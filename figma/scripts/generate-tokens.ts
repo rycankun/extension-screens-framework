@@ -35,12 +35,21 @@ const OUTPUT_JSON = resolve(__dirname, '../../src/tokens/figma-variables.json');
  * Maps --tid-{prefix}-* patterns to collection groups.
  */
 function categorize(name: string): string {
+  // RGB channel tokens (e.g., brand-rgb, ink-rgb, black-rgb, white-rgb)
+  // Grouped with color since they're decomposed color values
+  if (name.endsWith('-rgb')) return 'color';
+
   // Color tokens (most specific first)
   if (name.startsWith('ink') || name.startsWith('text-')) return 'color';
   if (name.startsWith('brand') || name.startsWith('success') || name.startsWith('error') || name.startsWith('warning')) return 'color';
   if (name.startsWith('page-bg') || name.startsWith('surface')) return 'color';
   if (name.startsWith('btn-') || name.startsWith('toggle-')) return 'color';
-  if (name.startsWith('icon-on-')) return 'color';
+  if (name.startsWith('icon-on-') || name.startsWith('info')) return 'color';
+
+  // Standalone color tokens that don't match prefix patterns
+  if (name.startsWith('black-') || name.startsWith('white-')) return 'color';
+
+  // Border colors and widths
   if (name.startsWith('border')) return 'border';
 
   // Typography
@@ -68,6 +77,12 @@ function categorize(name: string): string {
 
   // Opacity
   if (name.startsWith('opacity-')) return 'opacity';
+
+  // Backdrop blur
+  if (name.startsWith('blur-')) return 'blur';
+
+  // Gradients
+  if (name.startsWith('gradient-')) return 'gradient';
 
   // Outline / border width
   if (name.startsWith('outline-')) return 'border';

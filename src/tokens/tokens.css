@@ -9,113 +9,182 @@
  * Token namespace: --tid-* (TrustID, prevents collisions)
  *
  * Categories:
- *   - Colors (text, brand, status, surface, button, toggle, border)
- *   - Typography (font families, sizes, weights, line heights, letter spacing)
- *   - Spacing (4px base unit scale)
- *   - Border radius
- *   - Sizing (icons, controls, containers)
- *   - Shadows
- *   - Z-index
- *   - Transitions
- *   - Opacity
- *   - Borders
+ *   1. Colors — Text, Brand, Status, Surface, Button, Toggle, Border
+ *   2. RGB Channels — decomposed RGB for rgba() patterns
+ *   3. Typography — font families, sizes, weights, line heights, letter spacing
+ *   4. Spacing — 4px base unit scale (sp-0 through sp-24)
+ *   5. Border Radius — sm through circle
+ *   6. Sizing — icons, controls, containers, toggle parts, blobs
+ *   7. Shadows — elevation, focus, glow, state rings
+ *   8. Z-Index — layer ordering scale
+ *   9. Transitions — durations, easing, animation timing
+ *  10. Opacity — disabled, hover, overlay, frost
+ *  11. Backdrop Blur — frost glass tiers (live demo only, not for Figma)
+ *  12. Gradients — banner, overlay, thumbnail, age gate backgrounds
+ *  13. Borders — widths, outlines
+ *
+ * Values are adapted from the predecessor project (rycankun/extension-screens)
+ * with namespace changed from --name to --tid-name. All values are identical
+ * to the original — this is a pixel-perfect migration.
  *
  * @see docs/PRD.md § Token System for the full specification
+ * @see docs/reference/SCREEN-AUDIT.md § CSS Token Reference
  * @see DIRECTIVES.md § 1 for enforcement rules
  */
 
-/* ══════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════════════════════════
    LIGHT THEME (default)
-   ══════════════════════════════════════════════════════════ */
+   All tokens defined on :root. Dark overrides via [data-theme='dark'].
+   ══════════════════════════════════════════════════════════════════════ */
 :root {
 
-  /* ── Colors / Text ── */
-  --tid-ink: #0B1620;                     /* Primary headings */
-  --tid-text-body: #374151;               /* Body text */
-  --tid-text-secondary: #6B7280;          /* Subtle text, icons */
-  --tid-text-muted: #697080;              /* WCAG AA muted (≥4.5:1 on white) */
-  --tid-text-tertiary: #6B7280;           /* Alternative muted */
-  --tid-text-micro: #5C6B80;              /* Tiny labels */
-  --tid-text-disabled: #B0B7C3;           /* Disabled elements */
-  --tid-text-footer: #6E7880;             /* Footer text */
-  --tid-text-nav: #1A1A2E;               /* Navigation text */
+  /* ─────────────────────────────────────────────────────────────────
+     1. COLORS
+     ───────────────────────────────────────────────────────────────── */
 
-  /* ── Colors / Brand & Status ── */
-  --tid-brand: #0E6FFF;                   /* Primary accent, CTAs, links */
-  --tid-brand-dark: #0B5CD6;              /* Hover state */
-  --tid-brand-dark-hover: #0950B8;        /* Active state */
+  /* ── 1a. Text Colors ──
+     Nine text tiers provide enough contrast differentiation for headings,
+     body copy, secondary labels, muted/disabled states, footers, and nav.
+     Every muted tier is pre-validated for WCAG AA 4.5:1 on --tid-surface. */
+  --tid-ink: #0B1620;                     /* Primary headings, strongest contrast */
+  --tid-text-body: #374151;               /* Body text, paragraphs, form labels */
+  --tid-text-secondary: #6B7280;          /* Subtle text, icons, helper text */
+  --tid-text-muted: #697080;              /* WCAG AA muted (≥4.5:1 on #FFFFFF) */
+  --tid-text-tertiary: #6B7280;           /* Alternative muted for non-critical info */
+  --tid-text-micro: #5C6B80;              /* Tiny labels, badge text, footnotes */
+  --tid-text-disabled: #B0B7C3;           /* Disabled elements — fails AA intentionally */
+  --tid-text-footer: #6E7880;             /* Footer links and attribution text */
+  --tid-text-nav: #1A1A2E;               /* Navigation bar text, site chrome */
+
+  /* ── 1b. Brand & Status Colors ──
+     Brand blue is the primary interactive color (CTAs, links, focus rings).
+     Three tiers: base → dark (hover) → dark-hover (active/pressed). */
+  --tid-brand: #0E6FFF;                   /* Primary accent, CTAs, links, focus rings */
+  --tid-brand-dark: #0B5CD6;              /* Hover state for brand elements */
+  --tid-brand-dark-hover: #0950B8;        /* Active/pressed state */
   --tid-icon-on-color: #F5F0EB;           /* Icons rendered on brand-color backgrounds */
-  --tid-success: #00C897;                 /* Success states */
-  --tid-success-light: #33D4AB;           /* Light success variant */
-  --tid-success-verified: #00B085;        /* Verified badge */
-  --tid-error: #FF4D4D;                   /* Error states */
-  --tid-warning: #F59E0B;                 /* Warning states */
+  --tid-success: #00C897;                 /* Success states, verified badges, checkmarks */
+  --tid-success-light: #33D4AB;           /* Light success variant for subtle indicators */
+  --tid-success-verified: #00B085;        /* Verified credential badge */
+  --tid-error: #FF4D4D;                   /* Error states, destructive actions */
+  --tid-error-light: #FFF0F0;             /* Error background tint for input fields */
+  --tid-warning: #F59E0B;                 /* Warning states, credential expiry */
+  --tid-warning-light: #FFFBEB;           /* Warning background tint */
+  --tid-info: #3B82F6;                    /* Informational badges, tooltip accents */
 
-  /* ── Colors / Surfaces ── */
-  --tid-page-bg: #F5F7FA;                 /* Page background */
-  --tid-surface: #FFFFFF;                 /* Cards, dialogs */
-  --tid-surface-raised: #F3F4F6;          /* Hover/active backgrounds */
-  --tid-surface-subtle: #F8F9FB;          /* Minimal contrast areas */
-  --tid-surface-site: #F5F6F8;            /* Site chrome background */
+  /* ── 1c. Surface Colors ──
+     Four surface tiers for layered card elevation. page-bg is the
+     outermost layer, surface is the card face, raised/subtle are within. */
+  --tid-page-bg: #F5F7FA;                 /* Page background, outermost layer */
+  --tid-surface: #FFFFFF;                 /* Cards, dialogs, banner content */
+  --tid-surface-raised: #F3F4F6;          /* Hover/active backgrounds, toggle tracks */
+  --tid-surface-subtle: #F8F9FB;          /* Minimal contrast areas, alternate rows */
+  --tid-surface-site: #F5F6F8;            /* Site chrome background (StreamVault) */
 
-  /* ── Colors / Buttons & Toggles ── */
+  /* ── 1d. Button & Toggle Colors ──
+     Primary button uses ink-on-page-bg pattern (dark bg, light text).
+     Toggle OFF track is a neutral gray; ON uses --tid-brand. */
   --tid-btn-primary-bg: #0B1620;          /* Primary button background */
   --tid-btn-primary-text: #F5F7FA;        /* Primary button text */
+  --tid-btn-secondary-bg: transparent;    /* Secondary button background (border-only) */
+  --tid-btn-secondary-text: #0B1620;      /* Secondary button text */
+  --tid-btn-danger-bg: #FF4D4D;           /* Danger/destructive button background */
+  --tid-btn-danger-text: #FFFFFF;         /* Danger button text */
   --tid-toggle-off: #D1D5DB;              /* Toggle OFF track */
+  --tid-toggle-knob: #FFFFFF;             /* Toggle knob (always white) */
 
-  /* ── Colors / Borders ── */
-  --tid-border: #E5E7EB;                  /* Default border */
-  --tid-border-light: #F0F1F3;            /* Subtle border */
+  /* ── 1e. Border Colors ── */
+  --tid-border: #E5E7EB;                  /* Default border for cards, sections */
+  --tid-border-light: #F0F1F3;            /* Subtle border for inner dividers */
   --tid-border-input: #D1D5DB;            /* Input field border */
+  --tid-border-input-hover: #B0B7C3;      /* Input field border on hover */
   --tid-border-focus: #0E6FFF;            /* Focus ring border (matches brand) */
+  --tid-border-error: #FF4D4D;            /* Error state border for inputs */
+  --tid-border-success: #00C897;          /* Success state border */
 
-  /* ── Typography / Font Families ── */
+  /* ─────────────────────────────────────────────────────────────────
+     2. RGB CHANNEL TOKENS
+     Decomposed RGB values for use in rgba() patterns where the alpha
+     channel needs to be controlled independently (e.g., overlays,
+     tinted backgrounds, glow effects).
+     Usage: rgba(var(--tid-brand-rgb), 0.15)
+     ───────────────────────────────────────────────────────────────── */
+  --tid-brand-rgb: 14, 111, 255;          /* #0E6FFF decomposed */
+  --tid-ink-rgb: 11, 22, 32;              /* #0B1620 decomposed */
+  --tid-success-rgb: 0, 200, 151;         /* #00C897 decomposed */
+  --tid-error-rgb: 255, 77, 77;           /* #FF4D4D decomposed */
+  --tid-warning-rgb: 245, 158, 11;        /* #F59E0B decomposed */
+  --tid-surface-rgb: 255, 255, 255;       /* #FFFFFF decomposed */
+  --tid-black-rgb: 0, 0, 0;              /* For shadow/overlay alpha */
+  --tid-white-rgb: 255, 255, 255;         /* For frost/glow alpha */
+
+  /* ─────────────────────────────────────────────────────────────────
+     3. TYPOGRAPHY
+     ───────────────────────────────────────────────────────────────── */
+
+  /* ── 3a. Font Families ──
+     Inter for body (clean, modern sans-serif), Work Sans for headings
+     (slightly more character, still geometric). Both are Google Fonts —
+     natively available in Figma without font installation. */
   --tid-ff-body: 'Inter', sans-serif;
   --tid-ff-heading: 'Work Sans', sans-serif;
   --tid-ff-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
 
-  /* ── Typography / Font Weights ── */
+  /* ── 3b. Font Weights ──
+     Max weight: 500 (Medium) per TrustID brand rules.
+     Never use 600 (Semibold) or 700 (Bold) — they violate the brand. */
   --tid-fw-regular: 400;
   --tid-fw-medium: 500;
-  /* Max weight: 500 (Medium) per TrustID brand rules — never use 600/700 */
 
-  /* ── Typography / Font Sizes ── */
-  --tid-fs-4xs: 7px;
-  --tid-fs-3xs: 8px;
-  --tid-fs-2xs: 9px;
-  --tid-fs-xs: 10px;
-  --tid-fs-sm: 11px;
-  --tid-fs-body-sm: 12px;
-  --tid-fs-body: 13px;
-  --tid-fs-base: 14px;
-  --tid-fs-input: 15px;
-  --tid-fs-nav: 17px;
-  --tid-fs-lg: 20px;
-  --tid-fs-xl: 22px;
-  --tid-fs-2xl: 28px;
-  --tid-fs-3xl: 32px;
-  --tid-fs-4xl: 40px;
-  --tid-fs-display: 72px;
+  /* ── 3c. Font Sizes ──
+     16-step scale from 7px to 72px. Each size maps to a specific UI role.
+     The extension UI is intentionally compact — font sizes are smaller than
+     typical web pages because the banner is only 380px wide. */
+  --tid-fs-4xs: 7px;                      /* Smallest text, rarely used */
+  --tid-fs-3xs: 8px;                      /* Sub-tiny labels */
+  --tid-fs-2xs: 9px;                      /* Tiny badges, inline code */
+  --tid-fs-xs: 10px;                      /* Footer links, badge text, progress */
+  --tid-fs-sm: 11px;                      /* Micro text, toggle sublabels */
+  --tid-fs-body-sm: 12px;                 /* Sublabels, edit links, cookie details */
+  --tid-fs-body: 13px;                    /* Subtext, summaries, descriptions */
+  --tid-fs-base: 14px;                    /* Body text, labels, buttons (default) */
+  --tid-fs-input: 15px;                   /* Input fields (slightly larger for legibility) */
+  --tid-fs-nav: 17px;                     /* Navigation logos, site name */
+  --tid-fs-lg: 20px;                      /* Section headings within screens */
+  --tid-fs-xl: 22px;                      /* Banner headings, OTP digit display */
+  --tid-fs-2xl: 28px;                     /* Large display text */
+  --tid-fs-3xl: 32px;                     /* Hero titles (overlays) */
+  --tid-fs-4xl: 40px;                     /* StreamVault hero heading */
+  --tid-fs-display: 72px;                 /* Ranking numbers, oversized display */
 
-  /* ── Typography / Letter Spacing ── */
+  /* ── 3d. Letter Spacing ──
+     Negative spacing for headings (tighter), positive for buttons/labels.
+     -0.1px normal is an optical correction for Inter at small sizes. */
   --tid-ls-tight: -0.3px;                /* Headings, logos */
   --tid-ls-normal: -0.1px;               /* Body text */
   --tid-ls-wide: 0.2px;                  /* Buttons, labels */
-  --tid-ls-caps: 0.04em;                 /* Uppercase badges */
+  --tid-ls-caps: 0.04em;                 /* Uppercase badges, status text */
 
-  /* ── Typography / Line Heights ── */
-  --tid-lh-tight: 13px;
-  --tid-lh-compact: 14px;
-  --tid-lh-snug: 15px;
-  --tid-lh-normal: 16px;
-  --tid-lh-body: 17px;
-  --tid-lh-relaxed: 18px;
-  --tid-lh-loose: 20px;
-  --tid-lh-heading: 26px;
-  --tid-lh-display: 28px;
+  /* ── 3e. Line Heights ──
+     9-step scale from 13px to 28px. Each maps to a font size tier.
+     All are fixed px values (not unitless ratios) for Figma compatibility. */
+  --tid-lh-tight: 13px;                  /* Compact single-line text */
+  --tid-lh-compact: 14px;                /* Buttons, single-line labels */
+  --tid-lh-snug: 15px;                   /* Toggle labels, short descriptions */
+  --tid-lh-normal: 16px;                 /* Standard line height */
+  --tid-lh-body: 17px;                   /* Body text, multi-line paragraphs */
+  --tid-lh-relaxed: 18px;                /* Readable body, legal text */
+  --tid-lh-loose: 20px;                  /* Spaced text, input fields */
+  --tid-lh-heading: 26px;                /* Section headings */
+  --tid-lh-display: 28px;                /* Display text, banner headings */
 
-  /* ── Spacing (4px base unit) ── */
+  /* ─────────────────────────────────────────────────────────────────
+     4. SPACING (4px base unit)
+     sp-N where N = value / 2. e.g., sp-4 = 8px, sp-8 = 16px.
+     This scale covers every padding, margin, and gap in the UI.
+     ───────────────────────────────────────────────────────────────── */
   --tid-sp-0: 0px;
+  --tid-sp-px: 1px;                       /* Hairline spacing, border offsets */
   --tid-sp-1: 2px;
   --tid-sp-2: 4px;
   --tid-sp-3: 6px;
@@ -136,72 +205,213 @@
   --tid-sp-22: 44px;
   --tid-sp-24: 48px;
 
-  /* ── Border Radius ── */
-  --tid-radius-sm: 0.25rem;              /* 4px — buttons, inputs, cards */
-  --tid-radius-md: 6px;                  /* Thumbnails */
-  --tid-radius-lg: 8px;                  /* Larger cards, modals */
-  --tid-radius-pill: 9999px;             /* Pills, toggle tracks */
-  --tid-radius-circle: 50%;              /* Avatars, icon circles */
+  /* ─────────────────────────────────────────────────────────────────
+     5. BORDER RADIUS
+     Four semantic tiers + pill/circle for fully rounded shapes.
+     radius-sm (4px) is used on nearly every element in the UI.
+     ───────────────────────────────────────────────────────────────── */
+  --tid-radius-xs: 2px;                  /* Subtle rounding, progress bars */
+  --tid-radius-sm: 4px;                  /* Buttons, inputs, cards, banner top corners */
+  --tid-radius-md: 6px;                  /* Thumbnails, credential cards */
+  --tid-radius-lg: 8px;                  /* Larger cards, modals, overlays */
+  --tid-radius-xl: 12px;                 /* Toast containers, floating elements */
+  --tid-radius-pill: 9999px;             /* Pills, toggle tracks, badges */
+  --tid-radius-circle: 50%;              /* Avatars, icon circles, knobs */
 
-  /* ── Sizing ── */
-  --tid-size-icon: 16px;                 /* Standard icon */
-  --tid-size-icon-md: 20px;              /* Medium icon (logo height) */
-  --tid-size-icon-lg: 24px;              /* Large icon */
-  --tid-size-control: 40px;              /* Button height */
-  --tid-size-touch: 44px;                /* WCAG touch target minimum */
+  /* ─────────────────────────────────────────────────────────────────
+     6. SIZING
+     Fixed dimensions for UI elements. These must be exact to match
+     the predecessor project's layout pixel-for-pixel.
+     ───────────────────────────────────────────────────────────────── */
+
+  /* ── 6a. Icons ── */
+  --tid-size-icon-xs: 12px;              /* Inline indicator dots */
+  --tid-size-icon: 16px;                 /* Standard icon (most common) */
+  --tid-size-icon-md: 20px;              /* Medium icon, logo heights */
+  --tid-size-icon-lg: 24px;              /* Large icon, header icons */
+  --tid-size-icon-xl: 32px;              /* Extra-large icon, success/error states */
+  --tid-size-icon-2xl: 48px;             /* Feature icons, overlay centerpieces */
+
+  /* ── 6b. Controls ── */
+  --tid-size-control: 40px;              /* Standard button height */
+  --tid-size-control-sm: 32px;           /* Compact button height */
+  --tid-size-touch: 44px;                /* WCAG minimum touch target */
+  --tid-size-input-height: 40px;         /* Input field height */
+  --tid-size-otp-cell: 40px;             /* OTP digit input cell (square) */
+
+  /* ── 6c. Toggle Parts ── */
+  --tid-size-toggle-width: 36px;         /* Toggle track width */
+  --tid-size-toggle-height: 20px;        /* Toggle track height */
+  --tid-size-toggle-knob: 16px;          /* Toggle knob diameter */
+  --tid-size-toggle-sm-width: 28px;      /* Small toggle track width */
+  --tid-size-toggle-sm-height: 16px;     /* Small toggle track height */
+  --tid-size-toggle-sm-knob: 12px;       /* Small toggle knob diameter */
+
+  /* ── 6d. Containers ── */
   --tid-size-banner: 380px;              /* Browser extension drawer width */
-  --tid-size-drawer: 360px;              /* Controls drawer width */
-  --tid-size-qr-code: 180px;             /* QR code image size */
+  --tid-size-drawer: 360px;              /* Controls drawer inner width */
+  --tid-size-qr-code: 180px;             /* QR code image square */
+  --tid-size-toast-width: 280px;         /* Toast notification width */
+  --tid-size-success-ring: 64px;         /* Success circle + progress ring */
+  --tid-size-credential-card: 56px;      /* Credential card height (icon + text row) */
 
-  /* ── Shadows ── */
+  /* ── 6e. Blobs (decorative background elements) ──
+     Three radial gradient blobs animate behind the banner content
+     to create the signature TrustID visual. Dimensions match the
+     predecessor project's .banner-blob* CSS exactly. */
+  --tid-size-blob1: 180px;               /* Largest blob — top-right corner */
+  --tid-size-blob2: 140px;               /* Medium blob — bottom-left area */
+  --tid-size-blob3: 120px;               /* Smallest blob — center-right */
+
+  /* ── 6f. Thumbnails (StreamVault landing page) ── */
+  --tid-size-thumb-sm: 120px;            /* Small thumbnail (grid) */
+  --tid-size-thumb-md: 160px;            /* Medium thumbnail */
+  --tid-size-thumb-lg: 200px;            /* Large featured thumbnail */
+
+  /* ─────────────────────────────────────────────────────────────────
+     7. SHADOWS
+     Elevation system: xs → sm → md → lg → banner.
+     Focus/state shadows use brand/success/error colors for visual
+     feedback without relying on color alone (WCAG).
+     ───────────────────────────────────────────────────────────────── */
+  --tid-shadow-none: none;
   --tid-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
   --tid-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
   --tid-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
   --tid-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.04);
+  --tid-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.10), 0 8px 10px rgba(0, 0, 0, 0.04);
   --tid-shadow-banner: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1px 3px rgba(0, 0, 0, 0.06);
   --tid-shadow-banner-glow: 0 4px 24px rgba(14, 111, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --tid-shadow-toast: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.06);
+  --tid-shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  /* ── 7b. Focus & State Ring Shadows ──
+     3px spread ring for focus-visible and validation states.
+     These supplement (not replace) the outline for WCAG. */
   --tid-shadow-focus-brand: 0 0 0 3px rgba(14, 111, 255, 0.3);
+  --tid-shadow-focus-error: 0 0 0 3px rgba(255, 77, 77, 0.3);
   --tid-shadow-success: 0 0 0 3px rgba(0, 200, 151, 0.3);
   --tid-shadow-error: 0 0 0 3px rgba(255, 77, 77, 0.3);
+  --tid-shadow-warning: 0 0 0 3px rgba(245, 158, 11, 0.3);
 
-  /* ── Z-Index ── */
-  --tid-z-base: 0;
-  --tid-z-content: 1;
-  --tid-z-raised: 2;
-  --tid-z-sticky: 10;
-  --tid-z-nav: 50;
-  --tid-z-label: 100;
-  --tid-z-icon: 150;
-  --tid-z-panel: 200;
-  --tid-z-overlay: 300;
+  /* ── 7c. Inset Shadows ── */
+  --tid-shadow-inset-sm: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+  --tid-shadow-inset-input: inset 0 1px 3px rgba(0, 0, 0, 0.04);
 
-  /* ── Transitions ── */
-  --tid-duration-fast: 120ms;
-  --tid-duration-normal: 200ms;
-  --tid-duration-slow: 400ms;
-  --tid-duration-fade: 600ms;
-  --tid-ease-default: cubic-bezier(0.4, 0, 0.2, 1);
-  --tid-ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --tid-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  /* ─────────────────────────────────────────────────────────────────
+     8. Z-INDEX
+     10-level stacking scale. Each level represents a semantic layer.
+     Components should never use arbitrary z-index values — always
+     reference one of these tokens.
+     ───────────────────────────────────────────────────────────────── */
+  --tid-z-base: 0;                       /* Default stacking context */
+  --tid-z-content: 1;                    /* Content above base (in-flow) */
+  --tid-z-raised: 2;                     /* Elevated elements (cards, badges) */
+  --tid-z-sticky: 10;                    /* Sticky headers, tab bars */
+  --tid-z-nav: 50;                       /* Navigation bar */
+  --tid-z-label: 100;                    /* Floating labels, tooltips */
+  --tid-z-icon: 150;                     /* Floating icon (Trust ID badge) */
+  --tid-z-panel: 200;                    /* Side panels, drawers */
+  --tid-z-banner: 250;                   /* Banner container (above panel) */
+  --tid-z-overlay: 300;                  /* Full-page overlays, age gate */
+  --tid-z-toast: 400;                    /* Toast notifications (topmost) */
+  --tid-z-modal: 500;                    /* Modal dialogs (emergency topmost) */
 
-  /* ── Opacity ── */
-  --tid-opacity-disabled: 0.5;
-  --tid-opacity-hover: 0.04;
-  --tid-opacity-overlay: 0.6;
+  /* ─────────────────────────────────────────────────────────────────
+     9. TRANSITIONS
+     Three duration tiers + three easing curves.
+     CSS transitions only — no JS timers in Figma exports.
+     Figma frames are static snapshots, so transitions only activate
+     in the live Storybook preview.
+     ───────────────────────────────────────────────────────────────── */
+  --tid-duration-instant: 0ms;            /* No transition (for Figma export) */
+  --tid-duration-fast: 120ms;             /* Micro-interactions: toggles, checkboxes */
+  --tid-duration-normal: 200ms;           /* Standard transitions: hover, focus */
+  --tid-duration-slow: 400ms;             /* Larger transitions: panel open/close */
+  --tid-duration-fade: 600ms;             /* Fade transitions: age gate cover */
+  --tid-duration-success: 1500ms;         /* Success ring animation */
+  --tid-ease-default: cubic-bezier(0.4, 0, 0.2, 1);  /* Material standard */
+  --tid-ease-in: cubic-bezier(0.4, 0, 1, 1);          /* Accelerate (exit) */
+  --tid-ease-out: cubic-bezier(0, 0, 0.2, 1);         /* Decelerate (enter) */
+  --tid-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* Spring bounce (toggles) */
 
-  /* ── Borders ── */
-  --tid-border-width: 1px;
-  --tid-border-width-focus: 2px;
-  --tid-outline-width: 2px;
-  --tid-outline-offset: 2px;
+  /* ─────────────────────────────────────────────────────────────────
+     10. OPACITY
+     Semantic opacity levels. disabled is intentionally low to visually
+     communicate non-interactivity. overlay controls the dark scrim
+     behind modal content.
+     ───────────────────────────────────────────────────────────────── */
+  --tid-opacity-0: 0;
+  --tid-opacity-disabled: 0.5;            /* Disabled elements */
+  --tid-opacity-hover: 0.04;              /* Hover tint overlay */
+  --tid-opacity-active: 0.08;             /* Active/pressed tint overlay */
+  --tid-opacity-frost: 0.85;              /* Frost glass panel (live demo only) */
+  --tid-opacity-overlay: 0.6;             /* Overlay scrim behind modals */
+  --tid-opacity-overlay-heavy: 0.8;       /* Heavy overlay for age gate */
+  --tid-opacity-full: 1;
+
+  /* ─────────────────────────────────────────────────────────────────
+     11. BACKDROP BLUR
+     Frosted glass effect tiers for live demo preview only.
+     NOT exported to Figma — Figma uses solid surfaces instead.
+     Components should use solid --tid-surface fallbacks.
+     ───────────────────────────────────────────────────────────────── */
+  --tid-blur-none: 0px;
+  --tid-blur-sm: 4px;                    /* Subtle blur — toast containers */
+  --tid-blur-md: 8px;                    /* Medium blur — banner frost layer */
+  --tid-blur-lg: 16px;                   /* Heavy blur — overlay backgrounds */
+  --tid-blur-xl: 24px;                   /* Maximum blur — age gate cover */
+
+  /* ─────────────────────────────────────────────────────────────────
+     12. GRADIENTS
+     Background gradients for decorative elements. The banner uses
+     an animated gradient with blob overlays in live demo mode;
+     Figma exports use a static snapshot of the gradient.
+     ───────────────────────────────────────────────────────────────── */
+
+  /* ── 12a. Banner Background ──
+     Diagonal gradient behind banner content. Blobs overlay this
+     with radial gradients for the signature TrustID look. */
+  --tid-gradient-banner: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --tid-gradient-banner-subtle: linear-gradient(135deg, #e0e7ff 0%, #f0e6ff 100%);
+
+  /* ── 12b. Overlay Backgrounds ──
+     Used by age gate, QR verify, and SLC KYC full-page overlays. */
+  --tid-gradient-overlay: linear-gradient(135deg, #0B1620 0%, #1a1a3e 50%, #0B1620 100%);
+  --tid-gradient-overlay-brand: linear-gradient(135deg, #0E6FFF 0%, #667eea 100%);
+
+  /* ── 12c. Blob Gradients ──
+     Radial gradients for the three decorative blobs behind the banner.
+     Each blob is a soft, translucent radial gradient. */
+  --tid-gradient-blob1: radial-gradient(circle, rgba(14, 111, 255, 0.3) 0%, transparent 70%);
+  --tid-gradient-blob2: radial-gradient(circle, rgba(118, 75, 162, 0.25) 0%, transparent 70%);
+  --tid-gradient-blob3: radial-gradient(circle, rgba(102, 126, 234, 0.2) 0%, transparent 70%);
+
+  /* ── 12d. Thumbnail Gradient (StreamVault landing) ── */
+  --tid-gradient-thumb: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6) 100%);
+
+  /* ── 12e. Success Ring Gradient ── */
+  --tid-gradient-success-ring: conic-gradient(#00C897 0deg, transparent 0deg);
+
+  /* ─────────────────────────────────────────────────────────────────
+     13. BORDERS
+     Width tokens for borders, outlines, and focus rings. Referenced
+     in CSS modules via var(--tid-border-width) etc.
+     ───────────────────────────────────────────────────────────────── */
+  --tid-border-width: 1px;               /* Standard border */
+  --tid-border-width-thick: 2px;         /* Emphasized border (active tab) */
+  --tid-border-width-focus: 2px;         /* Focus ring border */
+  --tid-outline-width: 2px;              /* Outline width for :focus-visible */
+  --tid-outline-offset: 2px;             /* Outline offset from element edge */
 }
 
-/* ══════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════════════════════════
    DARK THEME
    Applied via data-theme="dark" attribute on root element.
-   Only color tokens change — spacing, sizing, typography
-   remain the same.
-   ══════════════════════════════════════════════════════════ */
+   Only color tokens, RGB channels, shadows, and gradients change —
+   spacing, sizing, typography, radius, transitions, and blur remain
+   the same across themes.
+   ══════════════════════════════════════════════════════════════════════ */
 [data-theme='dark'] {
 
   /* ── Colors / Text ── */
@@ -224,7 +434,10 @@
   --tid-success-light: #40E0B8;
   --tid-success-verified: #00C090;
   --tid-error: #FF7A7A;
+  --tid-error-light: #2D1F1F;
   --tid-warning: #FBBF24;
+  --tid-warning-light: #2D2810;
+  --tid-info: #60A5FA;
 
   /* ── Colors / Surfaces ── */
   --tid-page-bg: #0C0E14;
@@ -236,22 +449,58 @@
   /* ── Colors / Buttons & Toggles ── */
   --tid-btn-primary-bg: #E2E8F0;
   --tid-btn-primary-text: #0C0E14;
+  --tid-btn-secondary-bg: transparent;
+  --tid-btn-secondary-text: #E2E8F0;
+  --tid-btn-danger-bg: #FF7A7A;
+  --tid-btn-danger-text: #1A0000;
   --tid-toggle-off: #3A3F4B;
+  --tid-toggle-knob: #FFFFFF;
 
   /* ── Colors / Borders ── */
   --tid-border: #2D3340;
   --tid-border-light: #232830;
   --tid-border-input: #3A3F4B;
+  --tid-border-input-hover: #4A5060;
   --tid-border-focus: #5BA3FF;
+  --tid-border-error: #FF7A7A;
+  --tid-border-success: #00D6A0;
 
-  /* ── Shadows (darker for dark theme) ── */
+  /* ── RGB Channels (dark theme uses adjusted brand blue) ── */
+  --tid-brand-rgb: 91, 163, 255;          /* #5BA3FF decomposed */
+  --tid-ink-rgb: 226, 232, 240;           /* #E2E8F0 decomposed */
+  --tid-success-rgb: 0, 214, 160;         /* #00D6A0 decomposed */
+  --tid-error-rgb: 255, 122, 122;         /* #FF7A7A decomposed */
+  --tid-warning-rgb: 251, 191, 36;        /* #FBBF24 decomposed */
+  --tid-surface-rgb: 24, 27, 36;          /* #181B24 decomposed */
+  --tid-black-rgb: 0, 0, 0;
+  --tid-white-rgb: 255, 255, 255;
+
+  /* ── Shadows (increased opacity for visibility on dark backgrounds) ── */
   --tid-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --tid-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
   --tid-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
   --tid-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
+  --tid-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 8px 10px rgba(0, 0, 0, 0.3);
   --tid-shadow-banner: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
   --tid-shadow-banner-glow: 0 4px 24px rgba(91, 163, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --tid-shadow-toast: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --tid-shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
   --tid-shadow-focus-brand: 0 0 0 3px rgba(91, 163, 255, 0.3);
+  --tid-shadow-focus-error: 0 0 0 3px rgba(255, 122, 122, 0.3);
   --tid-shadow-success: 0 0 0 3px rgba(0, 214, 160, 0.3);
   --tid-shadow-error: 0 0 0 3px rgba(255, 122, 122, 0.3);
+  --tid-shadow-warning: 0 0 0 3px rgba(251, 191, 36, 0.3);
+  --tid-shadow-inset-sm: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  --tid-shadow-inset-input: inset 0 1px 3px rgba(0, 0, 0, 0.15);
+
+  /* ── Gradients (dark theme — deeper, moodier) ── */
+  --tid-gradient-banner: linear-gradient(135deg, #3b4d99 0%, #4a2d6e 100%);
+  --tid-gradient-banner-subtle: linear-gradient(135deg, #1a1f3d 0%, #2a1f3d 100%);
+  --tid-gradient-overlay: linear-gradient(135deg, #0C0E14 0%, #12142a 50%, #0C0E14 100%);
+  --tid-gradient-overlay-brand: linear-gradient(135deg, #1a4aa0 0%, #3b4d99 100%);
+  --tid-gradient-blob1: radial-gradient(circle, rgba(91, 163, 255, 0.2) 0%, transparent 70%);
+  --tid-gradient-blob2: radial-gradient(circle, rgba(74, 45, 110, 0.2) 0%, transparent 70%);
+  --tid-gradient-blob3: radial-gradient(circle, rgba(59, 77, 153, 0.15) 0%, transparent 70%);
+  --tid-gradient-thumb: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
+  --tid-gradient-success-ring: conic-gradient(#00D6A0 0deg, transparent 0deg);
 }

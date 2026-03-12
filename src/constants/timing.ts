@@ -31,7 +31,10 @@ export const TIMING = {
   /** Delay after DOB verification before transitioning (ms) */
   DOB_VERIFIED_DELAY: 800,
 
-  /** OTP resend countdown duration (seconds) */
+  /** Delay after nav login route before showing the floating icon (ms) */
+  NAV_LOGIN_DELAY: 500,
+
+  /** OTP resend countdown duration (seconds, not ms) */
   OTP_RESEND_SECONDS: 30,
 
   /** Delay before auto-focusing the next input after screen transition (ms) */
