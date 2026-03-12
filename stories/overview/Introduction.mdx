@@ -1,0 +1,70 @@
+{/**
+  * Introduction — TrustID Extension Screen Library
+  *
+  * Landing page for the Storybook catalog. Provides an overview of the
+  * library's purpose, architecture, and how to navigate the component
+  * hierarchy. This is the first thing developers and designers see.
+  *
+  * @see CLAUDE.md for full project context
+  * @see docs/PRD.md for product requirements
+  */}
+
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Overview/Introduction" />
+
+# TrustID Extension Screen Library
+
+A React component library rendering every screen in the **TrustID browser extension** — consent prompts, identity verification, cookie management, credential sharing, and data subject requests.
+
+## Design Constraint
+
+The primary constraint is **Figma import**. Every component is built to produce a clean, self-contained Figma frame:
+
+- **Isolated components** — no external state, no side effects
+- **Tokenized CSS** — all visual values from `var(--tid-*)` tokens
+- **Each story = one Figma frame** — named exports map to import targets
+- **Custom Figma plugin** — syncs tokens and imports screens automatically
+
+## Architecture
+
+```
+tokens.css (design tokens, single source of truth)
+    ↓ consumed by
+*.module.css (component styles via var(--tid-*))
+    ↓ generates
+figma-variables.json (Figma Variables manifest)
+    ↓ synced by
+Figma Plugin → Figma Variables
+```
+
+## Component Hierarchy
+
+| Layer | Purpose | Examples |
+|-------|---------|---------|
+| **Foundation** | Token visualization | Colors, Typography, Spacing, Shadows |
+| **Atoms** | UI primitives | Button, Input, Toggle, Badge, Icon |
+| **Molecules** | Composed patterns | FormGroup, DialogHeader, ConsentToggle |
+| **Organisms** | Shell containers | BannerShell, ToastContainer, OverlayShell |
+| **Screens** | Full compositions | ConsentEU, EmailCapture, CookiePrefs |
+| **Flows** | Journey documentation | FirstTimeUser, ConsentManagement |
+
+## Variant System
+
+Screens support five axes of variation:
+
+| Axis | Values | Controls |
+|------|--------|----------|
+| **Theme** | `light`, `dark` | CSS token overrides via toolbar toggle |
+| **Jurisdiction** | `eu`, `us-strict`, `us-standard` | Consent screen selection, legal text |
+| **Scenario** | `first`, `returning`, `returningVerified` | Screen flow, state flags |
+| **Honor Age Gate** | `true`, `false` | DOB entry vs direct email flow |
+| **SLC Mode** | `off`, `noKyc`, `withKyc` | OTP vs eSIM verification path |
+
+## Theme Toggle
+
+Use the **sun/moon icon** in the Storybook toolbar to switch between light and dark themes. This sets `data-theme` on the document root, activating the dark token overrides defined in `tokens.css`.
+
+## Token System
+
+All 206 design tokens are defined in `src/tokens/tokens.css` with the `--tid-*` namespace. Browse the **Foundation** stories to see every token category with resolved values.

@@ -5,7 +5,12 @@
  * with components in src/ and foundation/flow docs live in stories/.
  * The a11y addon enables automated WCAG 2.1 AA testing per component.
  *
+ * Static dirs serve public/ assets (brand logos, fonts) to the Storybook
+ * dev server so they're available at the root path, matching the Vite dev
+ * server behavior.
+ *
  * @see .storybook/preview.ts for global decorators and theme setup
+ * @see .storybook/manager.ts for sidebar branding
  */
 import type { StorybookConfig } from '@storybook/react-vite';
 
@@ -28,6 +33,11 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
+
+  /* ── Static Assets ──
+     Serves public/ at the root path so brand logos and font files
+     are accessible at /assets/logo.svg, /fonts/Inter.woff2, etc. */
+  staticDirs: ['../public'],
 
   /* ── Vite Integration ── */
   viteFinal: async (config) => {
