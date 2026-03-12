@@ -1,0 +1,86 @@
+/**
+ * ConsentUS Styles — Screen Component
+ *
+ * Layout and typography for the US strict-state consent screen.
+ * Shares the same layout pattern as ConsentEU — separate file for
+ * screen-specific variations (e.g., CT minor ban notice).
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.1 — All values from tokens.css
+ */
+
+/* ── Signal Badges Row ── */
+
+.signals {
+  display: flex;
+  gap: var(--tid-sp-3); /* 6px */
+  flex-wrap: wrap;
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Content Area ── */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Headline ── */
+
+.headline {
+  font-family: var(--tid-ff-heading);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-body); /* 17px */
+  letter-spacing: var(--tid-ls-tight);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Trust Line ── */
+
+.trustLine {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Toggle Section ── */
+
+.toggles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-1); /* 2px */
+}
+
+/* ── CT Minor Ban Notice ──
+   Shown when CT minor advertising ban is active. */
+
+.banNotice {
+  display: flex;
+  padding-top: var(--tid-sp-2); /* 4px */
+  padding-left: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Action Buttons ── */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Footer ── */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-3); /* 6px */
+}

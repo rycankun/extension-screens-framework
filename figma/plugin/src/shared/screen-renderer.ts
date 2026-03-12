@@ -4,9 +4,53 @@
  * Converts React screen component HTML (from renderToStaticMarkup)
  * into Figma frame nodes using the html2figma approach.
  *
- * Placeholder — implementation will be built in the screen import step.
+ * Placeholder — full rendering implementation will be built in the
+ * screen import step. The screen registry below tracks which screens
+ * the plugin knows about and their metadata.
  *
  * @see figma/scripts/generate-screens.ts for the HTML generation
+ * @see src/constants/screens.ts for the canonical screen ID list
  */
 
-export {};
+/* ── Screen Registry ──
+   Tracks which screen components are available for Figma import.
+   Updated every time a new screen component is built. */
+
+export interface ScreenEntry {
+  /** Screen ID from SCREENS constant */
+  id: string;
+  /** Component name (PascalCase) */
+  component: string;
+  /** Screen category for Figma page organization */
+  category: string;
+  /** Number of story variants available */
+  variants: number;
+}
+
+/**
+ * Registry of all screen components available for Figma import.
+ * Each entry maps to a built React screen component with stories.
+ *
+ * @see src/constants/screens.ts — SCREENS constant for ID values
+ */
+export const SCREEN_REGISTRY: ScreenEntry[] = [
+  /* ── Consent Screens (Step 9) ── */
+  {
+    id: 'consent-t1',
+    component: 'ConsentEU',
+    category: 'consent',
+    variants: 6,
+  },
+  {
+    id: 'consent-t2',
+    component: 'ConsentUS',
+    category: 'consent',
+    variants: 4,
+  },
+  {
+    id: 'consent-t3',
+    component: 'ConsentUSStd',
+    category: 'consent',
+    variants: 2,
+  },
+];
