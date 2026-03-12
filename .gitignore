@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Figma export (generated HTML frames — always re-generated)
+figma/export/
+
+# Vite
+*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Storybook build
+storybook-static/
+
+# Test coverage
+coverage/
+
+# Logs
+*.log

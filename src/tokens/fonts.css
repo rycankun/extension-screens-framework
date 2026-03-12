@@ -1,0 +1,48 @@
+/**
+ * Font Declarations — TrustID Extension Screen Library
+ *
+ * @font-face rules for Inter (body) and Work Sans (headings).
+ * Both are Google Fonts, natively available in Figma.
+ * Local woff2 files in public/fonts/ for offline Storybook use.
+ *
+ * Weights loaded: 400 (Regular), 500 (Medium) — max weight per brand rules.
+ *
+ * @see src/tokens/tokens.css for --tid-ff-body and --tid-ff-heading tokens
+ * @see CLAUDE.md § Fonts for the type system specification
+ */
+
+/* ── Inter — Body Text ── */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/inter-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/inter-medium.woff2') format('woff2');
+}
+
+/* ── Work Sans — Headings ── */
+
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/work-sans-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/work-sans-medium.woff2') format('woff2');
+}

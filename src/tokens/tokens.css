@@ -1,0 +1,257 @@
+/**
+ * Design Tokens — TrustID Extension Screen Library
+ *
+ * SINGLE SOURCE OF TRUTH for all visual values in the project.
+ * Every CSS module references these tokens via var(--tid-*).
+ * The generate-tokens script parses this file to produce
+ * figma-variables.json for the Figma plugin's Variable sync.
+ *
+ * Token namespace: --tid-* (TrustID, prevents collisions)
+ *
+ * Categories:
+ *   - Colors (text, brand, status, surface, button, toggle, border)
+ *   - Typography (font families, sizes, weights, line heights, letter spacing)
+ *   - Spacing (4px base unit scale)
+ *   - Border radius
+ *   - Sizing (icons, controls, containers)
+ *   - Shadows
+ *   - Z-index
+ *   - Transitions
+ *   - Opacity
+ *   - Borders
+ *
+ * @see docs/PRD.md § Token System for the full specification
+ * @see DIRECTIVES.md § 1 for enforcement rules
+ */
+
+/* ══════════════════════════════════════════════════════════
+   LIGHT THEME (default)
+   ══════════════════════════════════════════════════════════ */
+:root {
+
+  /* ── Colors / Text ── */
+  --tid-ink: #0B1620;                     /* Primary headings */
+  --tid-text-body: #374151;               /* Body text */
+  --tid-text-secondary: #6B7280;          /* Subtle text, icons */
+  --tid-text-muted: #697080;              /* WCAG AA muted (≥4.5:1 on white) */
+  --tid-text-tertiary: #6B7280;           /* Alternative muted */
+  --tid-text-micro: #5C6B80;              /* Tiny labels */
+  --tid-text-disabled: #B0B7C3;           /* Disabled elements */
+  --tid-text-footer: #6E7880;             /* Footer text */
+  --tid-text-nav: #1A1A2E;               /* Navigation text */
+
+  /* ── Colors / Brand & Status ── */
+  --tid-brand: #0E6FFF;                   /* Primary accent, CTAs, links */
+  --tid-brand-dark: #0B5CD6;              /* Hover state */
+  --tid-brand-dark-hover: #0950B8;        /* Active state */
+  --tid-icon-on-color: #F5F0EB;           /* Icons rendered on brand-color backgrounds */
+  --tid-success: #00C897;                 /* Success states */
+  --tid-success-light: #33D4AB;           /* Light success variant */
+  --tid-success-verified: #00B085;        /* Verified badge */
+  --tid-error: #FF4D4D;                   /* Error states */
+  --tid-warning: #F59E0B;                 /* Warning states */
+
+  /* ── Colors / Surfaces ── */
+  --tid-page-bg: #F5F7FA;                 /* Page background */
+  --tid-surface: #FFFFFF;                 /* Cards, dialogs */
+  --tid-surface-raised: #F3F4F6;          /* Hover/active backgrounds */
+  --tid-surface-subtle: #F8F9FB;          /* Minimal contrast areas */
+  --tid-surface-site: #F5F6F8;            /* Site chrome background */
+
+  /* ── Colors / Buttons & Toggles ── */
+  --tid-btn-primary-bg: #0B1620;          /* Primary button background */
+  --tid-btn-primary-text: #F5F7FA;        /* Primary button text */
+  --tid-toggle-off: #D1D5DB;              /* Toggle OFF track */
+
+  /* ── Colors / Borders ── */
+  --tid-border: #E5E7EB;                  /* Default border */
+  --tid-border-light: #F0F1F3;            /* Subtle border */
+  --tid-border-input: #D1D5DB;            /* Input field border */
+  --tid-border-focus: #0E6FFF;            /* Focus ring border (matches brand) */
+
+  /* ── Typography / Font Families ── */
+  --tid-ff-body: 'Inter', sans-serif;
+  --tid-ff-heading: 'Work Sans', sans-serif;
+  --tid-ff-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* ── Typography / Font Weights ── */
+  --tid-fw-regular: 400;
+  --tid-fw-medium: 500;
+  /* Max weight: 500 (Medium) per TrustID brand rules — never use 600/700 */
+
+  /* ── Typography / Font Sizes ── */
+  --tid-fs-4xs: 7px;
+  --tid-fs-3xs: 8px;
+  --tid-fs-2xs: 9px;
+  --tid-fs-xs: 10px;
+  --tid-fs-sm: 11px;
+  --tid-fs-body-sm: 12px;
+  --tid-fs-body: 13px;
+  --tid-fs-base: 14px;
+  --tid-fs-input: 15px;
+  --tid-fs-nav: 17px;
+  --tid-fs-lg: 20px;
+  --tid-fs-xl: 22px;
+  --tid-fs-2xl: 28px;
+  --tid-fs-3xl: 32px;
+  --tid-fs-4xl: 40px;
+  --tid-fs-display: 72px;
+
+  /* ── Typography / Letter Spacing ── */
+  --tid-ls-tight: -0.3px;                /* Headings, logos */
+  --tid-ls-normal: -0.1px;               /* Body text */
+  --tid-ls-wide: 0.2px;                  /* Buttons, labels */
+  --tid-ls-caps: 0.04em;                 /* Uppercase badges */
+
+  /* ── Typography / Line Heights ── */
+  --tid-lh-tight: 13px;
+  --tid-lh-compact: 14px;
+  --tid-lh-snug: 15px;
+  --tid-lh-normal: 16px;
+  --tid-lh-body: 17px;
+  --tid-lh-relaxed: 18px;
+  --tid-lh-loose: 20px;
+  --tid-lh-heading: 26px;
+  --tid-lh-display: 28px;
+
+  /* ── Spacing (4px base unit) ── */
+  --tid-sp-0: 0px;
+  --tid-sp-1: 2px;
+  --tid-sp-2: 4px;
+  --tid-sp-3: 6px;
+  --tid-sp-4: 8px;
+  --tid-sp-5: 10px;
+  --tid-sp-6: 12px;
+  --tid-sp-7: 14px;
+  --tid-sp-8: 16px;
+  --tid-sp-9: 18px;
+  --tid-sp-10: 20px;
+  --tid-sp-11: 22px;
+  --tid-sp-12: 24px;
+  --tid-sp-13: 26px;
+  --tid-sp-14: 28px;
+  --tid-sp-16: 32px;
+  --tid-sp-18: 36px;
+  --tid-sp-20: 40px;
+  --tid-sp-22: 44px;
+  --tid-sp-24: 48px;
+
+  /* ── Border Radius ── */
+  --tid-radius-sm: 0.25rem;              /* 4px — buttons, inputs, cards */
+  --tid-radius-md: 6px;                  /* Thumbnails */
+  --tid-radius-lg: 8px;                  /* Larger cards, modals */
+  --tid-radius-pill: 9999px;             /* Pills, toggle tracks */
+  --tid-radius-circle: 50%;              /* Avatars, icon circles */
+
+  /* ── Sizing ── */
+  --tid-size-icon: 16px;                 /* Standard icon */
+  --tid-size-icon-md: 20px;              /* Medium icon (logo height) */
+  --tid-size-icon-lg: 24px;              /* Large icon */
+  --tid-size-control: 40px;              /* Button height */
+  --tid-size-touch: 44px;                /* WCAG touch target minimum */
+  --tid-size-banner: 380px;              /* Browser extension drawer width */
+  --tid-size-drawer: 360px;              /* Controls drawer width */
+  --tid-size-qr-code: 180px;             /* QR code image size */
+
+  /* ── Shadows ── */
+  --tid-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --tid-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --tid-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --tid-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.04);
+  --tid-shadow-banner: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --tid-shadow-banner-glow: 0 4px 24px rgba(14, 111, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --tid-shadow-focus-brand: 0 0 0 3px rgba(14, 111, 255, 0.3);
+  --tid-shadow-success: 0 0 0 3px rgba(0, 200, 151, 0.3);
+  --tid-shadow-error: 0 0 0 3px rgba(255, 77, 77, 0.3);
+
+  /* ── Z-Index ── */
+  --tid-z-base: 0;
+  --tid-z-content: 1;
+  --tid-z-raised: 2;
+  --tid-z-sticky: 10;
+  --tid-z-nav: 50;
+  --tid-z-label: 100;
+  --tid-z-icon: 150;
+  --tid-z-panel: 200;
+  --tid-z-overlay: 300;
+
+  /* ── Transitions ── */
+  --tid-duration-fast: 120ms;
+  --tid-duration-normal: 200ms;
+  --tid-duration-slow: 400ms;
+  --tid-duration-fade: 600ms;
+  --tid-ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --tid-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --tid-ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* ── Opacity ── */
+  --tid-opacity-disabled: 0.5;
+  --tid-opacity-hover: 0.04;
+  --tid-opacity-overlay: 0.6;
+
+  /* ── Borders ── */
+  --tid-border-width: 1px;
+  --tid-border-width-focus: 2px;
+  --tid-outline-width: 2px;
+  --tid-outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   DARK THEME
+   Applied via data-theme="dark" attribute on root element.
+   Only color tokens change — spacing, sizing, typography
+   remain the same.
+   ══════════════════════════════════════════════════════════ */
+[data-theme='dark'] {
+
+  /* ── Colors / Text ── */
+  --tid-ink: #E2E8F0;
+  --tid-text-body: #B8C0CC;
+  --tid-text-secondary: #8892A0;
+  --tid-text-muted: #828D9C;
+  --tid-text-tertiary: #8892A0;
+  --tid-text-micro: #8A95A3;
+  --tid-text-disabled: #3D4550;
+  --tid-text-footer: #7A8490;
+  --tid-text-nav: #E2E8F0;
+
+  /* ── Colors / Brand & Status ── */
+  --tid-brand: #5BA3FF;
+  --tid-brand-dark: #4A94F5;
+  --tid-brand-dark-hover: #3D86E8;
+  --tid-icon-on-color: #F5F0EB;
+  --tid-success: #00D6A0;
+  --tid-success-light: #40E0B8;
+  --tid-success-verified: #00C090;
+  --tid-error: #FF7A7A;
+  --tid-warning: #FBBF24;
+
+  /* ── Colors / Surfaces ── */
+  --tid-page-bg: #0C0E14;
+  --tid-surface: #181B24;
+  --tid-surface-raised: #22262F;
+  --tid-surface-subtle: #1C1F28;
+  --tid-surface-site: #10121A;
+
+  /* ── Colors / Buttons & Toggles ── */
+  --tid-btn-primary-bg: #E2E8F0;
+  --tid-btn-primary-text: #0C0E14;
+  --tid-toggle-off: #3A3F4B;
+
+  /* ── Colors / Borders ── */
+  --tid-border: #2D3340;
+  --tid-border-light: #232830;
+  --tid-border-input: #3A3F4B;
+  --tid-border-focus: #5BA3FF;
+
+  /* ── Shadows (darker for dark theme) ── */
+  --tid-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --tid-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --tid-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --tid-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
+  --tid-shadow-banner: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --tid-shadow-banner-glow: 0 4px 24px rgba(91, 163, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --tid-shadow-focus-brand: 0 0 0 3px rgba(91, 163, 255, 0.3);
+  --tid-shadow-success: 0 0 0 3px rgba(0, 214, 160, 0.3);
+  --tid-shadow-error: 0 0 0 3px rgba(255, 122, 122, 0.3);
+}

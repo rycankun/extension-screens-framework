@@ -1,0 +1,76 @@
+/**
+ * Global Styles — TrustID Extension Screen Library
+ *
+ * Minimal CSS reset and token system imports. This file is the single
+ * entry point for global CSS — imported by Storybook's preview.ts.
+ *
+ * Import order matters:
+ *   1. fonts.css — @font-face declarations (must load before tokens reference them)
+ *   2. tokens.css — design token definitions (CSS custom properties)
+ *
+ * @see .storybook/preview.ts where this file is imported
+ */
+
+/* ── Token System Imports ── */
+@import './fonts.css';
+@import './tokens.css';
+
+/* ── CSS Reset ── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: var(--tid-sp-0);
+  padding: var(--tid-sp-0);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-base);
+  font-weight: var(--tid-fw-regular);
+  line-height: var(--tid-lh-normal);
+  color: var(--tid-text-body);
+  background-color: var(--tid-page-bg);
+}
+
+/* ── Focus Visible (global baseline) ── */
+
+:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}
+
+/* ── Semantic Resets ── */
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--tid-brand);
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}

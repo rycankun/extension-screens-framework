@@ -1,0 +1,10 @@
+{
+  "name": "trustid-figma-plugin",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Figma plugin for TrustID token sync and screen import",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  }
+}
