@@ -1,0 +1,99 @@
+/**
+ * DnsConfirm Styles — Screen Component
+ *
+ * Layout and typography for the Do Not Sell confirmation screen.
+ * All values from tokens.css — zero hardcoded values.
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.1 — All values from tokens.css
+ */
+
+/* ── Content Area ──
+   Headline + body text block. */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Headline ──
+   Screen heading — heading font, medium weight. */
+
+.headline {
+  font-family: var(--tid-ff-heading);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-body); /* 17px */
+  letter-spacing: var(--tid-ls-tight);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Body Text ──
+   Descriptive paragraph below headline. */
+
+.body {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-relaxed); /* 18px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Action Buttons ──
+   Confirm Opt-Out button. */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Cancel Row ──
+   Centered cancel link below action button. */
+
+.cancelRow {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Cancel Link ──
+   Text-only button styled as a link. */
+
+.cancelLink {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-brand);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--tid-sp-0);
+  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-snug); /* 15px */
+}
+
+.cancelLink:hover {
+  color: var(--tid-brand-dark);
+}
+
+.cancelLink:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs);
+}
+
+/* ── Footer ──
+   Centered PoweredBadge at the bottom. */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-3); /* 6px */
+}

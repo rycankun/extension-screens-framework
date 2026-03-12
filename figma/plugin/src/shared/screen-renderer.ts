@@ -91,4 +91,36 @@ export const SCREEN_REGISTRY: ScreenEntry[] = [
     category: 'authentication',
     variants: 2,
   },
+
+  /* ── Preference Screens (Step 11) ── */
+  {
+    id: 'cookie-prefs',
+    component: 'CookiePrefs',
+    category: 'preferences',
+    variants: 8,
+  },
+  {
+    id: 'cookie-email',
+    component: 'CookieEmail',
+    category: 'preferences',
+    variants: 2,
+  },
+  {
+    id: 'dns-confirm',
+    component: 'DnsConfirm',
+    category: 'preferences',
+    variants: 2,
+  },
+  {
+    id: 'sharing-settings',
+    component: 'SharingSettings',
+    category: 'preferences',
+    variants: 4,
+  },
+  {
+    id: 'dsr-intake',
+    component: 'DsrIntake',
+    category: 'preferences',
+    variants: 6,
+  },
 ];

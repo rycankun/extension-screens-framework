@@ -1,0 +1,135 @@
+/**
+ * CookiePrefs Styles — Screen Component
+ *
+ * Layout and typography for the cookie preferences screen.
+ * Includes tab bar, toggle sections, and shared data panel.
+ * All values from tokens.css — zero hardcoded values.
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.1 — All values from tokens.css
+ */
+
+/* ── Tab Bar ──
+   Horizontal tab row with bottom border. Active tab has brand
+   bottom border for visual indicator. */
+
+.tabBar {
+  display: flex;
+  gap: var(--tid-sp-0);
+  border-bottom: var(--tid-border-width) solid var(--tid-border-light);
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Tab Button ──
+   Individual tab — text-only button with bottom-border active state. */
+
+.tab {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-text-secondary);
+  background: none;
+  border: none;
+  border-bottom: var(--tid-border-width-thick) solid transparent;
+  padding: var(--tid-sp-3) var(--tid-sp-4); /* 6px 8px */
+  cursor: pointer;
+  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-snug); /* 15px */
+  transition: color var(--tid-duration-fast) var(--tid-ease-default),
+              border-color var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+.tab:hover {
+  color: var(--tid-ink);
+}
+
+.tab:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs);
+}
+
+/* ── Active Tab ──
+   Brand-colored bottom border and dark text. */
+
+.tabActive {
+  color: var(--tid-brand);
+  border-bottom-color: var(--tid-brand);
+}
+
+/* ── Content Area ──
+   Headline + trust line + body for Shared Data tab. */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Headline ──
+   Section heading (Shared Data tab). */
+
+.headline {
+  font-family: var(--tid-ff-heading);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-body); /* 17px */
+  letter-spacing: var(--tid-ls-tight);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Trust Line ──
+   Motivational tagline. */
+
+.trustLine {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Body Text ──
+   Descriptive paragraph. */
+
+.body {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-relaxed); /* 18px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Toggle Section ──
+   Vertical stack of toggle rows. */
+
+.toggles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-1); /* 2px */
+}
+
+/* ── Action Buttons ──
+   Save button area. */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Footer ──
+   Centered PoweredBadge at the bottom. */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-3); /* 6px */
+}

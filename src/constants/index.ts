@@ -14,3 +14,4 @@ export * from './timing';
 export * from './flows';
 export * from './consent';
 export * from './auth';
+export * from './preferences';

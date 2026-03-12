@@ -1,0 +1,84 @@
+/**
+ * CookieEmail Styles — Screen Component
+ *
+ * Layout and typography for the cookie email capture screen.
+ * All values from tokens.css — zero hardcoded values.
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.1 — All values from tokens.css
+ */
+
+/* ── Content Area ──
+   Headline + body + trust line text block. */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Headline ──
+   Screen heading — heading font, medium weight. */
+
+.headline {
+  font-family: var(--tid-ff-heading);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-body); /* 17px */
+  letter-spacing: var(--tid-ls-tight);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Body Text ──
+   Descriptive paragraph below headline. */
+
+.body {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-relaxed); /* 18px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Trust Line ──
+   Motivational tagline. */
+
+.trustLine {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Input Area ──
+   Email input wrapper. */
+
+.inputArea {
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Action Buttons ──
+   Send Verification Code button. */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Footer ──
+   Centered PoweredBadge at the bottom. */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-3); /* 6px */
+}
