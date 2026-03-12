@@ -1,0 +1,136 @@
+/**
+ * OtpEntry Styles — Screen Component
+ *
+ * Layout and typography for the OTP verification entry screen.
+ * All values from tokens.css — zero hardcoded values.
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.1 — All values from tokens.css
+ */
+
+/* ── Content Area ──
+   Headline + subtext with email. */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Headline ──
+   Screen heading — heading font, medium weight. */
+
+.headline {
+  font-family: var(--tid-ff-heading);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-body); /* 17px */
+  letter-spacing: var(--tid-ls-tight);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Subtext ──
+   "Enter the code sent to" + email address. */
+
+.subtext {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Email Highlight ──
+   Bold email address within the subtext. */
+
+.email {
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+}
+
+/* ── OTP Area ──
+   OTP input cells + auto-submit indicator. */
+
+.otpArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Auto-Submit Indicator ──
+   "Code verifies automatically" text below OTP cells. */
+
+.autoSubmit {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Action Buttons ──
+   Verify button. */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Resend Row ──
+   Centered resend code link. */
+
+.resendRow {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Resend Link ──
+   Text-only button styled as a link with countdown support. */
+
+.resendLink {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-brand);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--tid-sp-0);
+  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-snug); /* 15px */
+}
+
+.resendLink:hover:not(:disabled) {
+  color: var(--tid-brand-dark);
+}
+
+.resendLink:disabled {
+  color: var(--tid-text-disabled);
+  cursor: default;
+}
+
+.resendLink:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs);
+}
+
+/* ── Footer ──
+   Centered PoweredBadge at the bottom. */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-3); /* 6px */
+}

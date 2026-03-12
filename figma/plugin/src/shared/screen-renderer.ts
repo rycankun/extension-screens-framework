@@ -53,4 +53,42 @@ export const SCREEN_REGISTRY: ScreenEntry[] = [
     category: 'consent',
     variants: 2,
   },
+
+  /* ── Authentication Screens (Step 10) ── */
+  {
+    id: 'email-capture',
+    component: 'EmailCapture',
+    category: 'authentication',
+    variants: 2,
+  },
+  {
+    id: 'otp-entry',
+    component: 'OtpEntry',
+    category: 'authentication',
+    variants: 2,
+  },
+  {
+    id: 'otp-error',
+    component: 'OtpError',
+    category: 'authentication',
+    variants: 2,
+  },
+  {
+    id: 'email-confirm',
+    component: 'EmailConfirm',
+    category: 'authentication',
+    variants: 2,
+  },
+  {
+    id: 'passkey-setup',
+    component: 'PasskeySetup',
+    category: 'authentication',
+    variants: 2,
+  },
+  {
+    id: 'passkey-verify',
+    component: 'PasskeyVerify',
+    category: 'authentication',
+    variants: 2,
+  },
 ];

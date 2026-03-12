@@ -1,0 +1,75 @@
+/**
+ * EmailConfirm Styles — Screen Component
+ *
+ * Layout and typography for the email verification confirmation screen.
+ * All values from tokens.css — zero hardcoded values.
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.1 — All values from tokens.css
+ */
+
+/* ── Content Area ──
+   Success icon + headline + body text, centered. */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+  text-align: center;
+}
+
+/* ── Icon Wrapper ──
+   Centers the success icon with padding. */
+
+.iconWrap {
+  display: flex;
+  justify-content: center;
+  padding: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Headline ──
+   Confirmation headline — heading font, medium weight. */
+
+.headline {
+  font-family: var(--tid-ff-heading);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-body); /* 17px */
+  letter-spacing: var(--tid-ls-tight);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Body Text ──
+   Confirmation description below headline. */
+
+.body {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-relaxed); /* 18px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Action Buttons ──
+   Continue button. */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Footer ──
+   Centered PoweredBadge at the bottom. */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-3); /* 6px */
+}
