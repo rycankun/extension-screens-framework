@@ -1,0 +1,67 @@
+/**
+ * Spinner Styles — Atom Component
+ *
+ * Border-based spinner with brand-blue top arc rotating continuously.
+ * Uses CSS @keyframes for animation. Three sizes: sm (16px), md (24px),
+ * lg (32px). Static snapshot in Figma exports (no animation).
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Spinner Base ──
+   Circle with transparent top border for the spinning arc indicator. */
+
+.spinner {
+  display: inline-block;
+  border-style: solid;
+  border-color: var(--tid-surface-raised);
+  border-top-color: var(--tid-brand);
+  border-radius: var(--tid-radius-circle); /* 50% */
+  animation: spin var(--tid-duration-success) linear infinite; /* 1500ms */
+}
+
+/* ── Size Variants ── */
+
+.sm {
+  width: var(--tid-size-icon); /* 16px */
+  height: var(--tid-size-icon);
+  border-width: var(--tid-border-width); /* 1px */
+}
+
+.md {
+  width: var(--tid-size-icon-lg); /* 24px */
+  height: var(--tid-size-icon-lg);
+  border-width: var(--tid-border-width-thick); /* 2px */
+}
+
+.lg {
+  width: var(--tid-size-icon-xl); /* 32px */
+  height: var(--tid-size-icon-xl);
+  border-width: var(--tid-border-width-thick); /* 2px */
+}
+
+/* ── Rotation Keyframes ── */
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Screen Reader Only Text ──
+   Visually hidden but announced by assistive tech. */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

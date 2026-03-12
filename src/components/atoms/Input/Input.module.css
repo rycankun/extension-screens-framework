@@ -1,0 +1,87 @@
+/**
+ * Input Styles — Atom Component
+ *
+ * Text input field with default, focus, error, and disabled states.
+ * All dimensions and colors reference --tid-* tokens.
+ * Matches the predecessor project's input field styles.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Wrapper ── */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px between input and error message */
+  width: 100%;
+}
+
+/* ── Input Field ── */
+
+.input {
+  width: 100%;
+  height: var(--tid-size-input-height); /* 40px */
+  border: var(--tid-border-width) solid var(--tid-border-input); /* 1px solid #D1D5DB */
+  border-radius: var(--tid-radius-sm); /* 4px */
+  padding: 0 var(--tid-sp-8); /* 0 16px */
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-input); /* 15px */
+  font-weight: var(--tid-fw-regular); /* 400 */
+  color: var(--tid-ink);
+  background-color: var(--tid-surface);
+  letter-spacing: var(--tid-ls-normal); /* -0.1px */
+  line-height: var(--tid-lh-loose); /* 20px */
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    border-color var(--tid-duration-normal) var(--tid-ease-default),
+    box-shadow var(--tid-duration-normal) var(--tid-ease-default),
+    background-color var(--tid-duration-normal) var(--tid-ease-default);
+}
+
+/* ── Placeholder ── */
+
+.input::placeholder {
+  color: var(--tid-text-muted);
+}
+
+/* ── Focus State ── */
+
+.input:focus {
+  border-color: var(--tid-border-focus);
+  box-shadow: var(--tid-shadow-focus-brand);
+  background-color: var(--tid-surface);
+}
+
+/* ── Error State ── */
+
+.input.error {
+  border-color: var(--tid-border-error);
+  box-shadow: var(--tid-shadow-focus-error);
+}
+
+/* ── Disabled State ── */
+
+.input:disabled {
+  opacity: var(--tid-opacity-disabled); /* 0.5 */
+  cursor: default;
+  background-color: var(--tid-surface-raised);
+}
+
+/* ── Focus-Visible ──
+   WCAG keyboard focus ring — supplements the focus border. */
+
+.input:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}
+
+/* ── Error Message ── */
+
+.errorMessage {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  color: var(--tid-error);
+  line-height: var(--tid-lh-snug); /* 15px */
+}

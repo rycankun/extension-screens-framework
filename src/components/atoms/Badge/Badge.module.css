@@ -1,0 +1,70 @@
+/**
+ * Badge Styles — Atom Component
+ *
+ * Pill-shaped status badge with five color variants.
+ * Uppercase text with caps letter-spacing for visual emphasis.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Base ── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--tid-radius-pill); /* 9999px */
+  font-family: var(--tid-ff-body);
+  font-weight: var(--tid-fw-medium); /* 500 */
+  text-transform: uppercase;
+  letter-spacing: var(--tid-ls-caps); /* 0.04em */
+  white-space: nowrap;
+  line-height: var(--tid-lh-tight); /* 13px */
+}
+
+/* ── Sizes ── */
+
+.sm {
+  padding: var(--tid-sp-1) var(--tid-sp-3); /* 2px 6px */
+  font-size: var(--tid-fs-2xs); /* 9px */
+}
+
+.md {
+  padding: var(--tid-sp-2) var(--tid-sp-4); /* 4px 8px */
+  font-size: var(--tid-fs-xs); /* 10px */
+}
+
+/* ── Success Variant ── */
+
+.success {
+  background-color: rgba(var(--tid-success-rgb), 0.12);
+  color: var(--tid-success);
+}
+
+/* ── Warning Variant ── */
+
+.warning {
+  background-color: rgba(var(--tid-warning-rgb), 0.12);
+  color: var(--tid-warning);
+}
+
+/* ── Error Variant ── */
+
+.error {
+  background-color: rgba(var(--tid-error-rgb), 0.12);
+  color: var(--tid-error);
+}
+
+/* ── Info Variant ── */
+
+.info {
+  background-color: rgba(var(--tid-brand-rgb), 0.12);
+  color: var(--tid-brand);
+}
+
+/* ── Neutral Variant ── */
+
+.neutral {
+  background-color: var(--tid-surface-raised);
+  color: var(--tid-text-secondary);
+}

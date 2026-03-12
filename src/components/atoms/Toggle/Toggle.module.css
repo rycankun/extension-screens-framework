@@ -1,0 +1,110 @@
+/**
+ * Toggle Styles — Atom Component
+ *
+ * ON/OFF switch with track and sliding knob. Two sizes:
+ *   md: 36×20 track, 16px knob
+ *   sm: 28×16 track, 12px knob
+ *
+ * The knob slides left/right via CSS transition. OFF state uses
+ * --tid-toggle-off gray, ON state uses --tid-success green.
+ *
+ * @see src/tokens/tokens.css § 6c (Toggle Parts) for dimensions
+ */
+
+/* ── Track (button element) ── */
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  flex-shrink: 0;
+  outline: none;
+  transition: background-color var(--tid-duration-normal) var(--tid-ease-spring);
+  background-color: var(--tid-toggle-off); /* #D1D5DB (light), #3A3F4B (dark) */
+}
+
+/* ── Sizes ── */
+
+.md {
+  width: var(--tid-size-toggle-width); /* 36px */
+  height: var(--tid-size-toggle-height); /* 20px */
+  border-radius: var(--tid-radius-pill); /* 9999px */
+}
+
+.sm {
+  width: var(--tid-size-toggle-sm-width); /* 28px */
+  height: var(--tid-size-toggle-sm-height); /* 16px */
+  border-radius: var(--tid-radius-pill);
+}
+
+/* ── Knob ── */
+
+.knob {
+  position: absolute;
+  border-radius: var(--tid-radius-pill);
+  background-color: var(--tid-toggle-knob); /* #FFFFFF */
+  box-shadow: var(--tid-shadow-xs);
+  transition: left var(--tid-duration-normal) var(--tid-ease-spring);
+  pointer-events: none;
+}
+
+/* MD knob sizing: 16px knob, 2px offset from track edges */
+.md .knob {
+  width: var(--tid-size-toggle-knob); /* 16px */
+  height: var(--tid-size-toggle-knob);
+  top: var(--tid-sp-1); /* 2px */
+  left: var(--tid-sp-1); /* 2px — OFF position */
+}
+
+/* SM knob sizing: 12px knob, 2px offset */
+.sm .knob {
+  width: var(--tid-size-toggle-sm-knob); /* 12px */
+  height: var(--tid-size-toggle-sm-knob);
+  top: var(--tid-sp-1); /* 2px */
+  left: var(--tid-sp-1); /* 2px — OFF position */
+}
+
+/* ── Checked (ON) State ── */
+
+.checked {
+  background-color: var(--tid-success);
+}
+
+/* Move knob to right edge when checked.
+   MD: 36 - 16 - 2 = 18px
+   SM: 28 - 12 - 2 = 14px */
+.checked.md .knob {
+  left: var(--tid-sp-9); /* 18px */
+}
+
+.checked.sm .knob {
+  left: var(--tid-sp-7); /* 14px */
+}
+
+/* ── Locked State ──
+   Visually distinct from disabled — shows the toggle is intentionally
+   fixed (e.g., CT advertising ban forces analytics OFF). */
+
+.locked {
+  opacity: var(--tid-opacity-disabled);
+  cursor: not-allowed;
+}
+
+/* ── Disabled State ── */
+
+.toggle:disabled {
+  opacity: var(--tid-opacity-disabled);
+  cursor: default;
+}
+
+/* ── Focus-Visible ── */
+
+.toggle:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}

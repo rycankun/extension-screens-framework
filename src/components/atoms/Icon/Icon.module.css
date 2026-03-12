@@ -1,0 +1,44 @@
+/**
+ * Icon Styles — Atom Component
+ *
+ * SVG icon sizing classes mapped to --tid-size-icon-* tokens.
+ * Color inherits from parent or is overridden via inline style.
+ *
+ * @see src/tokens/tokens.css § 6a (Icons) for size tokens
+ */
+
+/* ── Base ── */
+
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  color: currentColor;
+  vertical-align: middle;
+}
+
+/* ── Sizes ── */
+
+.xs {
+  width: var(--tid-size-icon-xs); /* 12px */
+  height: var(--tid-size-icon-xs);
+}
+
+.sm {
+  width: var(--tid-size-icon); /* 16px */
+  height: var(--tid-size-icon);
+}
+
+.md {
+  width: var(--tid-size-icon-md); /* 20px */
+  height: var(--tid-size-icon-md);
+}
+
+.lg {
+  width: var(--tid-size-icon-lg); /* 24px */
+  height: var(--tid-size-icon-lg);
+}
+
+.xl {
+  width: var(--tid-size-icon-xl); /* 32px */
+  height: var(--tid-size-icon-xl);
+}

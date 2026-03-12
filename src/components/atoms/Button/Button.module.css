@@ -1,0 +1,153 @@
+/**
+ * Button Styles — Atom Component
+ *
+ * Four visual variants (primary, secondary, ghost, danger) with three
+ * size tiers. All values reference --tid-* tokens from tokens.css.
+ * Matches the predecessor project's button styles pixel-for-pixel.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ * @see docs/reference/ for predecessor button CSS
+ */
+
+/* ── Base ── */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--tid-radius-sm); /* 4px */
+  font-family: var(--tid-ff-body);
+  font-weight: var(--tid-fw-medium); /* 500 */
+  letter-spacing: var(--tid-ls-wide); /* 0.2px */
+  cursor: pointer;
+  transition:
+    opacity var(--tid-duration-normal) var(--tid-ease-default),
+    transform var(--tid-duration-fast) var(--tid-ease-default),
+    background-color var(--tid-duration-normal) var(--tid-ease-default),
+    border-color var(--tid-duration-normal) var(--tid-ease-default);
+  outline: none;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ── Sizes ── */
+
+.sm {
+  height: var(--tid-size-control-sm); /* 32px */
+  padding: 0 var(--tid-sp-6); /* 0 12px */
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  line-height: var(--tid-lh-compact); /* 14px */
+}
+
+.md {
+  height: var(--tid-size-control); /* 40px */
+  padding: 0 var(--tid-sp-8); /* 0 16px */
+  font-size: var(--tid-fs-base); /* 14px */
+  line-height: var(--tid-lh-compact); /* 14px */
+}
+
+.lg {
+  height: var(--tid-size-touch); /* 44px */
+  padding: 0 var(--tid-sp-10); /* 0 20px */
+  font-size: var(--tid-fs-base); /* 14px */
+  line-height: var(--tid-lh-compact); /* 14px */
+}
+
+/* ── Full Width ── */
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ── Primary Variant ──
+   Dark bg, light text — the main CTA pattern across all screens. */
+
+.primary {
+  background-color: var(--tid-btn-primary-bg);
+  color: var(--tid-btn-primary-text);
+}
+
+.primary:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.primary:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* ── Secondary Variant ──
+   Transparent bg with subtle border — used for secondary actions. */
+
+.secondary {
+  background-color: var(--tid-btn-secondary-bg);
+  color: var(--tid-btn-secondary-text);
+  border: var(--tid-border-width) solid var(--tid-border);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--tid-surface-raised);
+  border-color: var(--tid-border-input-hover);
+}
+
+.secondary:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* ── Ghost Variant ──
+   Text-only button with no background or border — for tertiary actions. */
+
+.ghost {
+  background: none;
+  color: var(--tid-text-muted);
+  font-weight: var(--tid-fw-regular); /* 400 — lighter than other variants */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+.ghost.sm {
+  font-size: var(--tid-fs-sm); /* 11px */
+}
+
+.ghost.md,
+.ghost.lg {
+  font-size: var(--tid-fs-body); /* 13px */
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--tid-text-secondary);
+}
+
+/* ── Danger Variant ──
+   Red bg — for destructive actions like delete, revoke, etc. */
+
+.danger {
+  background-color: var(--tid-btn-danger-bg);
+  color: var(--tid-btn-danger-text);
+}
+
+.danger:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.danger:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* ── Disabled State ──
+   Applies to all variants. Reduced opacity, no pointer events. */
+
+.button:disabled {
+  opacity: var(--tid-opacity-disabled); /* 0.5 */
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Focus-Visible ──
+   WCAG 2.1 AA focus ring — visible on keyboard navigation only. */
+
+.button:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}

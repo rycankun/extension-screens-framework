@@ -1,0 +1,70 @@
+/**
+ * Link Styles — Atom Component
+ *
+ * Brand-blue anchor with hover/active/focus states.
+ * External links show a small indicator icon.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ * @see docs/reference/ for predecessor link CSS
+ */
+
+/* ── Link Base ──
+   Brand-colored text link with underline on hover. */
+
+.link {
+  font-family: var(--tid-ff-body);
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-brand);
+  text-decoration: none;
+  letter-spacing: var(--tid-ls-normal);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tid-sp-1); /* 2px */
+  transition:
+    color var(--tid-duration-fast) var(--tid-ease-default),
+    opacity var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+/* ── Size Variants ── */
+
+.sm {
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  line-height: var(--tid-lh-snug); /* 15px */
+}
+
+.md {
+  font-size: var(--tid-fs-base); /* 14px */
+  line-height: var(--tid-lh-normal); /* 16px */
+}
+
+/* ── Hover State ── */
+
+.link:hover {
+  color: var(--tid-brand-dark);
+  text-decoration: underline;
+}
+
+/* ── Active/Pressed State ── */
+
+.link:active {
+  color: var(--tid-brand-dark-hover);
+}
+
+/* ── Focus-Visible ── */
+
+.link:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs); /* 2px — tight around text */
+}
+
+/* ── External Icon ──
+   Small indicator showing the link opens in a new tab. */
+
+.externalIcon {
+  width: var(--tid-size-icon-xs); /* 12px */
+  height: var(--tid-size-icon-xs);
+  flex-shrink: 0;
+}

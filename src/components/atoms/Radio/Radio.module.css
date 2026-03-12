@@ -1,0 +1,115 @@
+/**
+ * Radio Styles — Atom Component
+ *
+ * Custom radio button with hidden native input + styled circle indicator.
+ * Selected state shows brand-blue bg with white dot.
+ * 20×20 control size matching the Checkbox atom.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ * @see docs/reference/ for predecessor radio CSS
+ */
+
+/* ── Wrapper ──
+   Label wraps both the input and visual indicator for click targeting. */
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tid-sp-4); /* 8px */
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ── Hidden Native Input ──
+   Visually hidden but remains in the a11y tree. */
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Visual Control ──
+   Custom radio indicator — 20×20 circle. */
+
+.control {
+  width: var(--tid-size-icon-md); /* 20px */
+  height: var(--tid-size-icon-md);
+  border: var(--tid-border-width) solid var(--tid-border-input);
+  border-radius: var(--tid-radius-circle); /* 50% */
+  background-color: var(--tid-surface);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--tid-duration-fast) var(--tid-ease-default),
+    border-color var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+/* ── Inner Dot ──
+   White dot visible only when selected. */
+
+.dot {
+  width: var(--tid-sp-4); /* 8px */
+  height: var(--tid-sp-4);
+  border-radius: var(--tid-radius-circle);
+  background-color: var(--tid-toggle-knob); /* white */
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity var(--tid-duration-fast) var(--tid-ease-default),
+    transform var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+/* ── Selected State ──
+   Brand-blue background with visible white dot. */
+
+.input:checked + .control {
+  background-color: var(--tid-brand);
+  border-color: var(--tid-brand);
+}
+
+.input:checked + .control .dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Focus-Visible ──
+   Applied to the visual control when the hidden input has focus. */
+
+.input:focus-visible + .control {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}
+
+/* ── Hover State ── */
+
+.wrapper:hover .control {
+  border-color: var(--tid-border-input-hover);
+}
+
+/* ── Disabled State ── */
+
+.disabled {
+  opacity: var(--tid-opacity-disabled);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Label Text ── */
+
+.label {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  color: var(--tid-text-body);
+  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-snug); /* 15px */
+}
