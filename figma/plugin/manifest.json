@@ -1,5 +1,5 @@
 {
-  "name": "TrustID Screen Library",
+  "name": "TrustID Token Sync",
   "id": "trustid-extension-screens",
   "api": "1.0.0",
   "main": "dist/code.js",
