@@ -1,92 +1,158 @@
 /**
  * EmailCapture Styles — Screen Component
  *
- * Layout and typography for the email capture screen.
+ * Layout and typography for the email capture authentication screen.
+ * Matches the predecessor email-capture.html layout pixel-for-pixel.
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Content Area ──
-   Headline + body + trust line text block. */
+/* ── Text Block ──
+   Headline + body as inline spans in a single wrapping div.
+   The predecessor renders these as inline spans (not block h2/p),
+   so the text flows naturally within the same line context. */
 
-.content {
+.textBlock {
   display: flex;
   flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px */
+  gap: var(--tid-sp-1); /* 2px — tight gap between headline and body */
   margin-bottom: var(--tid-sp-2); /* 4px */
 }
 
-/* ── Headline ──
-   Screen heading — heading font, medium weight. */
+/* ── Bold (Headline Span) ──
+   Screen heading — heading font, medium weight, 14px. */
 
-.headline {
+.bold {
   font-family: var(--tid-ff-heading);
   font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium);
+  font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
   line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
-  margin: var(--tid-sp-0);
+  letter-spacing: var(--tid-ls-tight); /* -0.3px */
 }
 
-/* ── Body Text ──
-   Descriptive paragraph below headline. */
+/* ── Regular (Body Span) ──
+   Descriptive text below headline — body font, regular weight, 12px. */
 
-.body {
+.regular {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
+  font-weight: var(--tid-fw-regular); /* 400 */
   color: var(--tid-text-body);
   line-height: var(--tid-lh-relaxed); /* 18px */
-  letter-spacing: var(--tid-ls-normal);
-  margin: var(--tid-sp-0);
+  letter-spacing: var(--tid-ls-normal); /* -0.1px */
 }
 
 /* ── Trust Line ──
-   Motivational tagline. */
+   Motivational tagline — brand blue, medium weight, base font size.
+   Predecessor uses brand color for emphasis on the trust line. */
 
 .trustLine {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-snug); /* 15px */
-  letter-spacing: var(--tid-ls-normal);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium); /* 500 */
+  color: var(--tid-brand);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal); /* -0.1px */
   margin: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-2); /* 4px — space before step indicator */
 }
 
-/* ── Input Area ──
-   Email input wrapper. */
+/* ── Trust Signal Micro Text ──
+   "We'll never share your email..." reassurance below the input.
+   Small star icon + 11px secondary text. */
 
-.inputArea {
+.trustSignal {
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-2); /* 4px */
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px — micro text */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  margin-top: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Trust Signal Icon ──
+   12px star SVG, flex-shrink-0 to prevent collapse. */
+
+.trustSignalIcon {
+  width: var(--tid-size-icon-xs); /* 12px */
+  height: var(--tid-size-icon-xs); /* 12px */
+  flex-shrink: 0;
+  color: var(--tid-text-secondary);
+}
+
+/* ── Divider ──
+   Horizontal rule separating main content from passkey fallback.
+   1px border-top with muted border color. */
+
+.divider {
+  border: none;
+  border-top: var(--tid-border-width) solid var(--tid-border-light);
+  margin-top: var(--tid-sp-4); /* 8px */
   margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Action Buttons ──
-   Send Verification Code button. */
+/* ── Passkey Fallback ──
+   "Already have a Trust ID? Sign in with passkey" — centered micro text. */
 
-.actions {
+.passkeyFallback {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  text-align: center;
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Link (Passkey Fallback) ──
+   Brand-colored inline link within the passkey fallback text. */
+
+.link {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-medium); /* 500 — slightly emphasized */
+  color: var(--tid-brand);
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: var(--tid-ls-normal);
+}
+
+.link:hover {
+  color: var(--tid-brand-dark);
+}
+
+.link:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs); /* 2px */
+}
+
+/* ── Dismiss Group ──
+   Ghost link + re-auth micro text, grouped together at the bottom.
+   Centered column layout with minimal gap. */
+
+.dismissGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--tid-sp-3); /* 6px */
+  align-items: center;
+  gap: var(--tid-sp-1); /* 2px — tight grouping */
   margin-top: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Skip Row ──
-   Centered skip link below action buttons. */
+/* ── Ghost Button ──
+   Text-only button styled as a brand-color link. Compact padding,
+   no background, 12px font. Predecessor "No thanks" skip pattern. */
 
-.skipRow {
-  display: flex;
-  justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
-}
-
-/* ── Skip Link ──
-   Text-only button styled as a link. */
-
-.skipLink {
+.ghostBtn {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-body-sm); /* 12px */
   font-weight: var(--tid-fw-regular);
@@ -94,26 +160,50 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--tid-sp-0);
+  padding: var(--tid-sp-1) var(--tid-sp-2); /* 2px 4px — compact touch target */
   letter-spacing: var(--tid-ls-normal);
   line-height: var(--tid-lh-snug); /* 15px */
+  border-radius: var(--tid-radius-xs); /* 2px — for focus ring shape */
 }
 
-.skipLink:hover {
+.ghostBtn:hover {
   color: var(--tid-brand-dark);
 }
 
-.skipLink:focus-visible {
+.ghostBtn:focus-visible {
   outline: var(--tid-outline-width) solid var(--tid-border-focus);
   outline-offset: var(--tid-outline-offset);
-  border-radius: var(--tid-radius-xs);
+  border-radius: var(--tid-radius-xs); /* 2px */
 }
 
-/* ── Footer ──
-   Centered PoweredBadge at the bottom. */
+/* ── Micro Flush ──
+   Re-auth warning micro text below the ghost button.
+   11px, secondary color, no margin (flush to ghost button). */
 
-.footer {
-  display: flex;
-  justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+.microFlush {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  text-align: center;
+  margin: var(--tid-sp-0);
+  padding: var(--tid-sp-0);
+}
+
+/* ── Screen Reader Only ──
+   Visually hidden but accessible to assistive technologies.
+   Used for the email input label. */
+
+.srOnly {
+  position: absolute;
+  width: var(--tid-sp-px); /* 1px */
+  height: var(--tid-sp-px); /* 1px */
+  padding: var(--tid-sp-0);
+  margin: calc(-1 * var(--tid-sp-px)); /* -1px */
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: var(--tid-sp-0);
 }

@@ -31,6 +31,8 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   /** Accessible label override (defaults to label text) */
   ariaLabel?: string;
+  /** Optional additional CSS class for screen-level style overrides (e.g., success button color) */
+  className?: string;
 }
 
 /* ── Component ── */
@@ -44,12 +46,14 @@ export function Button({
   onClick,
   type = 'button',
   ariaLabel,
+  className,
 }: ButtonProps) {
   const classNames = [
     styles.button,
     styles[variant],
     styles[size],
     fullWidth ? styles.fullWidth : '',
+    className ?? '',
   ]
     .filter(Boolean)
     .join(' ');

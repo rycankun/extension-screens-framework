@@ -2,79 +2,168 @@
  * ConsentEU Styles — Screen Component
  *
  * Layout and typography for the EU/GDPR consent screen.
+ * Matches the predecessor consent-t1.html structure: text block + policy
+ * links + trust line + GPC indicator + social proof + button stack +
+ * universal opt-out disclosure + footer. NO toggle styles — toggles
+ * belong on cookie-prefs only.
+ *
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Signal Badges Row ──
-   Horizontal row of detection badges (GPC, DNT). */
+/* ── Text Block ──
+   Contains bold headline + regular body paragraph with inline
+   policy links. Vertical flex column with tight spacing. */
 
-.signals {
-  display: flex;
-  gap: var(--tid-sp-3); /* 6px */
-  flex-wrap: wrap;
-  margin-bottom: var(--tid-sp-3); /* 6px */
-}
-
-/* ── Content Area ──
-   Headline + trust line text block. */
-
-.content {
+.textBlock {
   display: flex;
   flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
+  gap: var(--tid-sp-2); /* 4px between headline and body */
+  margin-bottom: var(--tid-sp-2); /* 4px before trust line */
 }
 
-/* ── Headline ──
-   Screen heading — heading font, medium weight. */
+/* ── Bold Headline ──
+   "This site uses cookies and similar technologies."
+   Medium weight (500 max per brand rules), primary ink color. */
 
-.headline {
-  font-family: var(--tid-ff-heading);
+.textBlockBold {
+  font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium);
+  font-weight: var(--tid-fw-medium); /* 500 — max allowed by brand */
   color: var(--tid-ink);
   line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
-  margin: var(--tid-sp-0);
-}
-
-/* ── Trust Line ──
-   Motivational tagline below the headline. */
-
-.trustLine {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-snug); /* 15px */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
 }
 
-/* ── Toggle Section ──
-   Vertical stack of ConsentToggle rows. */
+/* ── Regular Body Text ──
+   Body paragraph with inline policy links. Lighter weight and
+   secondary color for visual hierarchy below the bold headline. */
 
-.toggles {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-1); /* 2px — tight spacing between toggle rows */
+.textBlockRegular {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px — predecessor body-sm */
+  font-weight: var(--tid-fw-regular); /* 400 */
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-relaxed); /* 18px — readable for multi-line legal text */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
 }
 
-/* ── Action Buttons ──
-   Stacked full-width Accept/Reject buttons. */
+/* ── Trust Line ──
+   "Your preferences. Your control." — brand-colored tagline
+   positioned between text block and GPC indicator. */
 
-.actions {
+.trustLine {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-base); /* 14px — predecessor trust line size */
+  font-weight: var(--tid-fw-medium); /* 500 — medium weight for emphasis */
+  color: var(--tid-brand); /* Trust ID Blue — trust line is always brand color */
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-3); /* 6px — space before GPC or social proof */
+}
+
+/* ── GPC Indicator ──
+   Conditional banner showing Global Privacy Control detection.
+   Tinted brand-blue background with shield icon + text + detail.
+   Only rendered when gpcDetected=true. */
+
+.gpcIndicator {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--tid-sp-3); /* 6px between icon and text column */
+  background: rgba(var(--tid-brand-rgb), 0.06); /* Subtle brand tint */
+  padding: var(--tid-sp-4); /* 8px */
+  border-radius: var(--tid-radius-sm); /* 4px */
+  margin-bottom: var(--tid-sp-3); /* 6px before social proof */
+}
+
+/* ── GPC Shield Icon ──
+   14px inline icon, brand-colored to match the indicator theme. */
+
+.gpcIcon {
+  width: var(--tid-sp-7); /* 14px */
+  height: var(--tid-sp-7); /* 14px */
+  color: var(--tid-brand);
+  flex-shrink: 0; /* Prevent icon from squishing on narrow viewports */
+  margin-top: var(--tid-sp-1); /* 2px — vertically align with first line of text */
+}
+
+/* ── GPC Text ──
+   Primary GPC indicator message. Body-sm size, secondary color. */
+
+.gpcText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+}
+
+/* ── GPC Detail ──
+   Smaller detail text listing which privacy categories are affected.
+   Muted color, xs font, separated from main GPC text by a small margin. */
+
+.gpcDetail {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xs); /* 10px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-muted);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+  margin-top: var(--tid-sp-2); /* 4px gap from gpcText */
+}
+
+/* ── Button Stack ──
+   Vertical column of three full-width buttons.
+   Order: Reject All → Accept All → Manage Preferences.
+   CNIL requires reject to be as prominent as accept — placing
+   reject first satisfies the "same level" enforcement. */
+
+.btnStack {
   display: flex;
   flex-direction: column;
-  gap: var(--tid-sp-3); /* 6px */
-  margin-top: var(--tid-sp-3); /* 6px */
+  gap: var(--tid-sp-3); /* 6px between buttons */
+  margin-top: var(--tid-sp-3); /* 6px above stack */
+}
+
+/* ── Consent Receipt ──
+   Hidden placeholder div. The extension runtime populates this
+   with a consent receipt after the user makes a choice. Hidden
+   by default so it occupies no layout space until filled. */
+
+.consentReceipt {
+  display: none;
+}
+
+/* ── Universal Opt-Out Disclosure ──
+   "We honor Global Privacy Control..." — required by CPA §6-1-1313.
+   Displayed regardless of GPC detection. Shield icon + text row. */
+
+.universalOptout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--tid-sp-2); /* 4px between icon and text */
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xs); /* 10px — small disclosure text */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  margin-top: var(--tid-sp-4); /* 8px — space from button stack or receipt */
 }
 
 /* ── Footer ──
-   Centered PoweredBadge at the bottom. */
+   Centered PoweredBadge at the bottom of the banner. */
 
 .footer {
   display: flex;

@@ -3,10 +3,12 @@
  *
  * The 380px-wide extension drawer container used by all 27 banner screens.
  * Renders a gradient background layer with three decorative blobs (static
- * for Figma import) and a solid surface content area.
+ * for Figma import) and a frosted glass content surface.
  *
- * Live demo uses animated blobs + backdrop-filter frost; Figma export
- * uses static blobs + solid opaque surface for clean frame import.
+ * The frosted glass effect (backdrop-filter: blur() + semi-transparent bg)
+ * is a critical design element present in both Storybook AND Figma exports.
+ * Content fills edge-to-edge with no margin gap (no visible gradient border
+ * frame around content).
  *
  * @see docs/PRD.md § 3.3 — BannerShell specification
  * @see DIRECTIVES.md § 1.5 — Figma-compatible CSS rules
@@ -53,9 +55,9 @@ export function BannerShell({
         <div className={styles.blob3} />
       </div>
 
-      {/* ── Content Surface ──
-          Solid surface layer for Figma compatibility (no backdrop-filter).
-          In the live demo, this would have frost/blur effects. */}
+      {/* ── Frosted Glass Content Surface ──
+          Semi-transparent surface with backdrop blur over the gradient.
+          This frost effect is critical — present in both Storybook and Figma. */}
       <div className={styles.surface}>
         {children}
       </div>

@@ -1,28 +1,36 @@
 /**
- * SharingSettings — Credential Sharing Management Screen
+ * SharingSettings — Credential Sharing Details Screen
  *
- * Screen component (screens/preferences). Allows users to manage which
- * credentials are shared with the current site. Each credential type
- * (Email, DOB, Age) has a toggle with dynamic on/off sublabels.
+ * Screen component (screens/preferences). Displays a read-only definition
+ * list of the user's active credential sharing details for the current site:
+ * credential type, status, expiry date, and data scope. Includes a "Revoke
+ * Sharing" secondary button and micro text warning.
  *
- * @see docs/PRD.md § 4.3 — SharingSettings specification
- * @see src/constants/preferences.ts — SHARING_*, CREDENTIAL_LABELS
- * @see src/constants/variants.ts — SHARED_COPY for toggle sublabels
+ * Predecessor ref: sharing-settings.html (101 lines) — definition list layout.
+ * This is NOT a toggle screen; it shows credential metadata in a <dl>.
+ *
+ * @see docs/PRD.md section 4.3 — SharingSettings specification
+ * @see src/constants/preferences.ts — SHARING_* constants
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
 import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
-import { ToggleRow } from '../../molecules/ToggleRow/ToggleRow';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
-import { Divider } from '../../atoms/Divider/Divider';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
-import { SHARED_COPY } from '../../../constants/variants';
 import {
-  SHARING_HEADLINE,
-  SHARING_BODY,
-  SHARING_SAVE_BTN,
-  CREDENTIAL_LABELS,
+  SHARING_HEADLINE_BOLD,
+  SHARING_HEADLINE_REGULAR,
+  SHARING_CREDENTIAL_LABEL,
+  SHARING_CREDENTIAL_VALUE,
+  SHARING_STATUS_LABEL,
+  SHARING_STATUS_ACTIVE,
+  SHARING_UNTIL_LABEL,
+  SHARING_UNTIL_VALUE,
+  SHARING_DATA_LABEL,
+  SHARING_DATA_VALUE,
+  SHARING_REVOKE_BTN,
+  SHARING_REVOKE_WARNING,
 } from '../../../constants/preferences';
 import styles from './SharingSettings.module.css';
 
@@ -31,89 +39,67 @@ import styles from './SharingSettings.module.css';
 export interface SharingSettingsProps {
   /** Theme variant for Figma export */
   theme?: 'light' | 'dark';
-  /** Initial email sharing state */
-  emailShared?: boolean;
-  /** Initial DOB sharing state */
-  dobShared?: boolean;
-  /** Initial age sharing state */
-  ageShared?: boolean;
-  /** Callback when the dialog is closed */
+  /** Callback when the dialog close button is clicked */
   onClose?: () => void;
-  /** Callback when Save Settings is clicked */
-  onSave?: () => void;
+  /** Callback when the Revoke Sharing button is clicked */
+  onRevoke?: () => void;
 }
 
 /* ── Component ── */
 
 export function SharingSettings({
   theme = 'light',
-  emailShared = false,
-  dobShared = false,
-  ageShared = false,
   onClose,
-  onSave,
+  onRevoke,
 }: SharingSettingsProps) {
-  const [email, setEmail] = useState(emailShared);
-  const [dob, setDob] = useState(dobShared);
-  const [age, setAge] = useState(ageShared);
-
   return (
     <div data-theme={theme}>
       <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.SHARING_SETTINGS]}
         screenId={SCREENS.SHARING_SETTINGS}
       >
-        {/* ── Header ── */}
-        <DialogHeader
-          title={SCREEN_TITLES[SCREENS.SHARING_SETTINGS]}
-          onClose={onClose}
+        {/* ── Header — Logo + Close (no back arrow) ── */}
+        <DialogHeader onClose={onClose} />
+
+        {/* ── Text Block — Inline spans, not h2/p ── */}
+        <div className={styles.textBlock}>
+          <span className={styles.bold}>{SHARING_HEADLINE_BOLD}</span>{' '}
+          <span className={styles.regular}>{SHARING_HEADLINE_REGULAR}</span>
+        </div>
+
+        {/* ── Definition List — Credential details ── */}
+        <dl className={styles.dlStack} aria-label="Credential sharing details">
+          <div className={styles.credRow}>
+            <dt className={styles.credLabel}>{SHARING_CREDENTIAL_LABEL}</dt>
+            <dd className={styles.credValue}>{SHARING_CREDENTIAL_VALUE}</dd>
+          </div>
+          <div className={styles.credRow}>
+            <dt className={styles.credLabel}>{SHARING_STATUS_LABEL}</dt>
+            <dd className={`${styles.credValue} ${styles.statusActive}`}>
+              {SHARING_STATUS_ACTIVE}
+            </dd>
+          </div>
+          <div className={styles.credRow}>
+            <dt className={styles.credLabel}>{SHARING_UNTIL_LABEL}</dt>
+            <dd className={styles.credValue}>{SHARING_UNTIL_VALUE}</dd>
+          </div>
+          <div className={styles.credRow}>
+            <dt className={styles.credLabel}>{SHARING_DATA_LABEL}</dt>
+            <dd className={styles.credValue}>{SHARING_DATA_VALUE}</dd>
+          </div>
+        </dl>
+
+        {/* ── Revoke Button ── */}
+        <Button
+          label={SHARING_REVOKE_BTN}
+          variant="secondary"
+          fullWidth
+          onClick={onRevoke}
+          ariaLabel="Revoke credential sharing with this site"
         />
 
-        {/* ── Headline + Body ── */}
-        <div className={styles.content}>
-          <h2 className={styles.headline}>
-            {SHARING_HEADLINE}
-          </h2>
-          <p className={styles.body}>
-            {SHARING_BODY}
-          </p>
-        </div>
-
-        <Divider spacing="sm" />
-
-        {/* ── Credential Toggles ── */}
-        <div className={styles.toggles}>
-          <ToggleRow
-            label={CREDENTIAL_LABELS.email}
-            sublabel={email ? SHARED_COPY.email.on : SHARED_COPY.email.off}
-            checked={email}
-            onChange={setEmail}
-          />
-          <ToggleRow
-            label={CREDENTIAL_LABELS.dob}
-            sublabel={dob ? SHARED_COPY.dob.on : SHARED_COPY.dob.off}
-            checked={dob}
-            onChange={setDob}
-          />
-          <ToggleRow
-            label={CREDENTIAL_LABELS.age}
-            sublabel={age ? SHARED_COPY.age.on : SHARED_COPY.age.off}
-            checked={age}
-            onChange={setAge}
-          />
-        </div>
-
-        <Divider spacing="sm" />
-
-        {/* ── Save Button ── */}
-        <div className={styles.actions}>
-          <Button
-            label={SHARING_SAVE_BTN}
-            variant="primary"
-            fullWidth
-            onClick={onSave}
-          />
-        </div>
+        {/* ── Revoke Warning Micro Text ── */}
+        <div className={styles.micro}>{SHARING_REVOKE_WARNING}</div>
 
         {/* ── Footer ── */}
         <div className={styles.footer}>

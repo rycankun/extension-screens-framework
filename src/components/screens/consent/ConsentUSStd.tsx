@@ -2,28 +2,48 @@
  * ConsentUSStd — US Standard-State Simplified Consent Screen
  *
  * Screen component (screens/consent). Simplified opt-out consent for
- * the ~37 US states without strict privacy laws. Fewer toggles and
- * shorter legal text compared to ConsentUS.
+ * the ~37 US states without strict privacy laws. Unlike ConsentEU and
+ * ConsentUS which use toggle rows, this screen uses text blocks +
+ * buttons + privacy links — matching the predecessor consent-t3.html.
  *
- * Uses the same opt-out model as ConsentUS — toggles default ON.
+ * Structure (top to bottom):
+ *   1. DialogHeader (logo + close)
+ *   2. Text block — bold headline + body with Privacy Policy / Cookie Policy links
+ *   3. Trust line (brand blue)
+ *   4. GPC indicator (conditional)
+ *   5. DNT indicator (conditional)
+ *   6. Social proof
+ *   7. Button stack — Reject All → Accept & Continue → Manage Preferences (ghost)
+ *   8. Universal opt-out disclosure
+ *   9. Privacy choices rows (3 links)
+ *  10. Sensitive data notice
+ *  11. PoweredBadge footer
  *
  * @see docs/PRD.md § 4.1 — ConsentUSStd specification
- * @see src/constants/variants.ts — COPY_TEXT for all screen text
- * @see src/constants/jurisdictions.ts — JURISDICTION_CONFIGS for legal text
+ * @see src/constants/consent.ts — US_STD_CONSENT_BODY, US_STD_PRIVACY_CHOICES, etc.
+ * @see src/constants/variants.ts — COPY_TEXT for button labels and headlines
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
 import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
-import { ConsentToggle } from '../../molecules/ConsentToggle/ConsentToggle';
-import { LegalNotice } from '../../molecules/LegalNotice/LegalNotice';
+import { SocialProof } from '../../molecules/SocialProof/SocialProof';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
-import { Badge } from '../../atoms/Badge/Badge';
-import { Divider } from '../../atoms/Divider/Divider';
+import { Link } from '../../atoms/Link/Link';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
-import { JURISDICTIONS, JURISDICTION_CONFIGS } from '../../../constants/jurisdictions';
 import { COPY_TEXT } from '../../../constants/variants';
-import { CONSENT_CATEGORIES, SIGNAL_BADGES } from '../../../constants/consent';
+import {
+  US_STD_CONSENT_BODY,
+  POLICY_LINKS,
+  POLICY_URLS,
+  GPC_TEXT,
+  GPC_DETAIL,
+  DNT_TEXT,
+  SOCIAL_PROOF_TEXT,
+  UNIVERSAL_OPTOUT_TEXT,
+  US_STD_PRIVACY_CHOICES,
+  SENSITIVE_DATA_NOTICE,
+} from '../../../constants/consent';
 import styles from './ConsentUSStd.module.css';
 
 /* ── Props ── */
@@ -35,14 +55,14 @@ export interface ConsentUSStdProps {
   gpcDetected?: boolean;
   /** Whether Do Not Track signal is detected */
   dntDetected?: boolean;
-  /** Initial state of analytics toggle (US default: ON — opt-out model) */
-  analyticsOn?: boolean;
   /** Callback when the dialog is closed */
   onClose?: () => void;
   /** Callback when Accept & Continue is clicked */
   onAccept?: () => void;
   /** Callback when Reject All is clicked */
   onRejectAll?: () => void;
+  /** Callback when Manage Preferences is clicked */
+  onManagePrefs?: () => void;
 }
 
 /* ── Component ── */
@@ -51,80 +71,88 @@ export function ConsentUSStd({
   theme = 'light',
   gpcDetected = false,
   dntDetected = false,
-  analyticsOn = true,
   onClose,
   onAccept,
   onRejectAll,
+  onManagePrefs,
 }: ConsentUSStdProps) {
-  const [analytics, setAnalytics] = useState(analyticsOn);
-
-  const jurisdictionConfig = JURISDICTION_CONFIGS[JURISDICTIONS.US_STANDARD];
-
   return (
     <div data-theme={theme}>
       <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.CONSENT_US_STD]}
         screenId={SCREENS.CONSENT_US_STD}
       >
-        {/* ── Header ── */}
-        <DialogHeader
-          title={SCREEN_TITLES[SCREENS.CONSENT_US_STD]}
-          onClose={onClose}
-        />
+        {/* ── 1. Header ── */}
+        <DialogHeader onClose={onClose} />
 
-        {/* ── Signal Detection Badges ── */}
-        {(gpcDetected || dntDetected) && (
-          <div className={styles.signals}>
-            {gpcDetected && (
-              <Badge label={SIGNAL_BADGES.GPC} variant="info" size="sm" />
-            )}
-            {dntDetected && (
-              <Badge label={SIGNAL_BADGES.DNT} variant="info" size="sm" />
-            )}
-          </div>
-        )}
-
-        {/* ── Headline + Body ── */}
-        <div className={styles.content}>
+        {/* ── 2. Text Block — Headline + Body with Policy Links ── */}
+        <div className={styles.textBlock}>
           <h2 className={styles.headline}>
             {COPY_TEXT.consentHeadline}
           </h2>
-          <p className={styles.trustLine}>
-            {COPY_TEXT.usTrustLine}
+          <p className={styles.body}>
+            {US_STD_CONSENT_BODY}{' '}
+            <Link
+              href={POLICY_URLS.privacy}
+              external
+              size="sm"
+            >
+              {POLICY_LINKS.privacy}
+            </Link>
+            {' and '}
+            <Link
+              href={POLICY_URLS.cookie}
+              external
+              size="sm"
+            >
+              {POLICY_LINKS.cookie}
+            </Link>
+            .
           </p>
         </div>
 
-        <Divider spacing="sm" />
+        {/* ── 3. Trust Line ── */}
+        <p className={styles.trustLine}>
+          {COPY_TEXT.usTrustLine}
+        </p>
 
-        {/* ── Consent Toggles ──
-            Simplified: Essential (locked) + Analytics only.
-            No marketing toggle — standard states have simpler requirements. */}
-        <div className={styles.toggles}>
-          <ConsentToggle
-            label={CONSENT_CATEGORIES.essential.label}
-            sublabel={CONSENT_CATEGORIES.essential.sublabel}
-            checked={true}
-            onChange={() => {}}
-            locked={true}
+        {/* ── 4. GPC Indicator (conditional) ── */}
+        {gpcDetected && (
+          <div className={styles.gpcIndicator} role="status">
+            <span className={styles.signalLabel}>{GPC_TEXT}</span>
+            <span className={styles.signalDetail}>{GPC_DETAIL}</span>
+          </div>
+        )}
+
+        {/* ── 5. DNT Indicator (conditional) ── */}
+        {dntDetected && (
+          <div className={styles.dntIndicator} role="status">
+            <span className={styles.signalLabel}>{DNT_TEXT}</span>
+          </div>
+        )}
+
+        {/* ── 6. Social Proof ── */}
+        <SocialProof className={styles.socialProof}>
+          {SOCIAL_PROOF_TEXT.prefix}
+          {SOCIAL_PROOF_TEXT.boldItems.map((item, idx) => (
+            <React.Fragment key={item}>
+              <SocialProof.Bold>{item}</SocialProof.Bold>
+              {/* Separator dot between bold items, not after the last */}
+              {idx < SOCIAL_PROOF_TEXT.boldItems.length - 1 && ' · '}
+            </React.Fragment>
+          ))}
+        </SocialProof>
+
+        {/* ── 7. Button Stack — Reject All → Accept & Continue → Manage Preferences ──
+            Order matches predecessor consent-t3.html: reject first (opt-out model),
+            then accept, then ghost manage link. */}
+        <div className={styles.btnStack}>
+          <Button
+            label={COPY_TEXT.consentRejectBtn}
+            variant="secondary"
+            fullWidth
+            onClick={onRejectAll}
           />
-          <ConsentToggle
-            label={CONSENT_CATEGORIES.analytics.label}
-            sublabel={CONSENT_CATEGORIES.analytics.sublabel}
-            checked={analytics}
-            onChange={setAnalytics}
-          />
-        </div>
-
-        <Divider spacing="sm" />
-
-        {/* ── Legal Notice ── */}
-        <LegalNotice
-          text={jurisdictionConfig.legalNotice}
-          icon="info"
-        />
-
-        {/* ── Action Buttons ── */}
-        <div className={styles.actions}>
           <Button
             label={COPY_TEXT.usStdAcceptBtn}
             variant="primary"
@@ -132,14 +160,58 @@ export function ConsentUSStd({
             onClick={onAccept}
           />
           <Button
-            label={COPY_TEXT.consentRejectBtn}
-            variant="secondary"
+            label={COPY_TEXT.consentManageBtn}
+            variant="ghost"
             fullWidth
-            onClick={onRejectAll}
+            onClick={onManagePrefs}
           />
         </div>
 
-        {/* ── Footer ── */}
+        {/* ── 8. Universal Opt-Out Disclosure ── */}
+        <p className={styles.universalOptout}>
+          {UNIVERSAL_OPTOUT_TEXT}
+        </p>
+
+        {/* ── 9. Privacy Choices Rows (3 links) ── */}
+        <nav
+          className={styles.privacyChoicesSection}
+          aria-label="Privacy choices"
+        >
+          <Link
+            href={US_STD_PRIVACY_CHOICES.privacyChoices.url}
+            ariaLabel={US_STD_PRIVACY_CHOICES.privacyChoices.ariaLabel}
+            className={styles.privacyChoicesLink}
+            external
+            size="sm"
+          >
+            {US_STD_PRIVACY_CHOICES.privacyChoices.label}
+          </Link>
+          <Link
+            href={US_STD_PRIVACY_CHOICES.dns.url}
+            ariaLabel={US_STD_PRIVACY_CHOICES.dns.ariaLabel}
+            className={styles.privacyChoicesLink}
+            external
+            size="sm"
+          >
+            {US_STD_PRIVACY_CHOICES.dns.label}
+          </Link>
+          <Link
+            href={US_STD_PRIVACY_CHOICES.sensitivePI.url}
+            ariaLabel={US_STD_PRIVACY_CHOICES.sensitivePI.ariaLabel}
+            className={styles.privacyChoicesLink}
+            external
+            size="sm"
+          >
+            {US_STD_PRIVACY_CHOICES.sensitivePI.label}
+          </Link>
+        </nav>
+
+        {/* ── 10. Sensitive Data Notice ── */}
+        <p className={styles.sensitiveDataNotice} role="note">
+          {SENSITIVE_DATA_NOTICE}
+        </p>
+
+        {/* ── 11. Footer ── */}
         <div className={styles.footer}>
           <PoweredBadge />
         </div>

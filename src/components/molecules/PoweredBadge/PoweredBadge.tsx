@@ -1,9 +1,12 @@
 /**
  * PoweredBadge — Molecule Component
  *
- * Attribution badge displaying "Powered by TrustID" with the TrustID
- * shield icon. Appears in the footer area of banner screens.
- * Uses an inline SVG path for self-contained Figma import.
+ * Attribution footer displaying "Powered by Trust ID · Privacy" with
+ * the TrustID Business icon. Both "Trust ID" and "Privacy" are external
+ * links. Uses an <img> tag for the icon for Figma-compatible rendering.
+ *
+ * Predecessor ref: .footer, .footer-logo, .footer-text, .footer-link,
+ * .footer-link-muted in components.css:1054-1072
  *
  * @see docs/PRD.md § 3.2 — PoweredBadge specification
  */
@@ -15,31 +18,62 @@ import styles from './PoweredBadge.module.css';
 export interface PoweredBadgeProps {
   /** Optional CSS class for positioning */
   className?: string;
+  /** URL for the TrustID Business link (default: business.trustid.life) */
+  trustIdUrl?: string;
+  /** URL for the Privacy link (default: privacy-policy.html) */
+  privacyUrl?: string;
 }
+
+/* ── Default Values ── */
+const DEFAULT_TRUST_ID_URL = 'https://business.trustid.life';
+const DEFAULT_PRIVACY_URL = 'privacy-policy.html';
+const ICON_SRC = '/assets/TrustIDBusiness-BrandLockup-icon.svg';
 
 /* ── Component ── */
 
-export function PoweredBadge({ className }: PoweredBadgeProps) {
+export function PoweredBadge({
+  className,
+  trustIdUrl = DEFAULT_TRUST_ID_URL,
+  privacyUrl = DEFAULT_PRIVACY_URL,
+}: PoweredBadgeProps) {
   return (
-    <div className={`${styles.badge} ${className || ''}`}>
-      <svg
-        className={styles.icon}
-        viewBox="0 0 24 24"
-        fill="none"
+    <div className={`${styles.footer} ${className || ''}`}>
+      {/* ── TrustID Business Icon ──
+          Image-based icon for Figma-compatible rendering. Decorative
+          (aria-hidden) since the text links provide context. */}
+      <img
+        className={styles.footerLogo}
+        src={ICON_SRC}
+        alt=""
         aria-hidden="true"
-      >
-        <path
-          d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"
-          fill="var(--tid-brand)"
-        />
-        <path
-          d="M10 15.5l-3.5-3.5 1.41-1.41L10 12.67l5.59-5.59L17 8.5l-7 7z"
-          fill="var(--tid-toggle-knob)"
-        />
-      </svg>
-      <span className={styles.text}>
-        Powered by <strong className={styles.brand}>TrustID</strong>
-      </span>
+      />
+
+      {/* ── Attribution Text with Links ──
+          "Powered by Trust ID · Privacy" — both are external links.
+          "Trust ID" links to the TrustID business site.
+          "Privacy" links to the privacy policy. */}
+      <div className={styles.footerText}>
+        Powered by{' '}
+        <a
+          className={styles.footerLink}
+          href={trustIdUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Learn more about Trust ID (opens in new tab)"
+        >
+          Trust ID
+        </a>
+        {' · '}
+        <a
+          className={styles.footerLinkMuted}
+          href={privacyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Privacy policy (opens in new tab)"
+        >
+          Privacy
+        </a>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,40 @@
+/**
+ * SocialProof Styles — Molecule Component
+ *
+ * Trust signal line with badge-check icon + text.
+ * Icon is brand blue, text is secondary color.
+ *
+ * Predecessor ref: .social-proof, .social-proof-bold
+ * in components.css:1108-1122
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Container ── */
+
+.socialProof {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  color: var(--tid-text-secondary);
+  font-weight: var(--tid-fw-regular);
+  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-snug); /* 15px */
+}
+
+/* ── Badge Check Icon ── */
+
+.icon {
+  flex-shrink: 0;
+  align-self: center;
+  margin-right: var(--tid-sp-2); /* 4px */
+  color: var(--tid-brand); /* Trust ID Blue */
+  vertical-align: -2px;
+}
+
+/* ── Bold Emphasis ── */
+
+.bold {
+  font-weight: var(--tid-fw-medium); /* 500 */
+}

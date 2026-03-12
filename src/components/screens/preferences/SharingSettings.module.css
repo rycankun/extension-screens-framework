@@ -1,65 +1,106 @@
 /**
  * SharingSettings Styles — Screen Component
  *
- * Layout and typography for the credential sharing settings screen.
- * All values from tokens.css — zero hardcoded values.
+ * Layout and typography for the credential sharing details screen.
+ * Renders a definition list (<dl>) of credential metadata, a revoke
+ * button, and micro text warning. All values from tokens.css.
+ *
+ * Predecessor ref: sharing-settings.html — .dl-stack, .color-success
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
- * @see DIRECTIVES.md § 1.1 — All values from tokens.css
+ * @see DIRECTIVES.md section 1.1 — All values from tokens.css
  */
 
-/* ── Content Area ──
-   Headline + body text block. */
+/* ── Text Block ──
+   Inline spans: bold "Your sharing settings" + regular "for this site." */
 
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
+.textBlock {
+  margin-bottom: var(--tid-sp-4); /* 8px — space before definition list */
 }
 
-/* ── Headline ──
-   Screen heading — heading font, medium weight. */
+/* ── Bold Span ──
+   "Your sharing settings" — medium weight, ink color. */
 
-.headline {
-  font-family: var(--tid-ff-heading);
+.bold {
+  font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-base); /* 14px */
   font-weight: var(--tid-fw-medium);
   color: var(--tid-ink);
   line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
-  margin: var(--tid-sp-0);
 }
 
-/* ── Body Text ──
-   Descriptive paragraph below headline. */
+/* ── Regular Span ──
+   "for this site." — regular weight, body color. */
 
-.body {
+.regular {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-base); /* 14px */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-text-body);
-  line-height: var(--tid-lh-relaxed); /* 18px */
-  letter-spacing: var(--tid-ls-normal);
-  margin: var(--tid-sp-0);
+  line-height: var(--tid-lh-body); /* 17px */
 }
 
-/* ── Toggle Section ──
-   Vertical stack of toggle rows. */
+/* ── Definition List Stack ──
+   Vertical stack of credential detail rows. Reset browser dl defaults. */
 
-.toggles {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-1); /* 2px */
-}
-
-/* ── Action Buttons ──
-   Save Settings button. */
-
-.actions {
+.dlStack {
   display: flex;
   flex-direction: column;
   gap: var(--tid-sp-3); /* 6px */
+  margin: var(--tid-sp-0);
+  padding: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-4); /* 8px — space before revoke button */
+}
+
+/* ── Credential Row ──
+   Label/value pair laid out horizontally with bottom border separator. */
+
+.credRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--tid-sp-2) var(--tid-sp-0); /* 4px vertical, 0 horizontal */
+  border-bottom: var(--tid-border-width) solid var(--tid-border-light);
+}
+
+/* ── Credential Label (dt) ──
+   Left side — muted secondary text. */
+
+.credLabel {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  color: var(--tid-text-secondary);
+  font-weight: var(--tid-fw-regular);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Credential Value (dd) ──
+   Right side — ink color, medium weight. */
+
+.credValue {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  color: var(--tid-ink);
+  font-weight: var(--tid-fw-medium);
+  margin: var(--tid-sp-0);
+}
+
+/* ── Status Active ──
+   Green color override for the "Active" status value. */
+
+.statusActive {
+  color: var(--tid-success);
+}
+
+/* ── Micro Text ──
+   Revoke warning text below the button. */
+
+.micro {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xs); /* 10px */
+  color: var(--tid-text-secondary);
+  text-align: center;
+  line-height: var(--tid-lh-relaxed); /* 18px */
   margin-top: var(--tid-sp-3); /* 6px */
 }
 

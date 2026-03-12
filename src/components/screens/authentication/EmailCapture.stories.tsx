@@ -20,13 +20,17 @@ const meta: Meta<typeof EmailCapture> = {
   argTypes: {
     theme: { control: 'select', options: ['light', 'dark'] },
     email: { control: 'text' },
+    onPasskeySignIn: { action: 'onPasskeySignIn' },
+    onClose: { action: 'onClose' },
+    onSend: { action: 'onSend' },
+    onSkip: { action: 'onSkip' },
   },
 };
 export default meta;
 
 type Story = StoryObj<typeof EmailCapture>;
 
-/** Email capture — light theme, empty input */
+/** Email capture — light theme, empty input, checkbox checked by default */
 export const Light: Story = {
   args: {
     theme: 'light',

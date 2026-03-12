@@ -468,7 +468,7 @@ REFERENCE: Read docs/PRD.md § 3.3. Match the predecessor project's BannerShell 
 Tasks:
 1. src/components/organisms/BannerShell/ — 380px wide extension banner:
    - Gradient background layer (static for Figma — no animation)
-   - Frosted content area (solid surface for Figma — no backdrop-filter)
+   - Frosted content area (backdrop-filter: blur() over gradient — critical design element)
    - Content slot (children prop)
    - Close button in top-right
    - role="dialog" aria-modal="true"
@@ -477,12 +477,12 @@ Tasks:
    - Auto-positioned (bottom-left for Figma static)
 3. src/components/organisms/OverlayShell/ — Full-viewport overlay:
    - Gradient background (static)
-   - Centered content card with frost layer (solid for Figma)
+   - Centered content card with frost layer (backdrop-filter: blur())
    - Content slot
 
 Each: .tsx + .module.css + .stories.tsx, typed props, JSDoc, a11y.
 
-NOTE ON FIGMA COMPATIBILITY: BannerShell has animated gradient blobs and frosted glass in the live demo. For Figma export, render a STATIC version — solid gradient background, solid surface content area. The visual effect must be close but Figma-compatible.
+NOTE ON FIGMA COMPATIBILITY: BannerShell uses gradient blobs behind a frosted glass content layer. The frosted glass effect (backdrop-filter: blur() + semi-transparent background) is a critical design element and MUST be present in both Storybook and Figma exports. CSS animations are still excluded — Figma frames are static — but the frost effect is required.
 
 Verify: Organisms render in Storybook, dimensions match predecessor exactly, a11y zero violations.
 
@@ -673,7 +673,254 @@ Violation scan (run before every push):
 - Fix every violation found. Zero tolerance.
 
 Push: git add -A && git commit -m "feat: preference screen components" && git push origin main
-When complete, print: "✅ STEP 11 COMPLETE — Ready for Step 12."
+When complete, print: "✅ STEP 11 COMPLETE — Ready for Step 11.5."
+```
+
+---
+
+## Step 11.5 — Visual Fidelity Correction: Match Predecessor 1:1
+
+```
+Read CLAUDE.md, DIRECTIVES.md, and docs/PRD.md before doing any work. Apply all rules from these files throughout this step.
+
+THE END GOAL: Every screen, component, and token in this project will be imported into Figma as a shared component library with a fully integrated token system. Build every piece of code with this in mind — isolated components, tokenized CSS, clean Figma-compatible output. The custom Figma plugin syncs tokens and screens automatically. If something won't import cleanly into Figma, fix it before moving on.
+
+Key reminders:
+- PIXEL-PERFECT: The refactored screens must match the current implementation exactly. Use docs/reference/ as the visual source of truth. Same dimensions, colors, fonts, spacing, shadows — no deviations.
+- All CSS values from tokens.css (zero hardcoded values — includes border widths, outline widths, outline offsets)
+- Stories/tests import shared constants from src/constants/ (zero hardcoded screen names, jurisdictions, or labels)
+- Every .tsx file with inline JSX loaded by Storybook must import React (args-only files are exempt)
+- Decorator/render constraint pixel values get a comment: /* decorator constraint, no matching token */
+- Foundation token stories (Colors, Spacing, Typography) are exempt from constraint comments
+- ACCESSIBILITY IS NON-NEGOTIABLE: every interactive element gets :focus-visible, aria-* attributes, keyboard handlers, and semantic HTML from line one
+- SINGLE SOURCE OF TRUTH: every value has ONE canonical source — tokens.css for visuals, src/constants/ for data, figma-variables.json for Figma plugin
+- FIGMA PLUGIN SYNC: after adding/changing any token or screen, update the Figma plugin manifest and run token sync. The plugin is not an afterthought — it ships with every step.
+- FIGMA IMPORT CLEAN: every screen component must render as a clean, self-contained frame suitable for html2figma import. No state dependencies, no animation side effects, no external data fetching.
+- DEV-FRIENDLY CODE: Comment every file with a header block (what it is, where it fits). Comment the WHY, not the WHAT. Add section dividers in longer files. Document every prop with JSDoc. This codebase must be easy for any developer to navigate and understand on day one.
+
+---
+
+Step 11.5: Visual Fidelity Correction
+
+The screens built in Steps 9-11 have structural and visual gaps compared to the predecessor codebase at /Users/ryanbeck/Documents/claude/extension flows/extension-demo/figma-import/. This step corrects every discrepancy. The approach is foundation-first, then screen-by-screen with per-screen predecessor comparison.
+
+PREDECESSOR REFERENCE FILES (the visual source of truth):
+- /Users/ryanbeck/Documents/claude/extension flows/extension-demo/figma-import/*.html — All screen HTML templates
+- /Users/ryanbeck/Documents/claude/extension flows/extension-demo/figma-import/css/components.css — All component styles
+- /Users/ryanbeck/Documents/claude/extension flows/extension-demo/figma-import/css/tokens.css — Design tokens
+- /Users/ryanbeck/Documents/claude/extension flows/extension-demo/figma-import/css/screens.css — Screen-specific styles
+
+PROCEDURE: For EVERY component and screen below, READ the predecessor HTML/CSS FIRST, then compare to the current React implementation, then fix ALL differences. Do NOT skip any element. This is a legal compliance issue — missing elements could violate GDPR, CCPA, or CNIL guidance.
+
+---
+
+SUB-STEP A: Fix Foundation Components
+
+For each component below, read the predecessor CSS class, compare to current, and fix.
+
+A1. BannerShell — src/components/organisms/BannerShell/
+   - Predecessor ref: .banner, .banner-bg, .banner-content.frost-light in components.css:235-332
+   - Remove .surface margin gap (no visible gradient border frame around content)
+   - Content wrapper becomes direct child with frosted glass effect:
+     - background: rgba(var(--tid-surface-rgb), 0.4)
+     - backdrop-filter: blur(var(--tid-blur-xl)) saturate(var(--tid-saturate-normal))
+     - border-top: 1px solid rgba(var(--tid-surface-rgb), 0.6)
+   - Padding: var(--tid-sp-8) var(--tid-sp-12) var(--tid-sp-4) (16px 24px 8px)
+   - Gap between children: var(--tid-sp-4) (8px)
+   - Keep gradient blobs behind content layer
+
+A2. DialogHeader — src/components/molecules/DialogHeader/
+   - Predecessor ref: .logo, .logo-left, .logo-img, .close-btn in components.css:335-408
+   - Replace TrustID shield icon + text title with host site logo image (<img> tag)
+   - Props: logoSrc?: string (defaults to /assets/StreamVault-BrandLockup-Primary.svg), logoAlt?: string
+   - Close button stays on the right
+   - Remove title text — predecessor header is logo image + close button only
+
+A3. PoweredBadge — src/components/molecules/PoweredBadge/
+   - Predecessor ref: .footer, .footer-logo, .footer-text, .footer-link, .footer-link-muted in components.css:1054-1072
+   - Icon: TrustID Business icon image (not Shield badge SVG)
+   - Text: "Powered by Trust ID · Privacy" where both "Trust ID" and "Privacy" are links
+   - Font: --tid-fs-xs, --tid-text-footer color, --tid-ls-wide
+
+A4. Trust line CSS fix — All .module.css files with .trustLine class
+   - Predecessor ref: .trust-line in components.css:439-445
+   - color: var(--tid-brand) (NOT --tid-text-secondary)
+   - font-weight: var(--tid-fw-medium) (NOT regular)
+   - font-size: var(--tid-fs-base) (NOT body-sm)
+
+A5. Add new molecules (only if referenced by predecessor screens):
+   - StepIndicator — progress dots (active/inactive/completed states)
+   - SocialProof — badge-check icon + trust text line
+   - CheckboxRow — checkbox + label molecule (for share consent checkbox)
+   - BackArrow — navigation back button
+
+After A1-A5: Launch Storybook and screenshot every existing screen to verify foundation fixes propagated correctly.
+
+---
+
+SUB-STEP B: Fix Consent Screens (one at a time)
+
+For EACH screen: open the predecessor HTML file, read every element, verify it exists in the React version. Fix all gaps.
+
+B1. ConsentEU — Compare line-by-line against consent-t1.html (179 lines)
+   - Add text block with bold headline + regular body paragraph with inline Privacy Policy / Cookie Policy / Terms of Service links
+   - Fix button order: Reject All FIRST, then Accept All (CNIL compliance requirement)
+   - Add "Manage Preferences" ghost button below Accept/Reject
+   - Add GPC indicator (conditionally visible when gpcDetected=true)
+   - Add SocialProof component ("End-to-end encrypted · No data stored · No tracking")
+   - Add universal opt-out disclosure ("We honor Global Privacy Control...")
+   - Add consent receipt placeholder (hidden by default)
+   - Update stories: add GPC variant, manage prefs variant
+
+B2. ConsentUS — Compare line-by-line against consent-t2.html
+   - Same structural fixes as B1 adapted for US strict state legal text
+   - Verify button text matches predecessor ("Accept & Continue" vs "Accept All")
+   - Add state-specific notices (CA financial incentive, TN age recheck, etc.)
+   - Add "Do Not Sell or Share" and "Your Privacy Choices" links
+
+B3. ConsentUSStd — Compare line-by-line against consent-t3.html
+   - Same structural fixes adapted for US standard states
+   - Simplified consent text with correct legal language
+
+After B1-B3: Screenshot each consent screen variant in Storybook and compare side-by-side with predecessor HTML opened in a browser.
+
+---
+
+SUB-STEP C: Fix Authentication Screens (one at a time)
+
+C1. EmailCapture — Compare against email-capture.html (149 lines)
+   - Add StepIndicator (step 1 of 3)
+   - Add trust signal micro text below email input
+   - Add CheckboxRow for "Share my email with this site"
+   - Add passkey sign-in fallback section
+   - Fix skip text: "No thanks, I'll do it manually"
+   - Add re-auth warning micro text
+
+C2. OtpEntry — Compare against otp-entry.html
+   - Verify: auto-submit hint text, resend code with countdown timer, step indicator
+
+C3. OtpError — Compare against otp-error.html
+   - Verify: error icon, "try again" + "resend code" actions
+
+C4. EmailConfirm — Compare against email-confirm.html
+   - Verify: success icon, continue button, confirmation text
+
+C5. PasskeySetup — Compare against passkey-setup.html
+   - Verify: fingerprint icon, skip option, setup text
+
+C6. PasskeyVerify — Compare against passkey-verify.html
+   - Verify: fingerprint icon, password fallback option
+
+After C1-C6: Screenshot each auth screen and compare to predecessor.
+
+---
+
+SUB-STEP D: Fix Preference Screens (one at a time)
+
+D1. CookiePrefs — Compare against cookie-prefs.html (443 lines)
+   - 4 toggle categories (Essential, Performance & Analytics, Personalization, Advertising) — NOT 3
+   - Expandable CookieDetails (<details>) per toggle category with individual cookie entries
+   - Shared Data tab: 3 items (Age, Email, DOB) each with expiry date editors + edit buttons
+   - Fine-print block: DNS link, privacy choices link, consent receipt link, retention notice
+   - "Withdraw All Consent" button (hidden by default, shown after consent given)
+   - NH profiling opt-out row (conditionally visible for NH jurisdiction)
+
+D2. CookieEmail — Compare against cookie-email.html (183 lines)
+   - Back arrow + logo + close header layout
+   - Step indicator (step 2 of 3)
+   - Trust signal micro text below email input
+   - CheckboxRow for "Share my email"
+   - Passkey sign-in fallback section
+   - "Save without an account" secondary option with expiry callout text
+
+D3. DnsConfirm — Compare against dns-confirm.html (112 lines)
+   - Predecessor shows SUCCESS STATE layout: green check icon, "Request Received" headline, confirmation body
+   - Current shows confirmation prompt — needs full restructure to match predecessor
+
+D4. SharingSettings — Compare against sharing-settings.html (101 lines)
+   - Predecessor shows DEFINITION LIST format (Credential, Status, Shared until, Data shared)
+   - Current shows toggle rows — needs full restructure to match predecessor
+   - Add "Revoke Sharing" button
+
+D5. DsrIntake — Compare against dsr-intake.html (178 lines)
+   - Add back arrow navigation
+   - Radio options need TITLE + DESCRIPTION per option (not just label text)
+   - Add email input for identity verification
+   - Add response time notice text
+   - Add legal disclaimer text
+
+After D1-D5: Screenshot each preference screen and compare to predecessor.
+
+---
+
+SUB-STEP E: Update Constants & Plugin Manifest
+
+- Update src/constants/variants.ts with any missing copy text keys discovered during screen fixes
+- Update consent constants with correct category names (Performance & Analytics, Personalization, Advertising)
+- Create src/constants/cookies.ts for expandable cookie detail data (individual cookie entries per category)
+- Update src/constants/preferences.ts with fine-print text, retention notice, DNS link text
+- Update Figma plugin screen-renderer.ts with corrected variant counts
+- Run pnpm generate:tokens to regenerate figma-variables.json
+
+---
+
+SUB-STEP F: Legal Compliance Audit
+
+This is the FINAL verification step. For EVERY screen, walk through EVERY element and verify against the predecessor HTML. This is a legal requirement — missing elements could violate GDPR, CCPA, or CNIL guidance.
+
+Consent screens audit (by jurisdiction):
+- [ ] EU: GDPR Art. 7(3) withdraw consent mechanism present
+- [ ] EU: Data Controller identity notice present
+- [ ] EU: Consent receipt mechanism present
+- [ ] EU: GPC signal indicator present and functional
+- [ ] EU: Button order Reject → Accept (CNIL compliance)
+- [ ] EU: Privacy Policy, Cookie Policy, Terms of Service links present
+- [ ] US-Strict: State-specific notices (CA financial incentive, TN age recheck, etc.)
+- [ ] US-Strict: "Do Not Sell or Share" link present
+- [ ] US-Strict: "Your Privacy Choices" link present
+- [ ] US-Standard: Simplified consent with correct legal text
+
+Authentication screens audit:
+- [ ] Email Capture: step indicator, trust signal, share checkbox, passkey fallback, re-auth warning
+- [ ] OTP Entry: auto-submit text, resend with countdown
+- [ ] OTP Error: error icon, try again + resend
+- [ ] Email Confirm: success icon, continue button
+- [ ] Passkey Setup: fingerprint icon, skip option
+- [ ] Passkey Verify: fingerprint icon, password fallback
+
+Preference screens audit:
+- [ ] CookiePrefs Cookies tab: 4 categories, expandable details, essential locked
+- [ ] CookiePrefs Shared Data tab: 3 items with expiry editors
+- [ ] CookiePrefs: fine-print block with DNS, privacy choices, retention notice
+- [ ] CookieEmail: back arrow, step indicator, share checkbox, passkey fallback, save without account
+- [ ] DnsConfirm: success state layout (green check icon, "Request Received")
+- [ ] SharingSettings: definition list format with credential details + Revoke button
+- [ ] DsrIntake: radio options with descriptions, email verification, response time notice, disclaimer
+
+Universal audit (every screen):
+- [ ] Host site logo in header (StreamVault logo, not TrustID icon + title)
+- [ ] Trust line in brand blue color, medium weight, base font size
+- [ ] "Powered by Trust ID · Privacy" footer with working links
+- [ ] Frosted glass background (backdrop-filter blur over gradient)
+- [ ] Content padding: 16px 24px 8px with 8px gap
+- [ ] No hardcoded strings — all from src/constants/
+- [ ] No hardcoded CSS values — all from tokens.css
+- [ ] ARIA attributes match predecessor
+- [ ] Focus-visible on all interactive elements
+
+Fix every violation found. Zero tolerance. This audit must pass before proceeding.
+
+---
+
+Violation scan (run before every push):
+- grep -rn --include="*.tsx" --include="*.ts" ">[^<{]*[A-Za-z]{2,}" src/components/ | grep -v "node_modules" | grep -v ".stories." — flag any hardcoded strings in JSX (false positives OK, but every real string must come from constants)
+- grep -rn --include="*.module.css" -E "#[0-9a-fA-F]{3,8}|: [0-9]+px|: [0-9]+rem" src/ | grep -v "tokens.css" | grep -v "fonts.css" — flag any hardcoded hex, px, or rem in CSS Modules
+- Verify figma-variables.json is up to date with tokens.css (run: pnpm generate:tokens && git diff --exit-code src/tokens/figma-variables.json)
+- Verify all new files have header comment blocks (file purpose, hierarchy position, key dependencies)
+- Fix every violation found. Zero tolerance.
+
+Push: git add -A && git commit -m "fix: visual fidelity correction — match predecessor 1:1" && git push origin main
+When complete, print: "✅ STEP 11.5 COMPLETE — Ready for Step 12."
 ```
 
 ---

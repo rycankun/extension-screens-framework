@@ -4,6 +4,10 @@
  * All variant stories for the cookie email capture screen.
  * Each named export = one Figma frame import target.
  *
+ * Stories cover:
+ *   - Light / Dark theme variants
+ *   - Pre-filled email state
+ *
  * @see src/components/screens/preferences/CookieEmail.tsx for implementation
  * @see docs/PRD.md § 4.3 — CookieEmail specification
  */
@@ -19,13 +23,14 @@ const meta: Meta<typeof CookieEmail> = {
   },
   argTypes: {
     theme: { control: 'select', options: ['light', 'dark'] },
+    email: { control: 'text' },
   },
 };
 export default meta;
 
 type Story = StoryObj<typeof CookieEmail>;
 
-/** Cookie email capture — light theme */
+/** Cookie email capture — light theme (default empty state) */
 export const Light: Story = {
   args: {
     theme: 'light',
@@ -36,5 +41,13 @@ export const Light: Story = {
 export const Dark: Story = {
   args: {
     theme: 'dark',
+  },
+};
+
+/** Cookie email capture — pre-filled email address */
+export const WithEmail: Story = {
+  args: {
+    theme: 'light',
+    email: 'user@example.com',
   },
 };

@@ -4,6 +4,10 @@
  * All variant stories for the EU/GDPR consent screen.
  * Each named export = one Figma frame import target.
  *
+ * Stories cover: light/dark themes and GPC signal detection.
+ * No toggle stories — EU consent uses text blocks + buttons, not toggles.
+ * DNT removed — DNT has no legal force under GDPR so no indicator is shown.
+ *
  * @see src/components/screens/consent/ConsentEU.tsx for implementation
  * @see docs/PRD.md § 4.1 — ConsentEU specification
  */
@@ -20,16 +24,13 @@ const meta: Meta<typeof ConsentEU> = {
   argTypes: {
     theme: { control: 'select', options: ['light', 'dark'] },
     gpcDetected: { control: 'boolean' },
-    dntDetected: { control: 'boolean' },
-    analyticsOn: { control: 'boolean' },
-    marketingOn: { control: 'boolean' },
   },
 };
 export default meta;
 
 type Story = StoryObj<typeof ConsentEU>;
 
-/** EU consent — light theme, default state (all optional toggles OFF) */
+/** EU consent — light theme, default state (no GPC detected) */
 export const Light: Story = {
   args: {
     theme: 'light',
@@ -43,7 +44,7 @@ export const Dark: Story = {
   },
 };
 
-/** EU consent — GPC signal detected badge visible */
+/** EU consent — GPC signal detected, shows GPC indicator panel */
 export const WithGPC: Story = {
   args: {
     theme: 'light',
@@ -51,28 +52,10 @@ export const WithGPC: Story = {
   },
 };
 
-/** EU consent — DNT signal detected badge visible */
-export const WithDNT: Story = {
+/** EU consent — dark theme with GPC signal detected */
+export const DarkWithGPC: Story = {
   args: {
-    theme: 'light',
-    dntDetected: true,
-  },
-};
-
-/** EU consent — all optional toggles ON (analytics + marketing accepted) */
-export const AllTogglesOn: Story = {
-  args: {
-    theme: 'light',
-    analyticsOn: true,
-    marketingOn: true,
-  },
-};
-
-/** EU consent — all optional toggles OFF (default EU state) */
-export const AllTogglesOff: Story = {
-  args: {
-    theme: 'light',
-    analyticsOn: false,
-    marketingOn: false,
+    theme: 'dark',
+    gpcDetected: true,
   },
 };

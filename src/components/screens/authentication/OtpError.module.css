@@ -2,50 +2,100 @@
  * OtpError Styles — Screen Component
  *
  * Layout and typography for the OTP verification error screen.
+ * Nearly identical to OtpEntry layout but with error-specific styling:
+ * custom three-column header (BackArrow + logo + close), error text
+ * with role="alert", and passkey fallback section.
+ *
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Content Area ──
-   Error icon + headline + body text, centered. */
+/* ── Custom Header ──
+   Three-column flex: BackArrow (left) · Logo (center) · Close (right).
+   Same pattern as OtpEntry predecessor header. */
 
-.content {
+.header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--tid-sp-3); /* 6px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
-  text-align: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-/* ── Icon Wrapper ──
-   Centers the error icon with padding. */
+/* ── Logo Center Wrapper ──
+   Flex-1 to center the logo between back arrow and close button. */
 
-.iconWrap {
+.logoCenter {
+  flex: 1;
   display: flex;
   justify-content: center;
-  padding: var(--tid-sp-2); /* 4px */
+  align-items: center;
 }
 
-/* ── Headline ──
-   Error headline — heading font, medium weight. */
+/* ── Host Site Logo Image ──
+   Height-constrained logo (same as DialogHeader pattern). */
 
-.headline {
-  font-family: var(--tid-ff-heading);
-  font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium);
-  color: var(--tid-ink);
-  line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
-  margin: var(--tid-sp-0);
+.logoImg {
+  height: var(--tid-size-icon-md); /* 20px */
+  width: auto;
 }
 
-/* ── Body Text ──
-   Error description below headline. */
+/* ── Dark Mode Logo Inversion ──
+   StreamVault logo designed for light backgrounds — invert in dark mode. */
 
-.body {
+:global([data-theme='dark']) .logoImg {
+  filter: brightness(0) invert(1);
+}
+
+/* ── Close Button ──
+   44px touch target with centered 16px close icon.
+   Negative right margin aligns icon edge with content area. */
+
+.closeBtn {
+  width: var(--tid-size-touch); /* 44px */
+  height: var(--tid-size-touch);
+  /* Align icon edge with content padding edge */
+  margin-right: calc((var(--tid-size-touch) - var(--tid-size-icon)) / -2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--tid-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: var(--tid-radius-sm); /* 4px */
+}
+
+.closeBtn:hover {
+  background: rgba(var(--tid-ink-rgb), 0.04); /* Very subtle tint on hover */
+  color: var(--tid-text-secondary);
+}
+
+.closeBtn:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}
+
+/* ── Text Block ──
+   Bold headline + regular body text + email link on a single flow.
+   Left-aligned (not centered) to match predecessor OTP error layout. */
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Text Content ──
+   Single paragraph containing bold headline, regular body, and email.
+   Predecessor renders these inline within one <p> element. */
+
+.textContent {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-body-sm); /* 12px */
   font-weight: var(--tid-fw-regular);
@@ -55,27 +105,83 @@
   margin: var(--tid-sp-0);
 }
 
-/* ── Action Buttons ──
-   Try Again button. */
+/* ── Bold Headline (inline) ──
+   "That code didn't work." — medium weight, ink color. */
 
-.actions {
+.bold {
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+}
+
+/* ── Regular Body (inline) ──
+   "Let's try again. We sent a code to" — inherits from .textContent. */
+
+.regular {
+  font-weight: var(--tid-fw-regular);
+}
+
+/* ── Email Link ──
+   Styled as a link (brand color) but not a real anchor —
+   just visual emphasis on the email address. */
+
+.emailLink {
+  color: var(--tid-brand);
+  font-weight: var(--tid-fw-medium);
+}
+
+/* ── OTP Input Area ──
+   Centers the 6-digit OTP input cells with spacing below. */
+
+.otpArea {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--tid-sp-3); /* 6px */
-  margin-top: var(--tid-sp-3); /* 6px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Screen-Reader Only ──
+   Visually hidden hint text for assistive technology. */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Error Alert Text ──
+   Red error message below OTP inputs. role="alert" in markup
+   ensures screen readers announce it immediately. */
+
+.errorText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-error);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  text-align: center;
+  margin: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-2); /* 4px */
 }
 
 /* ── Resend Row ──
-   Centered resend code link. */
+   Centered resend code link (active, no countdown). */
 
 .resendRow {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-2); /* 4px */
 }
 
 /* ── Resend Link ──
-   Text-only button styled as a link. */
+   Ghost button styled as a text link — brand color, no border/bg. */
 
 .resendLink {
   font-family: var(--tid-ff-body);
@@ -95,6 +201,92 @@
 }
 
 .resendLink:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs);
+}
+
+/* ── Wrong Email Row ──
+   Centered micro link for changing the email address. */
+
+.wrongEmailRow {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tid-sp-2); /* 4px */
+}
+
+/* ── Ghost Inline Button ──
+   Minimal text-only button for secondary actions ("Wrong email?").
+   Smaller font, secondary color — understated presence. */
+
+.ghostInline {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--tid-sp-0);
+  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-tight); /* 13px */
+}
+
+.ghostInline:hover {
+  color: var(--tid-brand);
+}
+
+.ghostInline:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs);
+}
+
+/* ── Passkey Fallback ──
+   "Already have a Trust ID? Sign in with passkey" micro text row.
+   Centered, small font, secondary color with brand-colored link. */
+
+.passkeyFallback {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: var(--tid-sp-1); /* 2px */
+  padding-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Passkey Prefix Text ──
+   "Already have a Trust ID?" — secondary color, micro font. */
+
+.passkeyPrefix {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+/* ── Passkey Link ──
+   "Sign in with passkey" — brand color ghost button. */
+
+.passkeyLink {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-brand);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--tid-sp-0);
+  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-tight); /* 13px */
+}
+
+.passkeyLink:hover {
+  color: var(--tid-brand-dark);
+}
+
+.passkeyLink:focus-visible {
   outline: var(--tid-outline-width) solid var(--tid-border-focus);
   outline-offset: var(--tid-outline-offset);
   border-radius: var(--tid-radius-xs);

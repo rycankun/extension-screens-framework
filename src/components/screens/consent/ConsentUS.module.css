@@ -1,24 +1,20 @@
 /**
  * ConsentUS Styles — Screen Component
  *
- * Layout and typography for the US strict-state consent screen.
- * Shares the same layout pattern as ConsentEU — separate file for
- * screen-specific variations (e.g., CT minor ban notice).
+ * Layout and typography for the US strict-state consent screen (consent-t2).
+ * Unlike ConsentEU, this screen has NO toggle rows — instead it has a text
+ * body with policy links, GPC/DNT signal indicators, social proof, a
+ * three-button action stack, universal opt-out disclosure, and five
+ * privacy choices links.
+ *
+ * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Signal Badges Row ── */
-
-.signals {
-  display: flex;
-  gap: var(--tid-sp-3); /* 6px */
-  flex-wrap: wrap;
-  margin-bottom: var(--tid-sp-3); /* 6px */
-}
-
-/* ── Content Area ── */
+/* ── Content Area ──
+   Headline + body text block with inline policy links. */
 
 .content {
   display: flex;
@@ -27,7 +23,8 @@
   margin-bottom: var(--tid-sp-2); /* 4px */
 }
 
-/* ── Headline ── */
+/* ── Headline ──
+   Screen heading — heading font, medium weight, ink color. */
 
 .headline {
   font-family: var(--tid-ff-heading);
@@ -39,36 +36,134 @@
   margin: var(--tid-sp-0);
 }
 
-/* ── Trust Line ── */
+/* ── Body Text ──
+   Regular paragraph below the bold headline. Contains inline
+   Privacy Policy and Cookie Policy links. */
 
-.trustLine {
+.body {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-body-sm); /* 12px — body-sm for consent body text */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-snug); /* 15px */
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-relaxed); /* 18px — relaxed for readability */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
 }
 
-/* ── Toggle Section ── */
+/* ── Trust Line ──
+   Motivational tagline in brand blue. Displayed as a standalone
+   line between the body text and signal indicators. */
 
-.toggles {
+.trustLine {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-base); /* 14px — predecessor trust line size */
+  font-weight: var(--tid-fw-medium); /* 500 — medium weight for emphasis */
+  color: var(--tid-brand); /* Trust ID Blue — trust line is always brand color */
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-3); /* 6px gap before signal indicators */
+}
+
+/* ── GPC Indicator ──
+   Flex row with shield icon + text block (main text + detail).
+   Background uses ink-rgb at low opacity for subtle tint.
+   Visible only when gpcDetected prop is true. */
+
+.gpcIndicator {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tid-sp-3); /* 6px */
+  padding: var(--tid-sp-3); /* 6px */
+  background: rgba(var(--tid-brand-rgb), 0.06);
+  border-radius: var(--tid-radius-sm); /* 4px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── GPC Icon ──
+   Shield icon — 14px, brand color to indicate active signal. */
+
+.gpcIcon {
+  width: var(--tid-sp-7); /* 14px */
+  height: var(--tid-sp-7); /* 14px */
+  color: var(--tid-brand);
+  flex-shrink: 0;
+  margin-top: var(--tid-sp-px); /* 1px optical alignment with text */
+}
+
+/* ── GPC Content ──
+   Vertical stack of main GPC text and detail text. */
+
+.gpcContent {
   display: flex;
   flex-direction: column;
   gap: var(--tid-sp-1); /* 2px */
 }
 
-/* ── CT Minor Ban Notice ──
-   Shown when CT minor advertising ban is active. */
+/* ── GPC Text ──
+   Main GPC indicator text — body-sm, secondary color. */
 
-.banNotice {
-  display: flex;
-  padding-top: var(--tid-sp-2); /* 4px */
-  padding-left: var(--tid-sp-2); /* 4px */
+.gpcText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
 }
 
-/* ── Action Buttons ── */
+/* ── GPC Detail ──
+   Supplementary GPC detail text — smaller, secondary color.
+   Lists the specific signal consequences (sale, targeting, sensitive PI). */
+
+.gpcDetail {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+/* ── DNT Indicator ──
+   Flex row with circle-slash icon + text. Subtle background tint
+   using ink-rgb at low opacity. */
+
+.dntIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-3); /* 6px */
+  padding: var(--tid-sp-3); /* 6px */
+  background: rgba(var(--tid-ink-rgb), 0.04);
+  border-radius: var(--tid-radius-sm); /* 4px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── DNT Icon ──
+   Circle-slash icon — 14px, muted text color. */
+
+.dntIcon {
+  width: var(--tid-sp-7); /* 14px */
+  height: var(--tid-sp-7); /* 14px */
+  color: var(--tid-text-muted);
+  flex-shrink: 0;
+}
+
+/* ── DNT Text ──
+   DNT indicator text — body-sm, secondary color. */
+
+.dntText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+/* ── Action Buttons ──
+   Stacked full-width buttons: Reject All → Accept & Continue → Manage Preferences.
+   Order matches the predecessor consent-t2.html button stack. */
 
 .actions {
   display: flex;
@@ -77,7 +172,93 @@
   margin-top: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Footer ── */
+/* ── Universal Opt-Out Disclosure ──
+   Required legal disclosure text about honoring universal opt-out signals.
+   Micro text, muted color. */
+
+.optoutDisclosure {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-muted);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+  margin-top: var(--tid-sp-3); /* 6px */
+  text-align: center;
+}
+
+/* ── Privacy Choices Section ──
+   Navigation region containing five privacy choice links with
+   legal citations. Each link is a separate row. */
+
+.privacyChoices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-0); /* no gap — border-top handles visual separation */
+  margin-top: var(--tid-sp-4); /* 8px */
+}
+
+/* ── Privacy Choices Row ──
+   Individual link row with top border separator and vertical padding. */
+
+.privacyChoicesRow {
+  display: flex;
+  align-items: center;
+  padding: var(--tid-sp-3) var(--tid-sp-0); /* 6px 0 — vertical padding only */
+  border-top: var(--tid-border-width) solid var(--tid-border-light);
+}
+
+/* ── Privacy Choices Link ──
+   Brand-colored underlined link for privacy choice actions.
+   Uses body-sm (12px) for compact display. */
+
+.privacyChoicesLink {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-brand);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+  text-decoration: underline;
+}
+
+.privacyChoicesLink:hover {
+  color: var(--tid-brand-dark);
+}
+
+/* ── Privacy Choices Button ──
+   "Request My Data" uses role="button" instead of a link because
+   it triggers an in-app flow (CCPA §1798.110). Styled identically
+   to the link variant but as a semantic <button>. */
+
+.privacyChoicesButton {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-brand);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: var(--tid-sp-0);
+  cursor: pointer;
+  text-align: left;
+}
+
+.privacyChoicesButton:hover {
+  color: var(--tid-brand-dark);
+}
+
+.privacyChoicesButton:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs); /* 2px — tight radius for inline element */
+}
+
+/* ── Footer ──
+   Centered PoweredBadge at the bottom of the screen. */
 
 .footer {
   display: flex;

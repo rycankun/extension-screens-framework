@@ -1,0 +1,49 @@
+/**
+ * BackArrow Styles — Molecule Component
+ *
+ * 44px touch target back navigation button with 16px chevron icon.
+ * Negative left margin aligns icon edge with content area.
+ *
+ * Predecessor ref: .back-arrow in components.css:1146-1172
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Back Button ── */
+
+.backArrow {
+  width: var(--tid-size-touch); /* 44px WCAG touch target */
+  height: var(--tid-size-touch);
+  /* Align icon edge with content padding edge */
+  margin-left: calc((var(--tid-size-touch) - var(--tid-size-icon)) / -2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--tid-radius-sm); /* 4px */
+  color: var(--tid-text-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+.backArrow:hover {
+  background: rgba(var(--tid-ink-rgb), 0.04); /* Very subtle tint */
+  color: var(--tid-ink);
+}
+
+/* ── Icon Sizing ── */
+
+.backArrow svg {
+  width: var(--tid-size-icon); /* 16px */
+  height: var(--tid-size-icon);
+}
+
+/* ── Focus-Visible ── */
+
+.backArrow:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-sm);
+}

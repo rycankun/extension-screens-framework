@@ -1,9 +1,14 @@
 /**
  * DialogHeader — Molecule Component
  *
- * Standard header for all 27 banner screens. Displays the TrustID
- * logo (shield icon), a title, and a close button. The logo uses an
- * inline SVG path for Figma-compatible self-contained rendering.
+ * Standard header for all 27 banner screens. Displays the host site
+ * logo image (e.g., StreamVault lockup) on the left and a close button
+ * on the right. No title text — the predecessor uses logo-only headers.
+ *
+ * The logo defaults to the StreamVault brand lockup (the demo host site).
+ * In dark mode, the logo is inverted to white via CSS filter.
+ *
+ * Predecessor ref: .logo, .logo-left, .logo-img, .close-btn in components.css:335-408
  *
  * @see docs/PRD.md § 3.2 — DialogHeader specification
  * @see src/components/atoms/Icon/Icon.tsx — Icon atom (close button)
@@ -15,49 +20,46 @@ import styles from './DialogHeader.module.css';
 /* ── Props ── */
 
 export interface DialogHeaderProps {
-  /** Header title text */
-  title: string;
+  /** Source path for the host site logo image */
+  logoSrc?: string;
+  /** Alt text for the host site logo (accessibility) */
+  logoAlt?: string;
   /** Callback when the close button is clicked */
   onClose?: () => void;
   /** Whether to show the close button (default true) */
   showClose?: boolean;
 }
 
-/* ── TrustID Shield Logo ──
-   Inline SVG path for the TrustID shield mark. Uses an inline path
-   rather than an external file so the component is fully self-contained
-   for Figma import. */
-function TrustIdLogo() {
-  return (
-    <svg
-      className={styles.logo}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"
-        fill="var(--tid-brand)"
-      />
-      <path
-        d="M10 15.5l-3.5-3.5 1.41-1.41L10 12.67l5.59-5.59L17 8.5l-7 7z"
-        fill="var(--tid-toggle-knob)"
-      />
-    </svg>
-  );
-}
+/* ── Default Values ──
+   StreamVault is the fictional demo host site. Default logo path points
+   to the provided brand lockup SVG in public/assets/. */
+const DEFAULT_LOGO_SRC = '/assets/StreamVault-BrandLockup-Primary.svg';
+const DEFAULT_LOGO_ALT = 'StreamVault';
 
 /* ── Component ── */
 
 export function DialogHeader({
-  title,
+  logoSrc = DEFAULT_LOGO_SRC,
+  logoAlt = DEFAULT_LOGO_ALT,
   onClose,
   showClose = true,
 }: DialogHeaderProps) {
   return (
     <header className={styles.header}>
-      <TrustIdLogo />
-      <h1 className={styles.title}>{title}</h1>
+      {/* ── Host Site Logo ──
+          Image-based logo for Figma-compatible rendering. Inverted
+          to white in dark mode via CSS filter on the img element. */}
+      <div className={styles.logoLeft}>
+        <img
+          className={styles.logoImg}
+          src={logoSrc}
+          alt={logoAlt}
+        />
+      </div>
+
+      {/* ── Close Button ──
+          44px touch target with 16px icon. Negative right margin aligns
+          the icon edge with content padding (predecessor pattern). */}
       {showClose && (
         <button
           className={styles.closeBtn}

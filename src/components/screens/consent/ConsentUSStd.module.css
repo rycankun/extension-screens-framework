@@ -2,32 +2,29 @@
  * ConsentUSStd Styles — Screen Component
  *
  * Layout and typography for the US standard-state simplified consent screen.
- * Follows the same layout pattern as ConsentEU/ConsentUS but with fewer
- * toggle rows and a more compact layout.
+ * This screen uses text blocks + buttons + privacy links (no toggles),
+ * matching the predecessor consent-t3.html structure.
+ *
+ * Shares layout patterns with ConsentUS (textBlock, trustLine, gpcIndicator,
+ * dntIndicator, socialProof, btnStack, universalOptout, privacyChoicesLink)
+ * but in a separate file because CSS Modules scope per-component.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Signal Badges Row ── */
+/* ── Text Block ──
+   Bold headline + body paragraph with inline policy links. */
 
-.signals {
-  display: flex;
-  gap: var(--tid-sp-3); /* 6px */
-  flex-wrap: wrap;
-  margin-bottom: var(--tid-sp-3); /* 6px */
-}
-
-/* ── Content Area ── */
-
-.content {
+.textBlock {
   display: flex;
   flex-direction: column;
   gap: var(--tid-sp-2); /* 4px */
   margin-bottom: var(--tid-sp-2); /* 4px */
 }
 
-/* ── Headline ── */
+/* ── Headline ──
+   Screen heading — heading font, medium weight. */
 
 .headline {
   font-family: var(--tid-ff-heading);
@@ -39,36 +36,155 @@
   margin: var(--tid-sp-0);
 }
 
-/* ── Trust Line ── */
+/* ── Body Text ──
+   Regular-weight paragraph below the bold headline.
+   Contains inline policy links (Privacy Policy, Cookie Policy). */
 
-.trustLine {
+.body {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-body-sm); /* 12px — sublabel-size body for compact banner */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-snug); /* 15px */
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-relaxed); /* 18px — readable multi-line text */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
 }
 
-/* ── Toggle Section ── */
+/* ── Trust Line ──
+   Brand-blue motivational tagline below the text block. */
 
-.toggles {
+.trustLine {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px — matches predecessor trust line */
+  font-weight: var(--tid-fw-medium); /* 500 — medium weight for emphasis */
+  color: var(--tid-brand); /* Trust ID Blue — trust line is always brand color */
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── GPC Indicator ──
+   Green-tinted signal block when Global Privacy Control is detected.
+   Shows main text + detail breakdown of opt-outs. */
+
+.gpcIndicator {
   display: flex;
   flex-direction: column;
   gap: var(--tid-sp-1); /* 2px */
+  padding: var(--tid-sp-3); /* 6px */
+  background: rgba(var(--tid-success-rgb), 0.08);
+  border-radius: var(--tid-radius-sm); /* 4px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Action Buttons ── */
+/* ── DNT Indicator ──
+   Blue-tinted signal block when Do Not Track is detected. */
 
-.actions {
+.dntIndicator {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-1); /* 2px */
+  padding: var(--tid-sp-3); /* 6px */
+  background: rgba(var(--tid-brand-rgb), 0.06);
+  border-radius: var(--tid-radius-sm); /* 4px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Signal Text Labels ──
+   Shared styles for GPC/DNT indicator text. */
+
+.signalLabel {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+.signalDetail {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+/* ── Social Proof ──
+   Trust signal row. Positioned with bottom margin before button stack. */
+
+.socialProof {
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Button Stack ──
+   Three stacked full-width buttons:
+   Reject All (secondary) → Accept & Continue (primary) → Manage Preferences (ghost).
+   Order follows the opt-out model: rejection is the most prominent action. */
+
+.btnStack {
   display: flex;
   flex-direction: column;
   gap: var(--tid-sp-3); /* 6px */
-  margin-top: var(--tid-sp-3); /* 6px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Footer ── */
+/* ── Universal Opt-Out Disclosure ──
+   Required by CPA §6-1-1313 — small muted text below buttons. */
+
+.universalOptout {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-muted);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Privacy Choices Section ──
+   Vertical stack of 3 regulatory-required privacy links:
+   - Your Privacy Choices (VCDPA §59.1-580)
+   - Do Not Sell My Personal Information
+   - Limit Use of My Sensitive Personal Information */
+
+.privacyChoicesSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Privacy Choices Link Row ──
+   Individual link within the privacy choices section.
+   Uses body-sm size to keep compact within the 380px banner. */
+
+.privacyChoicesLink {
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  line-height: var(--tid-lh-normal); /* 16px */
+}
+
+/* ── Sensitive Data Notice ──
+   Static informational text note about sensitive PI handling.
+   Slightly italic styling via font-style, muted color, role="note". */
+
+.sensitiveDataNotice {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px — micro text for legal notice */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-muted);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  font-style: italic;
+  margin: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Footer ──
+   Centered PoweredBadge at the bottom. */
 
 .footer {
   display: flex;

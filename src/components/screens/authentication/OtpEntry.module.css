@@ -2,105 +2,195 @@
  * OtpEntry Styles — Screen Component
  *
  * Layout and typography for the OTP verification entry screen.
+ * Matches predecessor otp-entry.html layout exactly:
+ *   - Custom header with BackArrow + logo + close button
+ *   - Inline text block (bold + regular + email link)
+ *   - Micro-text rows for auto-submit, resend, wrong-email
+ *   - Passkey fallback section
+ *
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Content Area ──
-   Headline + subtext with email. */
+/* ══════════════════════════════════════════════════════════════════════
+   HEADER — BackArrow + Logo (left) | Close Button (right)
+   ══════════════════════════════════════════════════════════════════════ */
 
-.content {
+/* ── Header Container ──
+   Full-width flex with space-between alignment.
+   Mirrors predecessor .logo layout. */
+
+.header {
   display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-/* ── Headline ──
-   Screen heading — heading font, medium weight. */
+/* ── Header Left ──
+   BackArrow button + host site logo grouped together.
+   Mirrors predecessor .logo-left wrapper. */
 
-.headline {
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+/* ── Host Site Logo Image ──
+   Height-constrained logo, auto width preserves aspect ratio.
+   20px height matches --tid-size-icon-md. */
+
+.logoImg {
+  height: var(--tid-size-icon-md); /* 20px */
+  width: auto;
+}
+
+/* ── Dark Mode Logo Inversion ──
+   StreamVault logo designed for light backgrounds.
+   In dark mode, invert to white via CSS filter. */
+
+:global([data-theme='dark']) .logoImg {
+  filter: brightness(0) invert(1);
+}
+
+/* ── Close Button ──
+   44px touch target (WCAG minimum) with 16px close icon.
+   Negative right margin aligns icon edge with content padding.
+   Mirrors predecessor .close-btn and DialogHeader pattern. */
+
+.closeBtn {
+  width: var(--tid-size-touch); /* 44px */
+  height: var(--tid-size-touch);
+  margin-right: calc((var(--tid-size-touch) - var(--tid-size-icon)) / -2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--tid-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: var(--tid-radius-sm); /* 4px */
+}
+
+.closeBtn svg {
+  width: var(--tid-size-icon); /* 16px */
+  height: var(--tid-size-icon);
+}
+
+.closeBtn:hover {
+  background: rgba(var(--tid-ink-rgb), 0.04);
+  color: var(--tid-text-secondary);
+}
+
+.closeBtn:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   TEXT BLOCK — Headline + Subtext + Email
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Text Block Container ──
+   Inline flow: bold headline, regular subtext, and link-styled email
+   form a single visual paragraph. Small vertical gap from step indicator. */
+
+.textBlock {
+  margin-top: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+  line-height: var(--tid-lh-relaxed); /* 18px — wrapping line height for the block */
+}
+
+/* ── Bold Span ──
+   Headline text: "We've sent a verification code."
+   Heading font, medium weight, ink color, 14px. */
+
+.bold {
   font-family: var(--tid-ff-heading);
   font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium);
+  font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
-  line-height: var(--tid-lh-body); /* 17px */
   letter-spacing: var(--tid-ls-tight);
-  margin: var(--tid-sp-0);
 }
 
-/* ── Subtext ──
-   "Enter the code sent to" + email address. */
+/* ── Regular Span ──
+   Subtext: "Check your inbox for a 6-digit code from Trust ID sent to"
+   Body font, regular weight, text-body color, 12px. */
 
-.subtext {
+.regular {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
+  font-weight: var(--tid-fw-regular); /* 400 */
   color: var(--tid-text-body);
-  line-height: var(--tid-lh-snug); /* 15px */
   letter-spacing: var(--tid-ls-normal);
-  margin: var(--tid-sp-0);
 }
 
-/* ── Email Highlight ──
-   Bold email address within the subtext. */
+/* ── Email Link Span ──
+   User's email displayed in brand color like a link (not clickable).
+   12px, brand color, inherits body font. */
 
-.email {
-  font-weight: var(--tid-fw-medium);
-  color: var(--tid-ink);
+.emailLink {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular); /* 400 */
+  color: var(--tid-brand); /* Trust ID Blue — styled like a link */
+  letter-spacing: var(--tid-ls-normal);
 }
 
-/* ── OTP Area ──
-   OTP input cells + auto-submit indicator. */
+/* ══════════════════════════════════════════════════════════════════════
+   OTP AREA
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── OTP Input Wrapper ──
+   Centers the 6-digit input row with spacing above and below. */
 
 .otpArea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-3); /* 6px */
   margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Auto-Submit Indicator ──
-   "Code verifies automatically" text below OTP cells. */
+/* ══════════════════════════════════════════════════════════════════════
+   MICRO TEXT ROWS — Auto-submit, Resend, Wrong Email
+   ══════════════════════════════════════════════════════════════════════ */
 
-.autoSubmit {
+/* ── Micro Text ──
+   Small centered text for auto-submit indicator, resend timer,
+   and "Wrong email?" link. 11px, text-secondary, centered. */
+
+.micro {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-sm); /* 11px */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-text-secondary);
   line-height: var(--tid-lh-tight); /* 13px */
   letter-spacing: var(--tid-ls-normal);
-  margin: var(--tid-sp-0);
+  text-align: center;
+  margin: var(--tid-sp-1) var(--tid-sp-0); /* 2px vertical spacing */
 }
 
-/* ── Action Buttons ──
-   Verify button. */
+/* ── Timer Text ──
+   Resend countdown text when timer is active.
+   Same style as micro but slightly muted (disabled feel). */
 
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-3); /* 6px */
-  margin-top: var(--tid-sp-3); /* 6px */
+.timerText {
+  color: var(--tid-text-disabled);
 }
 
-/* ── Resend Row ──
-   Centered resend code link. */
+/* ── Ghost Inline Button ──
+   Text-only inline button (brand color, 11px) for resend link
+   and "Wrong email?" link. No background, no border. */
 
-.resendRow {
-  display: flex;
-  justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
-}
-
-/* ── Resend Link ──
-   Text-only button styled as a link with countdown support. */
-
-.resendLink {
+.ghostInline {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-sm); /* 11px */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-brand);
   background: none;
@@ -108,23 +198,64 @@
   cursor: pointer;
   padding: var(--tid-sp-0);
   letter-spacing: var(--tid-ls-normal);
-  line-height: var(--tid-lh-snug); /* 15px */
+  line-height: var(--tid-lh-tight); /* 13px */
 }
 
-.resendLink:hover:not(:disabled) {
+.ghostInline:hover {
   color: var(--tid-brand-dark);
 }
 
-.resendLink:disabled {
-  color: var(--tid-text-disabled);
-  cursor: default;
-}
-
-.resendLink:focus-visible {
+.ghostInline:focus-visible {
   outline: var(--tid-outline-width) solid var(--tid-border-focus);
   outline-offset: var(--tid-outline-offset);
   border-radius: var(--tid-radius-xs);
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   PASSKEY FALLBACK
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Passkey Fallback Container ──
+   "Already have a Trust ID? Sign in with passkey"
+   Micro text, centered, with a link-styled call-to-action. */
+
+.passkeyFallback {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  text-align: center;
+  margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Link ──
+   Brand-colored link for "Sign in with passkey". */
+
+.link {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-sm); /* 11px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-brand);
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: var(--tid-ls-normal);
+}
+
+.link:hover {
+  color: var(--tid-brand-dark);
+}
+
+.link:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════════════ */
 
 /* ── Footer ──
    Centered PoweredBadge at the bottom. */

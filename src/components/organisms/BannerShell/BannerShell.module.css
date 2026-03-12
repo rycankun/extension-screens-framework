@@ -2,12 +2,13 @@
  * BannerShell Styles — Organism Component
  *
  * 380px extension drawer with gradient background, decorative blobs,
- * and solid content surface. Static layout for Figma import — no
- * animations, no backdrop-filter, no position: fixed.
+ * and frosted glass content surface. The frosted glass effect
+ * (backdrop-filter: blur() + semi-transparent bg) is a critical
+ * design element present in both Storybook AND Figma exports.
  *
  * The banner has two visual layers:
  *   1. Gradient background + blobs (decorative, behind content)
- *   2. Solid surface (content area, foreground)
+ *   2. Frosted glass surface (content area, foreground)
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.5 for Figma-compatible CSS constraints
@@ -74,18 +75,22 @@
   border-radius: var(--tid-radius-circle);
 }
 
-/* ── Content Surface ──
-   Solid opaque surface for Figma compatibility. The live Storybook
-   preview could add backdrop-filter: blur() for frost, but Figma
-   export must use this solid version. */
+/* ── Frosted Glass Content Surface ──
+   Semi-transparent surface with backdrop blur over the gradient layer.
+   This frost effect is a critical design element — present in both
+   Storybook preview AND Figma export. No margin gap — the content
+   fills the banner edge-to-edge (no visible gradient border frame).
+   Predecessor ref: .banner-content.frost-light in components.css:310 */
 
 .surface {
   position: relative;
   z-index: var(--tid-z-content); /* 1 — above gradient layer */
-  background-color: var(--tid-surface);
-  margin: var(--tid-sp-2); /* 4px — thin gradient border visible around edges */
-  border-radius: var(--tid-radius-sm); /* 4px */
-  padding: var(--tid-sp-4) var(--tid-sp-6) var(--tid-sp-2); /* 8px 12px 4px */
+  background: rgba(var(--tid-surface-rgb), 0.4); /* frost-light tier */
+  backdrop-filter: blur(var(--tid-blur-lg)) saturate(var(--tid-saturate-normal)); /* 16px blur + 1.4 saturate */
+  -webkit-backdrop-filter: blur(var(--tid-blur-lg)) saturate(var(--tid-saturate-normal));
+  border-top: var(--tid-border-width) solid rgba(var(--tid-surface-rgb), 0.6); /* subtle top highlight */
+  padding: var(--tid-sp-8) var(--tid-sp-12) var(--tid-sp-4); /* 16px 24px 8px */
+  gap: var(--tid-sp-4); /* 8px between children */
   display: flex;
   flex-direction: column;
   min-height: 0;

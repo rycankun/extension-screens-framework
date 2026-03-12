@@ -1,42 +1,67 @@
 /**
  * PoweredBadge Styles — Molecule Component
  *
- * Compact inline badge: icon + "Powered by TrustID" text.
- * Secondary text color for subtle attribution.
+ * Centered footer badge: icon + "Powered by Trust ID · Privacy" text.
+ * Uses --tid-text-footer color and --tid-fs-xs size for subtle attribution.
+ *
+ * Predecessor ref: .footer, .footer-logo, .footer-text, .footer-link,
+ * .footer-link-muted in components.css:1054-1072
  *
  * @see src/tokens/tokens.css for token definitions
  */
 
-/* ── Badge Container ── */
+/* ── Footer Container ── */
 
-.badge {
-  display: inline-flex;
+.footer {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: var(--tid-sp-2); /* 4px */
+  gap: var(--tid-sp-3); /* 6px */
 }
 
-/* ── TrustID Shield Icon ── */
+/* ── TrustID Business Icon ── */
 
-.icon {
-  width: var(--tid-size-icon); /* 16px */
-  height: var(--tid-size-icon);
-  flex-shrink: 0;
+.footerLogo {
+  height: var(--tid-size-icon); /* 16px */
+  width: auto;
+  opacity: var(--tid-opacity-full);
 }
 
 /* ── Attribution Text ── */
 
-.text {
+.footerText {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-xs); /* 10px */
+  color: var(--tid-text-footer);
+  letter-spacing: var(--tid-ls-wide); /* 0.3px */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-snug); /* 15px */
-  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-snug);
 }
 
-/* ── Brand Name ──
-   Medium weight for emphasis, same color as parent text. */
+/* ── Trust ID Link ──
+   Underlined, inherits footer text color. */
 
-.brand {
-  font-weight: var(--tid-fw-medium);
+.footerLink {
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── Privacy Link ──
+   Same style as footerLink — muted variant for secondary emphasis. */
+
+.footerLinkMuted {
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── Focus-Visible for links ── */
+
+.footerLink:focus-visible,
+.footerLinkMuted:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs); /* 2px */
 }

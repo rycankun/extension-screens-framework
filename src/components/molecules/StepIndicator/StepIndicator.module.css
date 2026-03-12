@@ -1,0 +1,53 @@
+/**
+ * StepIndicator Styles — Molecule Component
+ *
+ * Horizontal progress bar with pill-shaped dots and step label.
+ * Dots are 16px wide × 2px tall, with brand color for active/completed.
+ *
+ * Predecessor ref: .step-indicator, .step-indicator-bar, .step-dot,
+ * .step-indicator-label in components.css:447-474
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Container ── */
+
+.stepIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-3); /* 6px */
+  margin: var(--tid-sp-3) 0; /* 6px top/bottom */
+}
+
+/* ── Dot Bar ── */
+
+.stepIndicatorBar {
+  display: flex;
+  gap: var(--tid-sp-2); /* 4px between dots */
+}
+
+/* ── Individual Dot ──
+   Pill-shaped progress bar segment. Default: inactive gray.
+   Active/completed: brand blue. */
+
+.stepDot {
+  width: var(--tid-sp-8); /* 16px */
+  height: var(--tid-sp-1); /* 2px */
+  border-radius: var(--tid-radius-pill); /* 9999px — pill shape */
+  background: var(--tid-toggle-off); /* Inactive gray */
+}
+
+.stepDot.active,
+.stepDot.completed {
+  background: var(--tid-brand); /* Trust ID Blue */
+}
+
+/* ── Label ── */
+
+.stepIndicatorLabel {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  color: var(--tid-text-muted);
+  line-height: var(--tid-lh-ratio-normal); /* 1.4 */
+  white-space: nowrap;
+}

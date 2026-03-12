@@ -2,12 +2,52 @@
  * CookiePrefs Styles — Screen Component
  *
  * Layout and typography for the cookie preferences screen.
- * Includes tab bar, toggle sections, and shared data panel.
+ * Includes tab bar, toggle sections with expandable cookie details,
+ * shared data panel, fine-print legal block, and withdraw consent area.
  * All values from tokens.css — zero hardcoded values.
+ *
+ * Matches predecessor cookie-prefs.html structure pixel-for-pixel.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
+
+/* ── Intro Block ──
+   Shared Data intro text — bold headline + regular description inline.
+   Predecessor uses inline <span> elements, not <h2> + <p>. */
+
+.introBlock {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  line-height: var(--tid-lh-relaxed); /* 18px */
+  letter-spacing: var(--tid-ls-normal);
+  color: var(--tid-text-body);
+  margin-bottom: var(--tid-sp-2); /* 4px */
+}
+
+.introBold {
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+}
+
+.introRegular {
+  font-weight: var(--tid-fw-regular);
+}
+
+/* ── Trust Line ──
+   Motivational tagline — brand blue, medium weight.
+   "Your preferences. Your control." / "Your data. Your decision." */
+
+.trustLine {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-base); /* 14px — predecessor trust line size */
+  font-weight: var(--tid-fw-medium); /* 500 — medium weight for emphasis */
+  color: var(--tid-brand); /* Trust ID Blue — trust line is always brand color */
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
+  margin-bottom: var(--tid-sp-3); /* 6px — space before tab bar */
+}
 
 /* ── Tab Bar ──
    Horizontal tab row with bottom border. Active tab has brand
@@ -57,57 +97,8 @@
   border-bottom-color: var(--tid-brand);
 }
 
-/* ── Content Area ──
-   Headline + trust line + body for Shared Data tab. */
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
-}
-
-/* ── Headline ──
-   Section heading (Shared Data tab). */
-
-.headline {
-  font-family: var(--tid-ff-heading);
-  font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium);
-  color: var(--tid-ink);
-  line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
-  margin: var(--tid-sp-0);
-}
-
-/* ── Trust Line ──
-   Motivational tagline. */
-
-.trustLine {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-snug); /* 15px */
-  letter-spacing: var(--tid-ls-normal);
-  margin: var(--tid-sp-0);
-}
-
-/* ── Body Text ──
-   Descriptive paragraph. */
-
-.body {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-body);
-  line-height: var(--tid-lh-relaxed); /* 18px */
-  letter-spacing: var(--tid-ls-normal);
-  margin: var(--tid-sp-0);
-}
-
 /* ── Toggle Section ──
-   Vertical stack of toggle rows. */
+   Vertical stack of toggle blocks. */
 
 .toggles {
   display: flex;
@@ -115,14 +106,155 @@
   gap: var(--tid-sp-1); /* 2px */
 }
 
+/* ── Toggle Block ──
+   Wraps a ConsentToggle + its expandable cookie details.
+   Groups the toggle and its details visually. */
+
+.toggleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-0);
+}
+
+/* ── Cookie Details (Expandable) ──
+   <details> element beneath each toggle row. Predecessor pattern:
+   summary "View cookies" link + <ul> of individual cookies. */
+
+.cookieDetails {
+  margin-left: var(--tid-sp-20); /* 40px — indent past the toggle switch */
+  margin-bottom: var(--tid-sp-2); /* 4px */
+}
+
+.cookieSummary {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-brand); /* Brand blue link-style text */
+  cursor: pointer;
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  list-style: none; /* Remove default disclosure triangle */
+}
+
+/* Remove default marker in WebKit */
+.cookieSummary::-webkit-details-marker {
+  display: none;
+}
+
+.cookieSummary:hover {
+  text-decoration: underline;
+}
+
+.cookieSummary:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs);
+}
+
+/* ── Cookie List ──
+   Unordered list of individual cookie entries within an open <details>. */
+
+.cookieList {
+  list-style: none;
+  padding: var(--tid-sp-0);
+  margin: var(--tid-sp-2) var(--tid-sp-0) var(--tid-sp-0); /* 4px 0 0 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px between entries */
+}
+
+.cookieItem {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xs); /* 10px — predecessor cookie detail size */
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+.cookieName {
+  font-weight: var(--tid-fw-medium); /* Bold cookie name */
+}
+
+.cookieDesc {
+  font-weight: var(--tid-fw-regular);
+}
+
 /* ── Action Buttons ──
-   Save button area. */
+   Save Preferences button area. */
 
 .actions {
   display: flex;
   flex-direction: column;
   gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-4); /* 8px — predecessor spacing above save */
+}
+
+/* ── Micro Text ──
+   "You can update these anytime by clicking the Trust ID icon."
+   Small helper text below the Save button. */
+
+.microText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xs); /* 10px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  text-align: center;
+  margin: var(--tid-sp-3) var(--tid-sp-0) var(--tid-sp-0); /* 6px 0 0 */
+}
+
+/* ── Withdraw Consent ──
+   Secondary full-width button, hidden by default.
+   Shown on re-entry (GDPR Art. 7(3)). */
+
+.withdrawAction {
   margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Fine Print Block ──
+   Legal links and disclosure text at the bottom of the screen.
+   DNS link, privacy choices, right to know, consent receipt,
+   save scope hint, and retention notice. */
+
+.finePrint {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px between fine-print items */
+  margin-top: var(--tid-sp-4); /* 8px — space above fine-print block */
+  padding-top: var(--tid-sp-3); /* 6px — internal padding above first item */
+  border-top: var(--tid-border-width) solid var(--tid-border-light);
+}
+
+.finePrintLink {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xs); /* 10px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-brand); /* Brand blue for links */
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.finePrintLink:hover {
+  text-decoration: underline;
+}
+
+.finePrintLink:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs);
+}
+
+.finePrintText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xs); /* 10px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-tight); /* 13px */
+  letter-spacing: var(--tid-ls-normal);
+  margin: var(--tid-sp-0);
 }
 
 /* ── Footer ──

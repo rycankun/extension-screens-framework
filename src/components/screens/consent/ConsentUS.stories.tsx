@@ -21,16 +21,13 @@ const meta: Meta<typeof ConsentUS> = {
     theme: { control: 'select', options: ['light', 'dark'] },
     gpcDetected: { control: 'boolean' },
     dntDetected: { control: 'boolean' },
-    ctMinorBan: { control: 'boolean' },
-    analyticsOn: { control: 'boolean' },
-    marketingOn: { control: 'boolean' },
   },
 };
 export default meta;
 
 type Story = StoryObj<typeof ConsentUS>;
 
-/** US strict consent — light theme, default state (all toggles ON, opt-out model) */
+/** US strict consent — light theme, default state */
 export const Light: Story = {
   args: {
     theme: 'light',
@@ -44,7 +41,7 @@ export const Dark: Story = {
   },
 };
 
-/** US strict consent — GPC signal detected badge visible */
+/** US strict consent — GPC signal detected (shield icon + detail text) */
 export const WithGPC: Story = {
   args: {
     theme: 'light',
@@ -52,10 +49,19 @@ export const WithGPC: Story = {
   },
 };
 
-/** US strict consent — CT minor advertising ban (marketing locked OFF) */
-export const CtMinorBan: Story = {
+/** US strict consent — DNT signal detected (circle-slash icon + text) */
+export const WithDNT: Story = {
   args: {
     theme: 'light',
-    ctMinorBan: true,
+    dntDetected: true,
+  },
+};
+
+/** US strict consent — both GPC and DNT signals detected */
+export const WithGPCAndDNT: Story = {
+  args: {
+    theme: 'light',
+    gpcDetected: true,
+    dntDetected: true,
   },
 };

@@ -39,19 +39,19 @@ export const SCREEN_REGISTRY: ScreenEntry[] = [
     id: 'consent-t1',
     component: 'ConsentEU',
     category: 'consent',
-    variants: 6,
+    variants: 4,
   },
   {
     id: 'consent-t2',
     component: 'ConsentUS',
     category: 'consent',
-    variants: 4,
+    variants: 5,
   },
   {
     id: 'consent-t3',
     component: 'ConsentUSStd',
     category: 'consent',
-    variants: 2,
+    variants: 5,
   },
 
   /* ── Authentication Screens (Step 10) ── */
@@ -65,7 +65,7 @@ export const SCREEN_REGISTRY: ScreenEntry[] = [
     id: 'otp-entry',
     component: 'OtpEntry',
     category: 'authentication',
-    variants: 2,
+    variants: 4,
   },
   {
     id: 'otp-error',
@@ -97,13 +97,13 @@ export const SCREEN_REGISTRY: ScreenEntry[] = [
     id: 'cookie-prefs',
     component: 'CookiePrefs',
     category: 'preferences',
-    variants: 8,
+    variants: 14,
   },
   {
     id: 'cookie-email',
     component: 'CookieEmail',
     category: 'preferences',
-    variants: 2,
+    variants: 3,
   },
   {
     id: 'dns-confirm',
@@ -115,12 +115,12 @@ export const SCREEN_REGISTRY: ScreenEntry[] = [
     id: 'sharing-settings',
     component: 'SharingSettings',
     category: 'preferences',
-    variants: 4,
+    variants: 2,
   },
   {
     id: 'dsr-intake',
     component: 'DsrIntake',
     category: 'preferences',
-    variants: 6,
+    variants: 8,
   },
 ];

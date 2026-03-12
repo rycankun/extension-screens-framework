@@ -1,93 +1,202 @@
 /**
- * DnsConfirm Styles — Screen Component
+ * DnsConfirm Styles — Screen Component (Success State)
  *
- * Layout and typography for the Do Not Sell confirmation screen.
+ * Layout and typography for the Do Not Sell / Share confirmation screen.
+ * This is a SUCCESS state — centered check icon, title, body, note box,
+ * return button, and micro text.
+ *
+ * Matches predecessor dns-confirm.html layout exactly.
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Content Area ──
-   Headline + body text block. */
+/* ══════════════════════════════════════════════════════════════════════
+   HEADER — BackArrow + Logo (left) | Close Button (right)
+   ══════════════════════════════════════════════════════════════════════ */
 
-.content {
+/* ── Header Container ──
+   Full-width flex with space-between alignment.
+   Mirrors predecessor .logo layout. */
+
+.header {
   display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-/* ── Headline ──
-   Screen heading — heading font, medium weight. */
+/* ── Header Left ──
+   BackArrow button + host site logo grouped together.
+   Mirrors predecessor .logo-left wrapper. */
 
-.headline {
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+/* ── Host Site Logo Image ──
+   Height-constrained logo, auto width preserves aspect ratio.
+   20px height matches --tid-size-icon-md. */
+
+.logoImg {
+  height: var(--tid-size-icon-md); /* 20px */
+  width: auto;
+}
+
+/* ── Dark Mode Logo Inversion ──
+   StreamVault logo designed for light backgrounds.
+   In dark mode, invert to white via CSS filter. */
+
+:global([data-theme='dark']) .logoImg {
+  filter: brightness(0) invert(1);
+}
+
+/* ── Close Button ──
+   44px touch target (WCAG minimum) with 16px close icon.
+   Negative right margin aligns icon edge with content padding.
+   Mirrors predecessor .close-btn and DialogHeader pattern. */
+
+.closeBtn {
+  width: var(--tid-size-touch); /* 44px */
+  height: var(--tid-size-touch);
+  margin-right: calc((var(--tid-size-touch) - var(--tid-size-icon)) / -2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--tid-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: var(--tid-radius-sm); /* 4px */
+}
+
+.closeBtn svg {
+  width: var(--tid-size-icon); /* 16px */
+  height: var(--tid-size-icon);
+}
+
+.closeBtn:hover {
+  background: rgba(var(--tid-ink-rgb), 0.04);
+  color: var(--tid-text-secondary);
+}
+
+.closeBtn:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   DNS CONFIRM CONTENT — Centered Success Block
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Content Container ──
+   Vertically stacked, centered column for the success state:
+   check icon → title → description → note box. */
+
+.dnsContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Green Check Circle Icon ──
+   24×24 SVG check-circle from predecessor.
+   Uses --tid-success (Signal Green) for the stroke color. */
+
+.checkIcon {
+  color: var(--tid-success);
+}
+
+/* ── Title ──
+   "Request Received" — bold heading, centered.
+   Heading font, medium weight, ink color, 14px. */
+
+.title {
   font-family: var(--tid-ff-heading);
   font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium);
+  font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
   line-height: var(--tid-lh-body); /* 17px */
   letter-spacing: var(--tid-ls-tight);
   margin: var(--tid-sp-0);
 }
 
-/* ── Body Text ──
-   Descriptive paragraph below headline. */
+/* ── Description ──
+   Body text describing what happened (opt-out confirmed).
+   Body font, regular weight, text-body color, 12px. */
 
-.body {
+.description {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
+  font-weight: var(--tid-fw-regular); /* 400 */
   color: var(--tid-text-body);
   line-height: var(--tid-lh-relaxed); /* 18px */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
 }
 
-/* ── Action Buttons ──
-   Confirm Opt-Out button. */
+/* ── Note Box ──
+   Subtle background box explaining scope (this site only).
+   Raised surface bg, small padding, rounded corners. */
+
+.note {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xs); /* 10px */
+  font-weight: var(--tid-fw-regular); /* 400 */
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-relaxed); /* 18px */
+  letter-spacing: var(--tid-ls-normal);
+  background: var(--tid-surface-raised);
+  padding: var(--tid-sp-4); /* 8px */
+  border-radius: var(--tid-radius-sm); /* 4px */
+  margin: var(--tid-sp-0);
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   ACTION BUTTON — Return to Site
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Actions Container ──
+   Full-width button row for the "Return to Site" CTA. */
 
 .actions {
   display: flex;
   flex-direction: column;
   gap: var(--tid-sp-3); /* 6px */
-  margin-top: var(--tid-sp-3); /* 6px */
+  margin-top: var(--tid-sp-4); /* 8px */
 }
 
-/* ── Cancel Row ──
-   Centered cancel link below action button. */
+/* ══════════════════════════════════════════════════════════════════════
+   MICRO TEXT — Update Anytime Notice
+   ══════════════════════════════════════════════════════════════════════ */
 
-.cancelRow {
-  display: flex;
-  justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
-}
+/* ── Micro Text ──
+   "You can update these anytime by clicking the Trust ID icon."
+   Small centered text below the button. */
 
-/* ── Cancel Link ──
-   Text-only button styled as a link. */
-
-.cancelLink {
+.micro {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-xs); /* 10px */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-brand);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--tid-sp-0);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-tight); /* 13px */
   letter-spacing: var(--tid-ls-normal);
-  line-height: var(--tid-lh-snug); /* 15px */
+  text-align: center;
+  margin: var(--tid-sp-3) var(--tid-sp-0) var(--tid-sp-0); /* 6px top, 0 bottom */
 }
 
-.cancelLink:hover {
-  color: var(--tid-brand-dark);
-}
-
-.cancelLink:focus-visible {
-  outline: var(--tid-outline-width) solid var(--tid-border-focus);
-  outline-offset: var(--tid-outline-offset);
-  border-radius: var(--tid-radius-xs);
-}
+/* ══════════════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════════════ */
 
 /* ── Footer ──
    Centered PoweredBadge at the bottom. */

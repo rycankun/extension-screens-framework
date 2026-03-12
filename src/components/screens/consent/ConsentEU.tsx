@@ -2,52 +2,86 @@
  * ConsentEU — EU/GDPR Opt-In Consent Screen
  *
  * Screen component (screens/consent). Renders the GDPR-compliant consent
- * prompt with toggle controls for cookie categories. EU model requires
- * active opt-in — analytics and marketing default to OFF.
+ * prompt matching the predecessor consent-t1.html structure exactly:
+ *   1. DialogHeader (logo + close)
+ *   2. Text block (bold headline + body with inline policy links)
+ *   3. Trust line (brand blue, medium weight)
+ *   4. GPC indicator (conditional)
+ *   5. Social proof (badge-check icon + trust text)
+ *   6. Button stack: Reject All → Accept All → Manage Preferences (ghost)
+ *   7. Consent receipt (hidden placeholder)
+ *   8. Universal opt-out disclosure
+ *   9. PoweredBadge footer
  *
- * Essential cookies are locked ON and cannot be toggled off.
- * GPC (Global Privacy Control) and DNT (Do Not Track) detection badges
- * appear conditionally via props.
+ * IMPORTANT: EU consent has NO toggles. Toggles belong on the cookie-prefs
+ * screen only. The predecessor consent-t1.html uses text blocks + buttons.
+ *
+ * Button order is Reject → Accept → Manage per CNIL enforcement guidance
+ * (reject must be as prominent and accessible as accept).
  *
  * @see docs/PRD.md § 4.1 — ConsentEU specification
- * @see src/constants/variants.ts — COPY_TEXT for all screen text
- * @see src/constants/jurisdictions.ts — JURISDICTION_CONFIGS for legal text
+ * @see src/constants/consent.ts — EU_CONSENT_BODY, POLICY_LINKS, GPC_TEXT
+ * @see src/constants/variants.ts — COPY_TEXT for headlines, button labels
  * @see src/constants/screens.ts — SCREEN_TITLES for ARIA labels
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
 import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
-import { ConsentToggle } from '../../molecules/ConsentToggle/ConsentToggle';
-import { LegalNotice } from '../../molecules/LegalNotice/LegalNotice';
+import { SocialProof } from '../../molecules/SocialProof/SocialProof';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
-import { Badge } from '../../atoms/Badge/Badge';
-import { Divider } from '../../atoms/Divider/Divider';
+import { Link } from '../../atoms/Link/Link';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
-import { JURISDICTIONS, JURISDICTION_CONFIGS } from '../../../constants/jurisdictions';
 import { COPY_TEXT } from '../../../constants/variants';
-import { CONSENT_CATEGORIES, SIGNAL_BADGES } from '../../../constants/consent';
+import {
+  EU_CONSENT_BODY,
+  POLICY_LINKS,
+  POLICY_URLS,
+  GPC_TEXT,
+  GPC_DETAIL,
+  SOCIAL_PROOF_TEXT,
+  UNIVERSAL_OPTOUT_TEXT,
+} from '../../../constants/consent';
 import styles from './ConsentEU.module.css';
 
 /* ── Props ── */
 
 export interface ConsentEUProps {
-  /** Theme variant for Figma export */
+  /** Theme variant — controls light/dark token overrides via data-theme */
   theme?: 'light' | 'dark';
-  /** Whether Global Privacy Control signal is detected */
+  /** Whether Global Privacy Control signal is detected in the browser */
   gpcDetected?: boolean;
-  /** Whether Do Not Track signal is detected */
-  dntDetected?: boolean;
-  /** Initial state of analytics toggle (EU default: OFF) */
-  analyticsOn?: boolean;
-  /** Initial state of marketing toggle (EU default: OFF) */
-  marketingOn?: boolean;
-  /** Callback when the dialog is closed */
+  /** Callback when the close (×) button is clicked */
   onClose?: () => void;
-  /** Callback when Accept All is clicked */
+  /** Callback when Accept All is clicked (opt-in to all cookie categories) */
   onAcceptAll?: () => void;
-  /** Callback when Reject All is clicked */
+  /** Callback when Reject All is clicked (refuse all non-essential cookies) */
   onRejectAll?: () => void;
+  /** Callback when Manage Preferences is clicked (navigate to cookie-prefs) */
+  onManagePrefs?: () => void;
+}
+
+/* ── Inline SVG Icons ──
+   Self-contained SVGs for Figma-compatible rendering. No external icon
+   dependencies — each icon is a lightweight inline path. */
+
+/** Shield icon for GPC indicator and universal opt-out disclosure */
+function ShieldIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+        fill="currentColor"
+      />
+    </svg>
+  );
 }
 
 /* ── Component ── */
@@ -55,93 +89,85 @@ export interface ConsentEUProps {
 export function ConsentEU({
   theme = 'light',
   gpcDetected = false,
-  dntDetected = false,
-  analyticsOn = false,
-  marketingOn = false,
   onClose,
   onAcceptAll,
   onRejectAll,
+  onManagePrefs,
 }: ConsentEUProps) {
-  const [analytics, setAnalytics] = useState(analyticsOn);
-  const [marketing, setMarketing] = useState(marketingOn);
-
-  const jurisdictionConfig = JURISDICTION_CONFIGS[JURISDICTIONS.EU];
-
   return (
     <div data-theme={theme}>
       <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.CONSENT_EU]}
         screenId={SCREENS.CONSENT_EU}
       >
-        {/* ── Header ── */}
-        <DialogHeader
-          title={SCREEN_TITLES[SCREENS.CONSENT_EU]}
-          onClose={onClose}
-        />
+        {/* ── 1. Header ── */}
+        <DialogHeader onClose={onClose} />
 
-        {/* ── Signal Detection Badges ── */}
-        {(gpcDetected || dntDetected) && (
-          <div className={styles.signals}>
-            {gpcDetected && (
-              <Badge label={SIGNAL_BADGES.GPC} variant="info" size="sm" />
-            )}
-            {dntDetected && (
-              <Badge label={SIGNAL_BADGES.DNT} variant="info" size="sm" />
-            )}
-          </div>
-        )}
-
-        {/* ── Headline + Body ── */}
-        <div className={styles.content}>
-          <h2 className={styles.headline}>
+        {/* ── 2. Text Block ──
+            Bold headline + regular body with inline policy links.
+            Matches predecessor consent-t1.html .consent-text-block. */}
+        <div className={styles.textBlock}>
+          <p className={styles.textBlockBold}>
             {COPY_TEXT.consentHeadline}
-          </h2>
-          <p className={styles.trustLine}>
-            {COPY_TEXT.consentTrustLine}
+          </p>
+          <p className={styles.textBlockRegular}>
+            {EU_CONSENT_BODY}{' '}
+            <Link href={POLICY_URLS.privacy} size="sm">
+              {POLICY_LINKS.privacy}
+            </Link>
+            ,{' '}
+            <Link href={POLICY_URLS.cookie} size="sm">
+              {POLICY_LINKS.cookie}
+            </Link>
+            , &amp;{' '}
+            <Link href={POLICY_URLS.terms} size="sm">
+              {POLICY_LINKS.terms}
+            </Link>
+            .
           </p>
         </div>
 
-        <Divider spacing="sm" />
+        {/* ── 3. Trust Line ── */}
+        <p className={styles.trustLine}>
+          {COPY_TEXT.consentTrustLine}
+        </p>
 
-        {/* ── Consent Toggles ── */}
-        <div className={styles.toggles}>
-          <ConsentToggle
-            label={CONSENT_CATEGORIES.essential.label}
-            sublabel={CONSENT_CATEGORIES.essential.sublabel}
-            checked={true}
-            onChange={() => {}}
-            locked={true}
-            showInfo={true}
-            infoText={CONSENT_CATEGORIES.essential.info}
+        {/* ── 4. GPC Indicator (conditional) ──
+            Only rendered when the browser's Global Privacy Control signal
+            is active. GDPR doesn't mandate GPC, but showing it builds trust
+            and aligns with ePrivacy Regulation drafts. */}
+        {gpcDetected && (
+          <div className={styles.gpcIndicator} role="status">
+            <ShieldIcon className={styles.gpcIcon} />
+            <div>
+              <p className={styles.gpcText}>{GPC_TEXT}</p>
+              <p className={styles.gpcDetail}>{GPC_DETAIL}</p>
+            </div>
+          </div>
+        )}
+
+        {/* ── 5. Social Proof ── */}
+        <SocialProof>
+          {SOCIAL_PROOF_TEXT.prefix}
+          {SOCIAL_PROOF_TEXT.boldItems.map((item, i) => (
+            <React.Fragment key={item}>
+              {i > 0 && ' · '}
+              <SocialProof.Bold>{item}</SocialProof.Bold>
+            </React.Fragment>
+          ))}
+        </SocialProof>
+
+        {/* ── 6. Button Stack ──
+            Order: Reject → Accept → Manage Preferences (ghost).
+            CNIL requires reject to be at least as prominent as accept.
+            Placing reject first satisfies the "same level" enforcement. */}
+        <div className={styles.btnStack}>
+          <Button
+            label={COPY_TEXT.consentRejectBtn}
+            variant="secondary"
+            fullWidth
+            onClick={onRejectAll}
           />
-          <ConsentToggle
-            label={CONSENT_CATEGORIES.analytics.label}
-            sublabel={CONSENT_CATEGORIES.analytics.sublabel}
-            checked={analytics}
-            onChange={setAnalytics}
-            showInfo={true}
-            infoText={CONSENT_CATEGORIES.analytics.info}
-          />
-          <ConsentToggle
-            label={CONSENT_CATEGORIES.marketing.label}
-            sublabel={CONSENT_CATEGORIES.marketing.sublabel}
-            checked={marketing}
-            onChange={setMarketing}
-            showInfo={true}
-            infoText={CONSENT_CATEGORIES.marketing.info}
-          />
-        </div>
-
-        <Divider spacing="sm" />
-
-        {/* ── Legal Notice ── */}
-        <LegalNotice
-          text={jurisdictionConfig.legalNotice}
-          icon="shield"
-        />
-
-        {/* ── Action Buttons ── */}
-        <div className={styles.actions}>
           <Button
             label={COPY_TEXT.consentAcceptBtn}
             variant="primary"
@@ -149,14 +175,31 @@ export function ConsentEU({
             onClick={onAcceptAll}
           />
           <Button
-            label={COPY_TEXT.consentRejectBtn}
-            variant="secondary"
+            label={COPY_TEXT.consentManageBtn}
+            variant="ghost"
             fullWidth
-            onClick={onRejectAll}
+            onClick={onManagePrefs}
           />
         </div>
 
-        {/* ── Footer ── */}
+        {/* ── 7. Consent Receipt ──
+            Hidden placeholder populated by the extension runtime after the
+            user submits a choice. Kept in the DOM so layout doesn't shift. */}
+        <div
+          className={styles.consentReceipt}
+          aria-hidden="true"
+          data-consent-receipt
+        />
+
+        {/* ── 8. Universal Opt-Out Disclosure ──
+            Required by CPA §6-1-1313 and similar state laws. Displayed
+            regardless of GPC detection to inform all users. */}
+        <div className={styles.universalOptout}>
+          <ShieldIcon className={styles.gpcIcon} />
+          <span>{UNIVERSAL_OPTOUT_TEXT}</span>
+        </div>
+
+        {/* ── 9. Footer ── */}
         <div className={styles.footer}>
           <PoweredBadge />
         </div>

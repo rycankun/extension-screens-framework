@@ -3,23 +3,29 @@
  *
  * Screen component (screens/authentication). Prompts the user to set
  * up a biometric passkey (fingerprint, face, or device PIN) for faster
- * future authentication. Includes a fingerprint icon, headline, body
- * + detail copy, a Set Up button, and a Skip link.
+ * future authentication. Left-aligned layout with headline, body,
+ * detail micro text, primary Set Up button, ghost Skip button, and
+ * PoweredBadge footer.
+ *
+ * Predecessor match: passkey-setup.html — NO icon, NO divider, NO
+ * centered layout. Text is left-aligned throughout.
  *
  * @see docs/PRD.md § 4.2 — PasskeySetup specification
  * @see src/constants/variants.ts — COPY_TEXT for passkey text
- * @see src/constants/auth.ts — AUTH constants for labels
+ * @see src/constants/auth.ts — AUTH constants for labels/ARIA
  */
 import React from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
 import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
-import { Icon } from '../../atoms/Icon/Icon';
-import { Divider } from '../../atoms/Divider/Divider';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import { COPY_TEXT } from '../../../constants/variants';
-import { PASSKEY_SKIP_LABEL } from '../../../constants/auth';
+import {
+  PASSKEY_SKIP_LABEL,
+  PASSKEY_SKIP_ARIA,
+  PASSKEY_SETUP_ARIA,
+} from '../../../constants/auth';
 import styles from './PasskeySetup.module.css';
 
 /* ── Props ── */
@@ -31,7 +37,7 @@ export interface PasskeySetupProps {
   onClose?: () => void;
   /** Callback when Set Up Passkey is clicked */
   onSetup?: () => void;
-  /** Callback when Skip is clicked */
+  /** Callback when Skip for Now is clicked */
   onSkip?: () => void;
 }
 
@@ -49,29 +55,19 @@ export function PasskeySetup({
         ariaLabel={SCREEN_TITLES[SCREENS.PASSKEY_SETUP]}
         screenId={SCREENS.PASSKEY_SETUP}
       >
-        {/* ── Header ── */}
-        <DialogHeader
-          title={SCREEN_TITLES[SCREENS.PASSKEY_SETUP]}
-          onClose={onClose}
-        />
+        {/* ── Header: logo + close (no back arrow, no icon) ── */}
+        <DialogHeader onClose={onClose} />
 
-        {/* ── Fingerprint Icon + Content ── */}
-        <div className={styles.content}>
-          <div className={styles.iconWrap}>
-            <Icon name="fingerprint" size="xl" color="var(--tid-brand)" ariaLabel="Fingerprint" />
-          </div>
-          <h2 className={styles.headline}>
-            {COPY_TEXT.passkeyHeadline}
-          </h2>
-          <p className={styles.body}>
-            {COPY_TEXT.passkeyBody}
-          </p>
-          <p className={styles.detail}>
-            {COPY_TEXT.passkeyDetail}
-          </p>
+        {/* ── Text Block: bold headline + regular body ── */}
+        <div className={styles.textBlock}>
+          <p className={styles.bold}>{COPY_TEXT.passkeyHeadline}</p>
+          <p className={styles.regular}>{COPY_TEXT.passkeyBody}</p>
         </div>
 
-        <Divider spacing="sm" />
+        {/* ── Detail Micro Text ──
+            Predecessor class: .micro .color-body .text-left .micro-relaxed
+            12px, text-body color, left-aligned, relaxed line-height */}
+        <p className={styles.detail}>{COPY_TEXT.passkeyDetail}</p>
 
         {/* ── Action Buttons ── */}
         <div className={styles.actions}>
@@ -80,18 +76,15 @@ export function PasskeySetup({
             variant="primary"
             fullWidth
             onClick={onSetup}
+            ariaLabel={PASSKEY_SETUP_ARIA}
           />
-        </div>
-
-        {/* ── Skip Link ── */}
-        <div className={styles.skipRow}>
-          <button
-            className={styles.skipLink}
+          <Button
+            label={PASSKEY_SKIP_LABEL}
+            variant="ghost"
+            fullWidth
             onClick={onSkip}
-            type="button"
-          >
-            {PASSKEY_SKIP_LABEL}
-          </button>
+            ariaLabel={PASSKEY_SKIP_ARIA}
+          />
         </div>
 
         {/* ── Footer ── */}

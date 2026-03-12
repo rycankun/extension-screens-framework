@@ -256,9 +256,9 @@ See `tokens.css` for the full shadow token catalog. Key shadows:
 
 | Component | Composed Of | Description |
 |-----------|-------------|-------------|
-| **BannerShell** | Banner container + gradient background + frost layer + content slot | 380px wide extension drawer with animated gradient bg (static for Figma) |
+| **BannerShell** | Banner container + gradient background + frost layer + content slot | 380px wide extension drawer with gradient bg and frosted glass content layer |
 | **ToastContainer** | Floating container + content slot | Small notification overlay |
-| **OverlayShell** | Full-page overlay + gradient background + frost layer + content slot | Full-viewport overlay (age gate, QR verify) |
+| **OverlayShell** | Full-page overlay + gradient background + frost layer + content slot | Full-viewport overlay with frosted glass content layer (age gate, QR verify) |
 
 ---
 

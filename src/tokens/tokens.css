@@ -351,16 +351,18 @@
   --tid-opacity-full: 1;
 
   /* ─────────────────────────────────────────────────────────────────
-     11. BACKDROP BLUR
-     Frosted glass effect tiers for live demo preview only.
-     NOT exported to Figma — Figma uses solid surfaces instead.
-     Components should use solid --tid-surface fallbacks.
+     11. BACKDROP BLUR & SATURATION
+     Frosted glass effect tiers — critical design element used in both
+     Storybook preview AND Figma exports. BannerShell and OverlayShell
+     content layers use backdrop-filter: blur() + saturate() over the
+     gradient background. html2figma supports backdrop-filter natively.
      ───────────────────────────────────────────────────────────────── */
   --tid-blur-none: 0px;
   --tid-blur-sm: 4px;                    /* Subtle blur — toast containers */
   --tid-blur-md: 8px;                    /* Medium blur — banner frost layer */
-  --tid-blur-lg: 16px;                   /* Heavy blur — overlay backgrounds */
+  --tid-blur-lg: 16px;                   /* Heavy blur — banner/overlay frost (predecessor --blur-xl) */
   --tid-blur-xl: 24px;                   /* Maximum blur — age gate cover */
+  --tid-saturate-normal: 1.4;            /* Saturation boost for frosted glass layers */
 
   /* ─────────────────────────────────────────────────────────────────
      12. GRADIENTS

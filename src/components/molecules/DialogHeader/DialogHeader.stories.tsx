@@ -1,14 +1,18 @@
 /**
  * DialogHeader Stories — Molecule Component
  *
- * Showcases the standard banner header with logo, title, and close button.
+ * Showcases the standard banner header with logo image and close button.
+ * The header displays a site logo (e.g., StreamVault brand lockup) instead
+ * of a text title.
  *
  * @see src/components/molecules/DialogHeader/DialogHeader.tsx for implementation
  */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { DialogHeader } from './DialogHeader';
-import { SCREEN_TITLES, SCREENS } from '../../../constants';
+
+/** StreamVault brand lockup logo path — used as the default header logo */
+const STREAMVAULT_LOGO = '/assets/StreamVault-BrandLockup-Primary.svg';
 
 const meta: Meta<typeof DialogHeader> = {
   title: 'Molecules/DialogHeader',
@@ -34,34 +38,27 @@ export default meta;
 
 type Story = StoryObj<typeof DialogHeader>;
 
-/** Default header with consent screen title */
+/** Default header with StreamVault logo and close button */
 export const Default: Story = {
   args: {
-    title: SCREEN_TITLES[SCREENS.CONSENT_EU],
+    logoSrc: STREAMVAULT_LOGO,
+    logoAlt: 'StreamVault',
     onClose: () => {},
   },
 };
 
-/** Header for email capture screen */
-export const EmailCapture: Story = {
-  args: {
-    title: SCREEN_TITLES[SCREENS.EMAIL_CAPTURE],
-    onClose: () => {},
-  },
-};
-
-/** Header for cookie preferences screen */
-export const CookiePrefs: Story = {
-  args: {
-    title: SCREEN_TITLES[SCREENS.COOKIE_PREFS],
-    onClose: () => {},
-  },
-};
-
-/** Header without close button (e.g., success screen) */
+/** Header with logo but without close button (e.g., success screen) */
 export const NoCloseButton: Story = {
   args: {
-    title: SCREEN_TITLES[SCREENS.SUCCESS],
+    logoSrc: STREAMVAULT_LOGO,
+    logoAlt: 'StreamVault',
     showClose: false,
+  },
+};
+
+/** Header with close button only (no logo provided) */
+export const NoLogo: Story = {
+  args: {
+    onClose: () => {},
   },
 };

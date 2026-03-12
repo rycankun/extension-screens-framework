@@ -1,11 +1,15 @@
 /**
  * SharingSettings Stories — Screen Component
  *
- * All variant stories for the credential sharing settings screen.
+ * All variant stories for the credential sharing details screen.
  * Each named export = one Figma frame import target.
  *
+ * The SharingSettings screen shows a read-only definition list of
+ * credential sharing metadata with a Revoke Sharing button.
+ * No toggle controls — this is an informational display screen.
+ *
  * @see src/components/screens/preferences/SharingSettings.tsx for implementation
- * @see docs/PRD.md § 4.3 — SharingSettings specification
+ * @see docs/PRD.md section 4.3 — SharingSettings specification
  */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -19,16 +23,13 @@ const meta: Meta<typeof SharingSettings> = {
   },
   argTypes: {
     theme: { control: 'select', options: ['light', 'dark'] },
-    emailShared: { control: 'boolean' },
-    dobShared: { control: 'boolean' },
-    ageShared: { control: 'boolean' },
   },
 };
 export default meta;
 
 type Story = StoryObj<typeof SharingSettings>;
 
-/** Sharing settings — light theme, all off */
+/** Sharing settings — light theme, credential definition list */
 export const Light: Story = {
   args: {
     theme: 'light',
@@ -39,25 +40,5 @@ export const Light: Story = {
 export const Dark: Story = {
   args: {
     theme: 'dark',
-  },
-};
-
-/** All credentials shared */
-export const AllShared: Story = {
-  args: {
-    theme: 'light',
-    emailShared: true,
-    dobShared: true,
-    ageShared: true,
-  },
-};
-
-/** Only email shared */
-export const EmailOnly: Story = {
-  args: {
-    theme: 'light',
-    emailShared: true,
-    dobShared: false,
-    ageShared: false,
   },
 };

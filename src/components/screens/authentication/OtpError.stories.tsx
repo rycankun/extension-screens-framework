@@ -6,6 +6,7 @@
  *
  * @see src/components/screens/authentication/OtpError.tsx for implementation
  * @see docs/PRD.md § 4.2 — OtpError specification
+ * @see docs/reference/SCREEN-AUDIT.md — OtpError interactive states
  */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -19,13 +20,15 @@ const meta: Meta<typeof OtpError> = {
   },
   argTypes: {
     theme: { control: 'select', options: ['light', 'dark'] },
+    email: { control: 'text' },
+    attemptsLeft: { control: 'number' },
   },
 };
 export default meta;
 
 type Story = StoryObj<typeof OtpError>;
 
-/** OTP error — light theme */
+/** OTP error — light theme, 2 attempts remaining (default) */
 export const Light: Story = {
   args: {
     theme: 'light',

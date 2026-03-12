@@ -3,25 +3,35 @@
  *
  * Screen component (screens/authentication). Prompts the user to
  * authenticate with their existing passkey (fingerprint, face, or
- * device PIN). Shows a fingerprint icon, headline, body copy,
- * a Verify button, and a "Use Password Instead" fallback link.
+ * device PIN). Shows a person-outline SVG preview area with waiting
+ * status text, a GREEN "Simulate Passkey Success" button, a secondary
+ * "Use code instead" button, and a PoweredBadge footer.
+ *
+ * Predecessor match: passkey-verify.html
+ *   - DialogHeader: logo + close button (NO back arrow)
+ *   - Text block: bold headline + regular body (left-aligned)
+ *   - Passkey preview: 48x48 SVG person icon + waiting subtext (centered)
+ *   - Primary button: GREEN (btn-primary btn-success) not default brand blue
+ *   - Secondary button: "Use code instead" (btn-secondary, not a text link)
+ *   - PoweredBadge footer
  *
  * @see docs/PRD.md § 4.2 — PasskeyVerify specification
  * @see src/constants/variants.ts — COPY_TEXT for passkey verify text
- * @see src/constants/auth.ts — AUTH constants for labels
+ * @see src/constants/auth.ts — AUTH constants for labels/ARIA
  */
 import React from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
 import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
-import { Icon } from '../../atoms/Icon/Icon';
-import { Divider } from '../../atoms/Divider/Divider';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import { COPY_TEXT } from '../../../constants/variants';
 import {
   PASSKEY_VERIFY_BTN,
-  PASSKEY_USE_PASSWORD,
+  PASSKEY_VERIFY_BTN_ARIA,
+  PASSKEY_USE_CODE,
+  PASSKEY_USE_CODE_ARIA,
+  PASSKEY_VERIFY_WAITING,
 } from '../../../constants/auth';
 import styles from './PasskeyVerify.module.css';
 
@@ -32,10 +42,10 @@ export interface PasskeyVerifyProps {
   theme?: 'light' | 'dark';
   /** Callback when the dialog is closed */
   onClose?: () => void;
-  /** Callback when Verify with Passkey is clicked */
+  /** Callback when Simulate Passkey Success is clicked */
   onVerify?: () => void;
-  /** Callback when Use Password Instead is clicked */
-  onUsePassword?: () => void;
+  /** Callback when Use code instead is clicked */
+  onUseCode?: () => void;
 }
 
 /* ── Component ── */
@@ -44,7 +54,7 @@ export function PasskeyVerify({
   theme = 'light',
   onClose,
   onVerify,
-  onUsePassword,
+  onUseCode,
 }: PasskeyVerifyProps) {
   return (
     <div data-theme={theme}>
@@ -52,46 +62,55 @@ export function PasskeyVerify({
         ariaLabel={SCREEN_TITLES[SCREENS.PASSKEY_VERIFY]}
         screenId={SCREENS.PASSKEY_VERIFY}
       >
-        {/* ── Header ── */}
-        <DialogHeader
-          title={SCREEN_TITLES[SCREENS.PASSKEY_VERIFY]}
-          onClose={onClose}
-        />
+        {/* ── Header: logo + close (NO back arrow) ── */}
+        <DialogHeader onClose={onClose} />
 
-        {/* ── Fingerprint Icon + Content ── */}
-        <div className={styles.content}>
-          <div className={styles.iconWrap}>
-            <Icon name="fingerprint" size="xl" color="var(--tid-brand)" ariaLabel="Fingerprint" />
-          </div>
-          <h2 className={styles.headline}>
-            {COPY_TEXT.passkeyVerifyHeadline}
-          </h2>
-          <p className={styles.body}>
-            {COPY_TEXT.passkeyVerifyBody}
-          </p>
+        {/* ── Text Block: bold headline + regular body (left-aligned) ── */}
+        <div className={styles.textBlock}>
+          <p className={styles.bold}>{COPY_TEXT.passkeyVerifyHeadline}</p>
+          <p className={styles.regular}>{COPY_TEXT.passkeyVerifyBody}</p>
         </div>
 
-        <Divider spacing="sm" />
+        {/* ── Passkey Preview Area ──
+            Centered 48x48 person-outline SVG + waiting status text.
+            Predecessor: .passkey-preview with aria-label and aria-live subtext. */}
+        <div className={styles.passkeyPreview} aria-label="Waiting for biometric authentication">
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            fill="none"
+            aria-hidden="true"
+            className={styles.passkeyIcon}
+          >
+            <rect x="4" y="4" width="40" height="40" rx="12" stroke="currentColor" strokeWidth="2" />
+            <circle cx="24" cy="20" r="6" stroke="currentColor" strokeWidth="2" />
+            <path d="M14 36c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <div className={styles.waitingText} aria-live="polite">
+            {PASSKEY_VERIFY_WAITING}
+          </div>
+        </div>
 
-        {/* ── Action Buttons ── */}
+        {/* ── Action Buttons ──
+            1. "Simulate Passkey Success" — GREEN button (success override on primary)
+            2. "Use code instead" — secondary button (not a text link) */}
         <div className={styles.actions}>
           <Button
             label={PASSKEY_VERIFY_BTN}
             variant="primary"
             fullWidth
             onClick={onVerify}
+            ariaLabel={PASSKEY_VERIFY_BTN_ARIA}
+            className={styles.successBtn}
           />
-        </div>
-
-        {/* ── Use Password Link ── */}
-        <div className={styles.fallbackRow}>
-          <button
-            className={styles.fallbackLink}
-            onClick={onUsePassword}
-            type="button"
-          >
-            {PASSKEY_USE_PASSWORD}
-          </button>
+          <Button
+            label={PASSKEY_USE_CODE}
+            variant="secondary"
+            fullWidth
+            onClick={onUseCode}
+            ariaLabel={PASSKEY_USE_CODE_ARIA}
+          />
         </div>
 
         {/* ── Footer ── */}

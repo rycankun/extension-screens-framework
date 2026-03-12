@@ -305,7 +305,7 @@ Each screen component accepts variant axes as props. Each Storybook story combin
 - **Accent**: Trust ID Blue (`#0E6FFF`) for CTAs, links, interactive elements
 - **Banner width**: 380px fixed
 - **Cards**: Subtle borders with gentle box-shadows, small rounded corners
-- **No glassmorphism in Figma exports** — frosted glass effects only in live demo, static surfaces in Figma frames
+- **Frosted glass is a critical design element** — the `backdrop-filter: blur()` frost layer over the gradient background is present in both Storybook preview AND Figma exports. Use `background: rgba(var(--tid-surface-rgb), 0.4)` with `backdrop-filter: blur(var(--tid-blur-xl))` on the BannerShell content layer. Three frost tiers are available: `.frost-light` (0.4 opacity), `.frost-medium` (0.58), `.frost-heavy` (0.75).
 - **Overall feel**: Clean, professional, trustworthy, precise
 
 ## Color Palette (from TrustID Brand Guide)
@@ -429,7 +429,7 @@ Each named export = one Figma frame when imported.
 |---------|-------|-------|
 | Banner width | 380px | `--tid-size-banner` |
 | Banner border-radius | 4px top, 0 bottom | `--tid-radius-sm` |
-| Content padding | 8px 12px 4px | `--tid-sp-4` / `--tid-sp-6` |
+| Content padding | 16px 24px 8px | `--tid-sp-8` / `--tid-sp-12` / `--tid-sp-4` |
 | Touch target minimum | 44px | `--tid-size-touch` |
 | Icon standard | 16px | `--tid-size-icon` |
 | Control height | 40px | `--tid-size-control` |
@@ -467,4 +467,6 @@ Each named export = one Figma frame when imported.
 - [ ] Figma plugin screen import
 - [ ] Flow documentation (Mermaid MDX)
 - [ ] Figma export script (standalone HTML generation)
+- [ ] Visual fidelity correction (Step 11.5 — match predecessor 1:1)
+- [ ] Legal compliance audit (Step 11.5F — per-jurisdiction element verification)
 - [ ] Final audit (a11y, tokens, Figma sync)

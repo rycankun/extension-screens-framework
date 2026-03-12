@@ -1,0 +1,79 @@
+/**
+ * CheckboxRow Styles — Molecule Component
+ *
+ * Styled native checkbox (20px square) with label text.
+ * Checked state uses brand blue background with white checkmark.
+ *
+ * Predecessor ref: .checkbox-row, .checkbox, .checkbox-text
+ * in components.css:1220-1271
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Row Container ── */
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-4); /* 8px */
+  min-height: var(--tid-size-touch); /* 44px WCAG touch target */
+}
+
+/* ── Checkbox Input ──
+   Native <input type="checkbox"> with custom appearance.
+   20px square, 4px border-radius, brand blue when checked. */
+
+.checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: var(--tid-size-icon-md); /* 20px */
+  height: var(--tid-size-icon-md);
+  border: var(--tid-border-width) solid rgba(var(--tid-ink-rgb), 0.2);
+  border-radius: var(--tid-radius-sm); /* 4px */
+  background: var(--tid-surface);
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+/* ── Checked State ── */
+
+.checkbox:checked {
+  background: var(--tid-brand); /* Trust ID Blue */
+  border-color: var(--tid-brand);
+}
+
+/* ── Checkmark (white rotated border pseudo-element) ── */
+
+.checkbox:checked::after {
+  content: '';
+  display: block;
+  width: var(--tid-sp-3); /* 6px */
+  height: var(--tid-size-icon-xs); /* 10px */
+  border: solid var(--tid-toggle-knob); /* White */
+  border-width: 0 var(--tid-border-width-thick) var(--tid-border-width-thick) 0; /* right & bottom only */
+  transform: rotate(45deg) translateY(-1px);
+}
+
+/* ── Focus-Visible ── */
+
+.checkbox:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}
+
+/* ── Label Text ── */
+
+.checkboxText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  color: var(--tid-text-body);
+  letter-spacing: var(--tid-ls-normal);
+  line-height: var(--tid-lh-snug); /* 15px */
+  cursor: pointer;
+}

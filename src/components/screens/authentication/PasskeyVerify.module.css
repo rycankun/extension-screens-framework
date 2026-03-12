@@ -2,37 +2,32 @@
  * PasskeyVerify Styles — Screen Component
  *
  * Layout and typography for the passkey verification screen.
+ * Matches predecessor passkey-verify.html pixel-for-pixel:
+ *   - Left-aligned text block (bold + regular)
+ *   - Centered passkey preview area (48x48 SVG + waiting subtext)
+ *   - GREEN success button (overrides primary bg with --tid-success)
+ *   - Secondary "Use code instead" button (not a text link)
+ *
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Content Area ──
-   Fingerprint icon + headline + body, centered. */
+/* ── Text Block ──
+   Bold headline + regular body, left-aligned, tight gap.
+   Same pattern as PasskeySetup.module.css textBlock. */
 
-.content {
+.textBlock {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--tid-sp-3); /* 6px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
-  text-align: center;
+  gap: var(--tid-sp-1); /* 2px */
 }
 
-/* ── Icon Wrapper ──
-   Centers the fingerprint icon. */
+/* ── Bold Headline ──
+   "Confirm with your device." — heading font, medium weight, left-aligned. */
 
-.iconWrap {
-  display: flex;
-  justify-content: center;
-  padding: var(--tid-sp-2); /* 4px */
-}
-
-/* ── Headline ──
-   "Confirm with your device." — heading font, medium weight. */
-
-.headline {
+.bold {
   font-family: var(--tid-ff-heading);
   font-size: var(--tid-fs-base); /* 14px */
   font-weight: var(--tid-fw-medium);
@@ -40,64 +35,78 @@
   line-height: var(--tid-lh-body); /* 17px */
   letter-spacing: var(--tid-ls-tight);
   margin: var(--tid-sp-0);
+  text-align: left;
 }
 
-/* ── Body Text ──
-   Passkey verification description. */
+/* ── Regular Body ──
+   "Use Face ID, fingerprint, or your device PIN." — body font, regular weight. */
 
-.body {
+.regular {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-body-sm); /* 12px */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-text-body);
-  line-height: var(--tid-lh-relaxed); /* 18px */
+  line-height: var(--tid-lh-body); /* 17px */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
+  text-align: left;
+}
+
+/* ── Passkey Preview Area ──
+   Centered column with the person-outline SVG icon and waiting status text.
+   Predecessor: .passkey-preview — flex column, centered, padded. */
+
+.passkeyPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tid-sp-4); /* 8px */
+  padding: var(--tid-sp-8) var(--tid-sp-0); /* 16px 0 — vertical breathing room */
+}
+
+/* ── Passkey Icon (SVG) ──
+   48x48 person-outline SVG. Uses text-secondary for the stroke color
+   so it adapts automatically to light/dark theme. */
+
+.passkeyIcon {
+  color: var(--tid-text-secondary);
+}
+
+/* ── Waiting Text ──
+   "Waiting for biometric confirmation..." — small, centered, secondary color.
+   Predecessor: .subtext .text-center — 12px, text-secondary. */
+
+.waitingText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+  text-align: center;
 }
 
 /* ── Action Buttons ──
-   Verify with Passkey button. */
+   GREEN success button + secondary "Use code instead", stacked. */
 
 .actions {
   display: flex;
   flex-direction: column;
   gap: var(--tid-sp-3); /* 6px */
-  margin-top: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Fallback Row ──
-   Centered "Use Password Instead" link. */
+/* ── Success Button Override ──
+   Predecessor uses btn-primary btn-success which sets bg to the green
+   success color instead of the default dark primary. Applied via
+   className prop on the Button atom to override --tid-btn-primary-bg. */
 
-.fallbackRow {
-  display: flex;
-  justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+.successBtn {
+  background-color: var(--tid-success);
 }
 
-/* ── Fallback Link ──
-   Text-only button styled as a link. */
-
-.fallbackLink {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-brand);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--tid-sp-0);
-  letter-spacing: var(--tid-ls-normal);
-  line-height: var(--tid-lh-snug); /* 15px */
-}
-
-.fallbackLink:hover {
-  color: var(--tid-brand-dark);
-}
-
-.fallbackLink:focus-visible {
-  outline: var(--tid-outline-width) solid var(--tid-border-focus);
-  outline-offset: var(--tid-outline-offset);
-  border-radius: var(--tid-radius-xs);
+.successBtn:hover:not(:disabled) {
+  /* Slightly darker green on hover — uses the verified tier as the hover state */
+  background-color: var(--tid-success-verified);
 }
 
 /* ── Footer ──

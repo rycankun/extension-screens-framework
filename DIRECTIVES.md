@@ -66,7 +66,7 @@ Foundation token stories (Colors, Spacing, Typography) are exempt from this comm
 ### 1.5 Figma-Compatible CSS
 
 Screens destined for Figma import must avoid CSS that html2figma cannot handle:
-- No `backdrop-filter` (frosted glass) in exported screens — use solid surfaces
+- `backdrop-filter: blur()` frosted glass IS used — this is a critical visual element. BannerShell and OverlayShell content layers use `background: rgba(var(--tid-surface-rgb), 0.4)` + `backdrop-filter: blur(var(--tid-blur-xl))`. Figma's html2figma plugin supports backdrop-filter natively.
 - No CSS animations or transitions — Figma frames are static
 - No `position: fixed` or `position: sticky` — Figma uses auto-layout
 - Explicit dimensions on all containers (width, height, or flex sizing)

@@ -1,38 +1,100 @@
 /**
  * EmailConfirm Styles — Screen Component
  *
- * Layout and typography for the email verification confirmation screen.
+ * Layout and typography for the "Verify with a code instead" screen.
+ * Custom three-column header (BackArrow | Logo | Close), left-aligned
+ * text block, email input, primary + ghost button stack.
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
 
-/* ── Content Area ──
-   Success icon + headline + body text, centered. */
+/* ── Custom Header ──
+   Three-column layout: BackArrow (left) | Logo (center) | Close (right).
+   Same pattern as predecessor email-confirm.html header. */
 
-.content {
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* ── Logo Center ──
+   Centered logo between back arrow and close button. */
+
+.logoCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+/* ── Host Site Logo Image ──
+   Height-constrained logo with auto width to preserve aspect ratio.
+   Matches DialogHeader's --tid-size-icon-md (20px). */
+
+.logoImg {
+  height: var(--tid-size-icon-md); /* 20px */
+  width: auto;
+}
+
+/* ── Dark Mode Logo Inversion ──
+   StreamVault logo is designed for light backgrounds. In dark mode,
+   invert to white via CSS filter (predecessor pattern). */
+
+:global([data-theme='dark']) .logoImg {
+  filter: brightness(0) invert(1);
+}
+
+/* ── Close Button ──
+   44px touch target (WCAG minimum) with centered 16px close icon.
+   Negative right margin aligns icon edge with content area. */
+
+.closeBtn {
+  width: var(--tid-size-touch); /* 44px */
+  height: var(--tid-size-touch);
+  /* Align icon edge with content padding edge */
+  margin-right: calc((var(--tid-size-touch) - var(--tid-size-icon)) / -2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--tid-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: var(--tid-radius-sm); /* 4px */
+}
+
+.closeBtn:hover {
+  background: rgba(var(--tid-ink-rgb), 0.04); /* Very subtle tint on hover */
+  color: var(--tid-text-secondary);
+}
+
+.closeBtn:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}
+
+/* ── Text Block ──
+   Bold headline + regular body text, left-aligned (not centered).
+   Matches predecessor email-confirm.html layout. */
+
+.textBlock {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--tid-sp-3); /* 6px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
-  text-align: center;
+  gap: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Icon Wrapper ──
-   Centers the success icon with padding. */
+/* ── Bold Headline ──
+   "Verify with a code instead." — heading font, medium weight. */
 
-.iconWrap {
-  display: flex;
-  justify-content: center;
-  padding: var(--tid-sp-2); /* 4px */
-}
-
-/* ── Headline ──
-   Confirmation headline — heading font, medium weight. */
-
-.headline {
+.bold {
   font-family: var(--tid-ff-heading);
   font-size: var(--tid-fs-base); /* 14px */
   font-weight: var(--tid-fw-medium);
@@ -42,10 +104,10 @@
   margin: var(--tid-sp-0);
 }
 
-/* ── Body Text ──
-   Confirmation description below headline. */
+/* ── Regular Body Text ──
+   Description below headline — body font, regular weight. */
 
-.body {
+.regular {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-body-sm); /* 12px */
   font-weight: var(--tid-fw-regular);
@@ -55,8 +117,30 @@
   margin: var(--tid-sp-0);
 }
 
+/* ── Input Area ──
+   Email input wrapper with bottom spacing. */
+
+.inputArea {
+  margin-bottom: var(--tid-sp-3); /* 6px */
+}
+
+/* ── Screen-Reader Only ──
+   Visually hidden label for the email input. */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Action Buttons ──
-   Continue button. */
+   Send Code primary + Back to passkey ghost button stack. */
 
 .actions {
   display: flex;

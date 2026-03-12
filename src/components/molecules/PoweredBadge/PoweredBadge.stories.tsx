@@ -1,7 +1,8 @@
 /**
  * PoweredBadge Stories — Molecule Component
  *
- * Showcases the "Powered by TrustID" attribution badge.
+ * Showcases the "Powered by Trust ID · Privacy" attribution footer
+ * with icon image and linked text.
  *
  * @see src/components/molecules/PoweredBadge/PoweredBadge.tsx for implementation
  */
@@ -20,7 +21,7 @@ export default meta;
 
 type Story = StoryObj<typeof PoweredBadge>;
 
-/** Default powered badge */
+/** Default powered badge with Trust ID and Privacy links */
 export const Default: Story = {};
 
 /** Badge in footer context with surface background */
