@@ -1,0 +1,92 @@
+/**
+ * BannerShell Styles — Organism Component
+ *
+ * 380px extension drawer with gradient background, decorative blobs,
+ * and solid content surface. Static layout for Figma import — no
+ * animations, no backdrop-filter, no position: fixed.
+ *
+ * The banner has two visual layers:
+ *   1. Gradient background + blobs (decorative, behind content)
+ *   2. Solid surface (content area, foreground)
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.5 for Figma-compatible CSS constraints
+ */
+
+/* ── Banner Container ──
+   Fixed 380px width to match the browser extension drawer exactly.
+   Top corners are rounded, bottom is flush with viewport edge. */
+
+.banner {
+  position: relative;
+  width: var(--tid-size-banner); /* 380px */
+  border-radius: var(--tid-radius-sm) var(--tid-radius-sm) 0 0; /* 4px top, 0 bottom */
+  box-shadow: var(--tid-shadow-banner);
+  overflow: hidden;
+  z-index: var(--tid-z-banner); /* 250 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Gradient Background Layer ──
+   Diagonal gradient behind all content. Three radial gradient blobs
+   overlay this for the signature TrustID visual. Blobs are static
+   for Figma (no CSS animation). */
+
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: var(--tid-gradient-banner);
+  z-index: var(--tid-z-base); /* 0 */
+}
+
+/* ── Decorative Blobs ──
+   Three radial gradient circles positioned within the gradient layer.
+   Sizes and gradients come from tokens for Figma Variable sync. */
+
+.blob1 {
+  position: absolute;
+  width: var(--tid-size-blob1); /* 180px */
+  height: var(--tid-size-blob1);
+  background: var(--tid-gradient-blob1);
+  top: var(--tid-sp-0);
+  right: var(--tid-sp-0);
+  border-radius: var(--tid-radius-circle); /* 50% */
+}
+
+.blob2 {
+  position: absolute;
+  width: var(--tid-size-blob2); /* 140px */
+  height: var(--tid-size-blob2);
+  background: var(--tid-gradient-blob2);
+  bottom: var(--tid-sp-10); /* 20px */
+  left: var(--tid-sp-0);
+  border-radius: var(--tid-radius-circle);
+}
+
+.blob3 {
+  position: absolute;
+  width: var(--tid-size-blob3); /* 120px */
+  height: var(--tid-size-blob3);
+  background: var(--tid-gradient-blob3);
+  top: var(--tid-sp-20); /* 40px — center-right area */
+  right: var(--tid-sp-10); /* 20px */
+  border-radius: var(--tid-radius-circle);
+}
+
+/* ── Content Surface ──
+   Solid opaque surface for Figma compatibility. The live Storybook
+   preview could add backdrop-filter: blur() for frost, but Figma
+   export must use this solid version. */
+
+.surface {
+  position: relative;
+  z-index: var(--tid-z-content); /* 1 — above gradient layer */
+  background-color: var(--tid-surface);
+  margin: var(--tid-sp-2); /* 4px — thin gradient border visible around edges */
+  border-radius: var(--tid-radius-sm); /* 4px */
+  padding: var(--tid-sp-4) var(--tid-sp-6) var(--tid-sp-2); /* 8px 12px 4px */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}

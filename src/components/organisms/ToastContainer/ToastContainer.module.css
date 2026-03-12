@@ -1,0 +1,28 @@
+/**
+ * ToastContainer Styles — Organism Component
+ *
+ * Small floating notification with rounded corners, subtle border,
+ * and toast-level shadow. Fixed width of 280px. Static layout for
+ * Figma import — no position: fixed, no entry animations.
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.5 for Figma-compatible CSS constraints
+ */
+
+/* ── Toast Container ──
+   280px wide floating notification. Rounded corners (12px) give a
+   pill-like appearance. Border + shadow create subtle elevation. */
+
+.toast {
+  position: relative;
+  width: var(--tid-size-toast-width); /* 280px */
+  background-color: var(--tid-surface);
+  border: var(--tid-border-width) solid var(--tid-border); /* 1px subtle border */
+  border-radius: var(--tid-radius-xl); /* 12px */
+  box-shadow: var(--tid-shadow-toast);
+  z-index: var(--tid-z-toast); /* 400 */
+  padding: var(--tid-sp-6) var(--tid-sp-8); /* 12px 16px */
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-4); /* 8px */
+}

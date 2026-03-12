@@ -1,0 +1,46 @@
+/**
+ * OverlayShell Styles — Organism Component
+ *
+ * Full-viewport dark gradient backdrop with centered content card.
+ * Static layout for Figma import — no position: fixed, no backdrop-filter,
+ * no entry animations. Uses solid gradient background and opaque card.
+ *
+ * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see DIRECTIVES.md § 1.5 for Figma-compatible CSS constraints
+ */
+
+/* ── Backdrop ──
+   Full viewport dark gradient background. Uses flexbox centering
+   to position the content card. Fixed dimensions for Figma frame
+   (not viewport-relative — Figma doesn't support vh/vw). */
+
+.backdrop {
+  position: relative;
+  width: 100%;
+  min-height: 600px; /* Figma frame height — ensures visible card centering */
+  background: var(--tid-gradient-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--tid-z-overlay); /* 300 */
+  padding: var(--tid-sp-12); /* 24px — breathing room around card */
+}
+
+/* ── Content Card ──
+   Centered card with rounded corners, shadow, and solid surface.
+   In the live demo this would have frost/blur; Figma uses opaque
+   surface for clean import. */
+
+.card {
+  position: relative;
+  background-color: var(--tid-surface);
+  border-radius: var(--tid-radius-lg); /* 8px */
+  box-shadow: var(--tid-shadow-overlay);
+  padding: var(--tid-sp-12) var(--tid-sp-16); /* 24px 32px */
+  max-width: var(--tid-size-banner); /* 380px — same max as banner */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
