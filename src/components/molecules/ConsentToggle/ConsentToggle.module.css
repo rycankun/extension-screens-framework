@@ -1,0 +1,77 @@
+/**
+ * ConsentToggle Styles — Molecule Component
+ *
+ * Horizontal row: Toggle (left) → Label stack (flex) → Info icon (right).
+ * Used in consent screens for cookie/data category toggles.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Row Container ── */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-4); /* 8px */
+  padding: var(--tid-sp-3) 0; /* 6px vertical */
+  min-height: var(--tid-size-touch); /* 44px — WCAG touch target */
+}
+
+/* ── Label Stack ── */
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-1); /* 2px */
+  min-width: 0; /* Allow text truncation if needed */
+}
+
+.label {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+.sublabel {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+/* ── Info Button ── */
+
+.infoBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tid-size-icon-lg); /* 24px */
+  height: var(--tid-size-icon-lg);
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  color: var(--tid-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: var(--tid-radius-sm); /* 4px */
+  transition: color var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+.infoBtn:hover {
+  color: var(--tid-brand);
+}
+
+/* ── Focus-Visible ── */
+
+.infoBtn:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}

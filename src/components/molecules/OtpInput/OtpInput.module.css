@@ -1,0 +1,69 @@
+/**
+ * OtpInput Styles — Molecule Component
+ *
+ * Horizontal row of 6 square digit cells for OTP entry.
+ * Each cell: 40×40, centered digit, brand focus ring.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Container ── */
+
+.container {
+  display: flex;
+  gap: var(--tid-sp-4); /* 8px */
+  justify-content: center;
+}
+
+/* ── Individual Digit Cell ── */
+
+.cell {
+  width: var(--tid-size-otp-cell); /* 40px */
+  height: var(--tid-size-otp-cell);
+  border: var(--tid-border-width) solid var(--tid-border-input);
+  border-radius: var(--tid-radius-sm); /* 4px */
+  background-color: var(--tid-surface);
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-xl); /* 22px — large for digit readability */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  text-align: center;
+  line-height: var(--tid-lh-display); /* 28px */
+  letter-spacing: var(--tid-ls-normal);
+  padding: 0;
+  outline: none;
+  transition:
+    border-color var(--tid-duration-fast) var(--tid-ease-default),
+    box-shadow var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+/* ── Focus State ── */
+
+.cell:focus {
+  border-color: var(--tid-border-focus);
+  box-shadow: var(--tid-shadow-focus-brand);
+}
+
+/* ── Error State ── */
+
+.error {
+  border-color: var(--tid-border-error);
+}
+
+.error:focus {
+  border-color: var(--tid-border-error);
+  box-shadow: var(--tid-shadow-focus-error);
+}
+
+/* ── Disabled State ── */
+
+.cell:disabled {
+  opacity: var(--tid-opacity-disabled);
+  cursor: default;
+}
+
+/* ── Placeholder (empty cell) ── */
+
+.cell::placeholder {
+  color: var(--tid-text-disabled);
+}

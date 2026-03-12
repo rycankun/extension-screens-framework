@@ -1,0 +1,74 @@
+/**
+ * DialogHeader Styles — Molecule Component
+ *
+ * Horizontal layout: Logo (left) → Title (center/flex) → Close (right).
+ * Used as the header for all 27 banner screens.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Header Container ── */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-4); /* 8px */
+  padding: var(--tid-sp-4) var(--tid-sp-6); /* 8px 12px */
+  width: 100%;
+}
+
+/* ── TrustID Logo ── */
+
+.logo {
+  width: var(--tid-size-icon-md); /* 20px */
+  height: var(--tid-size-icon-md);
+  flex-shrink: 0;
+}
+
+/* ── Title ── */
+
+.title {
+  flex: 1;
+  font-family: var(--tid-ff-heading);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-tight); /* -0.3px */
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Close Button ──
+   Minimal touch target, icon-only button. */
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tid-size-icon-lg); /* 24px */
+  height: var(--tid-size-icon-lg);
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  color: var(--tid-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: var(--tid-radius-sm); /* 4px */
+  transition: color var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+.closeBtn:hover {
+  color: var(--tid-ink);
+}
+
+/* ── Focus-Visible ── */
+
+.closeBtn:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+}

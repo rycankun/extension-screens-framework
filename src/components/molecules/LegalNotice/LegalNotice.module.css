@@ -1,0 +1,41 @@
+/**
+ * LegalNotice Styles — Molecule Component
+ *
+ * Horizontal layout: small icon (left) + legal text block (flex).
+ * Subtle background to distinguish from main content area.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Notice Container ── */
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tid-sp-3); /* 6px */
+  padding: var(--tid-sp-4); /* 8px */
+  background-color: var(--tid-surface-subtle);
+  border-radius: var(--tid-radius-sm); /* 4px */
+}
+
+/* ── Icon Wrapper ──
+   Prevents icon from shrinking when text wraps. */
+
+.iconWrap {
+  flex-shrink: 0;
+  color: var(--tid-text-secondary);
+  display: flex;
+  margin-top: var(--tid-sp-1); /* 2px — align with first text line */
+}
+
+/* ── Legal Text ── */
+
+.text {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-relaxed); /* 18px — readable for dense legal text */
+  letter-spacing: var(--tid-ls-normal);
+  margin: 0;
+}

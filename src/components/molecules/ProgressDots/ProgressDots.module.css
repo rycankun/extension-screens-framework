@@ -1,0 +1,41 @@
+/**
+ * ProgressDots Styles — Molecule Component
+ *
+ * Horizontal row of small dots indicating flow progress.
+ * Three states: active (brand), completed (success), future (disabled).
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Container ── */
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-2); /* 4px */
+  justify-content: center;
+}
+
+/* ── Individual Dot ──
+   Default state: future/inactive dot. */
+
+.dot {
+  width: var(--tid-sp-3); /* 6px */
+  height: var(--tid-sp-3);
+  border-radius: var(--tid-radius-circle); /* 50% */
+  background-color: var(--tid-text-disabled);
+  flex-shrink: 0;
+  transition: background-color var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+/* ── Active Dot — current step ── */
+
+.active {
+  background-color: var(--tid-brand);
+}
+
+/* ── Completed Dot — previous steps ── */
+
+.completed {
+  background-color: var(--tid-success);
+}

@@ -1,0 +1,62 @@
+/**
+ * TabBar Styles — Molecule Component
+ *
+ * Horizontal tab bar with active bottom indicator.
+ * Tabs stretch equally across container width.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Tab Bar Container ── */
+
+.tabBar {
+  display: flex;
+  border-bottom: var(--tid-border-width) solid var(--tid-border-light);
+  width: 100%;
+}
+
+/* ── Individual Tab Button ── */
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tid-size-touch); /* 44px — WCAG touch target */
+  padding: var(--tid-sp-3) var(--tid-sp-4); /* 6px 8px */
+  border: none;
+  border-bottom: var(--tid-border-width-thick) solid transparent; /* 2px — active indicator slot */
+  background: none;
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-text-secondary);
+  letter-spacing: var(--tid-ls-wide); /* 0.2px */
+  line-height: var(--tid-lh-normal); /* 16px */
+  cursor: pointer;
+  transition:
+    color var(--tid-duration-fast) var(--tid-ease-default),
+    border-color var(--tid-duration-fast) var(--tid-ease-default);
+}
+
+/* ── Hover State ── */
+
+.tab:hover {
+  color: var(--tid-ink);
+}
+
+/* ── Active Tab ── */
+
+.active {
+  color: var(--tid-brand);
+  border-bottom-color: var(--tid-brand);
+}
+
+/* ── Focus-Visible ── */
+
+.tab:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-radius: var(--tid-radius-xs); /* 2px — tight inset */
+}

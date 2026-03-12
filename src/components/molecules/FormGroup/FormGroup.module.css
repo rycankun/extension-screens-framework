@@ -1,0 +1,28 @@
+/**
+ * FormGroup Styles — Molecule Component
+ *
+ * Vertical stack: label → input → error message.
+ * Label uses medium weight for visual hierarchy.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Group Container ── */
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px — tight label-to-input spacing */
+  width: 100%;
+}
+
+/* ── Label ── */
+
+.label {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-text-body);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+}

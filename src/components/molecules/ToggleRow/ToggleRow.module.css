@@ -1,0 +1,46 @@
+/**
+ * ToggleRow Styles — Molecule Component
+ *
+ * Horizontal row: Toggle (left) → Label stack (flex).
+ * Simplified version of ConsentToggle without info icon.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Row Container ── */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--tid-sp-4); /* 8px */
+  padding: var(--tid-sp-3) 0; /* 6px vertical */
+  min-height: var(--tid-size-touch); /* 44px — WCAG touch target */
+}
+
+/* ── Label Stack ── */
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-1); /* 2px */
+  min-width: 0;
+}
+
+.label {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-base); /* 14px */
+  font-weight: var(--tid-fw-medium);
+  color: var(--tid-ink);
+  line-height: var(--tid-lh-normal); /* 16px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+.sublabel {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+}

@@ -1,0 +1,42 @@
+/**
+ * PoweredBadge Styles — Molecule Component
+ *
+ * Compact inline badge: icon + "Powered by TrustID" text.
+ * Secondary text color for subtle attribution.
+ *
+ * @see src/tokens/tokens.css for token definitions
+ */
+
+/* ── Badge Container ── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tid-sp-2); /* 4px */
+}
+
+/* ── TrustID Shield Icon ── */
+
+.icon {
+  width: var(--tid-size-icon); /* 16px */
+  height: var(--tid-size-icon);
+  flex-shrink: 0;
+}
+
+/* ── Attribution Text ── */
+
+.text {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-snug); /* 15px */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+/* ── Brand Name ──
+   Medium weight for emphasis, same color as parent text. */
+
+.brand {
+  font-weight: var(--tid-fw-medium);
+}
