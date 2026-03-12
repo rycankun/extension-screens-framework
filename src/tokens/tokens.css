@@ -374,20 +374,20 @@
   /* ── 12a. Banner Background ──
      Diagonal gradient behind banner content. Blobs overlay this
      with radial gradients for the signature TrustID look. */
-  --tid-gradient-banner: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --tid-gradient-banner-subtle: linear-gradient(135deg, #e0e7ff 0%, #f0e6ff 100%);
+  --tid-gradient-banner: linear-gradient(160deg, #e4eaff 0%, #dce4fc 25%, #e8eeff 50%, #dfe8ff 75%, #e2e9ff 100%);
+  --tid-gradient-banner-subtle: linear-gradient(160deg, #eef1f8 0%, #e8ecf5 25%, #edf0f8 50%, #e9edf6 75%, #ebeff8 100%);
 
   /* ── 12b. Overlay Backgrounds ──
      Used by age gate, QR verify, and SLC KYC full-page overlays. */
-  --tid-gradient-overlay: linear-gradient(135deg, #0B1620 0%, #1a1a3e 50%, #0B1620 100%);
+  --tid-gradient-overlay: linear-gradient(160deg, #eef1f8 0%, #e8ecf5 25%, #edf0f8 50%, #e9edf6 75%, #ebeff8 100%);
   --tid-gradient-overlay-brand: linear-gradient(135deg, #0E6FFF 0%, #667eea 100%);
 
   /* ── 12c. Blob Gradients ──
      Radial gradients for the three decorative blobs behind the banner.
      Each blob is a soft, translucent radial gradient. */
-  --tid-gradient-blob1: radial-gradient(circle, rgba(14, 111, 255, 0.3) 0%, transparent 70%);
-  --tid-gradient-blob2: radial-gradient(circle, rgba(118, 75, 162, 0.25) 0%, transparent 70%);
-  --tid-gradient-blob3: radial-gradient(circle, rgba(102, 126, 234, 0.2) 0%, transparent 70%);
+  --tid-gradient-blob1: radial-gradient(ellipse at center, rgba(100, 160, 255, 0.55) 0%, rgba(80, 140, 245, 0.35) 30%, rgba(120, 170, 255, 0.15) 55%, transparent 75%);
+  --tid-gradient-blob2: radial-gradient(ellipse at center, rgba(130, 180, 255, 0.45) 0%, rgba(110, 165, 250, 0.25) 35%, rgba(140, 190, 255, 0.1) 60%, transparent 80%);
+  --tid-gradient-blob3: radial-gradient(ellipse at center, rgba(90, 150, 255, 0.4) 0%, rgba(70, 135, 240, 0.2) 40%, transparent 70%);
 
   /* ── 12d. Thumbnail Gradient (StreamVault landing) ── */
   --tid-gradient-thumb: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6) 100%);
@@ -496,13 +496,13 @@
   --tid-shadow-inset-input: inset 0 1px 3px rgba(0, 0, 0, 0.15);
 
   /* ── Gradients (dark theme — deeper, moodier) ── */
-  --tid-gradient-banner: linear-gradient(135deg, #3b4d99 0%, #4a2d6e 100%);
-  --tid-gradient-banner-subtle: linear-gradient(135deg, #1a1f3d 0%, #2a1f3d 100%);
-  --tid-gradient-overlay: linear-gradient(135deg, #0C0E14 0%, #12142a 50%, #0C0E14 100%);
+  --tid-gradient-banner: linear-gradient(160deg, #12152a 0%, #151830 25%, #131627 50%, #161932 75%, #14172c 100%);
+  --tid-gradient-banner-subtle: linear-gradient(160deg, #0e1018 0%, #11131e 25%, #0f1119 50%, #12141f 75%, #10121b 100%);
+  --tid-gradient-overlay: linear-gradient(160deg, #0e1018 0%, #11131e 25%, #0f1119 50%, #12141f 75%, #10121b 100%);
   --tid-gradient-overlay-brand: linear-gradient(135deg, #1a4aa0 0%, #3b4d99 100%);
-  --tid-gradient-blob1: radial-gradient(circle, rgba(91, 163, 255, 0.2) 0%, transparent 70%);
-  --tid-gradient-blob2: radial-gradient(circle, rgba(74, 45, 110, 0.2) 0%, transparent 70%);
-  --tid-gradient-blob3: radial-gradient(circle, rgba(59, 77, 153, 0.15) 0%, transparent 70%);
+  --tid-gradient-blob1: radial-gradient(ellipse at center, rgba(100, 160, 255, 0.33) 0%, rgba(80, 140, 245, 0.21) 30%, rgba(120, 170, 255, 0.09) 55%, transparent 75%);
+  --tid-gradient-blob2: radial-gradient(ellipse at center, rgba(130, 180, 255, 0.27) 0%, rgba(110, 165, 250, 0.15) 35%, rgba(140, 190, 255, 0.06) 60%, transparent 80%);
+  --tid-gradient-blob3: radial-gradient(ellipse at center, rgba(90, 150, 255, 0.24) 0%, rgba(70, 135, 240, 0.12) 40%, transparent 70%);
   --tid-gradient-thumb: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
   --tid-gradient-success-ring: conic-gradient(#00D6A0 0deg, transparent 0deg);
 }
