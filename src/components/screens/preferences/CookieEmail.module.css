@@ -100,39 +100,36 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 /* ── Text Block Container ──
-   Inline spans (bold headline + regular body) in a flex column.
-   The predecessor renders these as inline spans, text flows naturally. */
+   Predecessor .text-block renders inline spans that flow together.
+   Uses --fs-base (14px), --lh-reading (21px), --ls-normal (-0.1px).
+   No explicit font-family — inherits body font (Inter). */
 
 .textBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-1); /* 2px — tight gap between headline and body */
+  font-family: var(--tid-ff-body); /* Inter — predecessor inherits body font */
+  font-size: var(--tid-fs-base); /* 14px — predecessor --fs-base */
+  line-height: var(--tid-lh-reading); /* 21px — predecessor --lh-reading */
+  color: var(--tid-text-body); /* predecessor --text-body */
+  letter-spacing: var(--tid-ls-normal); /* -0.1px — predecessor --ls-normal */
   margin-bottom: var(--tid-sp-2); /* 4px */
 }
 
 /* ── Bold (Headline Span) ──
    Screen heading: "Save your preferences to your Trust ID account."
-   Heading font, medium weight, 14px. */
+   Body font (Inter), medium weight. Inherits size/spacing from .textBlock.
+   Predecessor .bold has NO explicit font-family (inherits body font). */
 
 .bold {
-  font-family: var(--tid-ff-heading);
-  font-size: var(--tid-fs-base); /* 14px */
+  font-family: var(--tid-ff-body); /* Inter — NOT heading font (predecessor inherits body) */
   font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
-  line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight); /* -0.3px */
+  letter-spacing: var(--tid-ls-normal); /* -0.1px — NOT --ls-tight */
 }
 
 /* ── Regular (Body Span) ──
-   Descriptive text below headline — body font, regular weight, 12px. */
+   Descriptive text below headline — inherits from .textBlock, regular weight. */
 
 .regular {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
   font-weight: var(--tid-fw-regular); /* 400 */
-  color: var(--tid-text-body);
-  line-height: var(--tid-lh-relaxed); /* 18px */
-  letter-spacing: var(--tid-ls-normal); /* -0.1px */
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -148,7 +145,7 @@
   font-size: var(--tid-fs-base); /* 14px */
   font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-brand);
-  line-height: var(--tid-lh-normal); /* 16px */
+  line-height: var(--tid-lh-loose); /* 20px — predecessor .trust-line uses lh-loose */
   letter-spacing: var(--tid-ls-normal); /* -0.1px */
   margin: var(--tid-sp-0);
   margin-bottom: var(--tid-sp-2); /* 4px — space before step indicator */
@@ -165,15 +162,14 @@
 .trustSignal {
   display: flex;
   align-items: center;
-  gap: var(--tid-sp-2); /* 4px */
+  gap: var(--tid-sp-2); /* 4px — predecessor --sp-2 */
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-sm); /* 11px — micro text */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .micro uses --fs-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-tight); /* 13px */
+  color: var(--tid-text-muted); /* predecessor .trust-signal overrides to --text-muted */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor .micro uses --lh-snug */
   letter-spacing: var(--tid-ls-normal);
-  margin-top: var(--tid-sp-2); /* 4px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-0); /* 0 — predecessor .trust-signal sets margin-bottom: 0 */
 }
 
 /* ── Trust Signal Icon ──
@@ -183,7 +179,7 @@
   width: var(--tid-size-icon-xs); /* 12px */
   height: var(--tid-size-icon-xs); /* 12px */
   flex-shrink: 0;
-  color: var(--tid-text-secondary);
+  color: var(--tid-brand); /* predecessor .trust-signal-icon uses --brand */
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -207,10 +203,10 @@
 
 .passkeyFallback {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-sm); /* 11px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .micro uses --fs-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-tight); /* 13px */
+  color: var(--tid-text-micro); /* predecessor .micro uses --text-micro */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor .micro uses --lh-snug */
   letter-spacing: var(--tid-ls-normal);
   text-align: center;
   margin-bottom: var(--tid-sp-3); /* 6px */
@@ -251,31 +247,34 @@
 .dismissGroup {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--tid-sp-1); /* 2px — tight grouping */
-  margin-top: var(--tid-sp-3); /* 6px */
+  gap: var(--tid-sp-2); /* 4px — predecessor .dismiss-group-tight gap: --sp-2 */
+  margin-top: var(--tid-sp-1); /* 2px — predecessor .dismiss-group-tight margin-top: --sp-1 */
 }
 
 /* ── Ghost Button ──
-   "Save without an account" — text-only button styled as a brand-color link.
-   Compact padding, no background, 12px font. */
+   "Save without an account" — text-only button styled as muted link.
+   Predecessor .btn-ghost: --fs-body (13px), --text-muted, full width.
+   .btn-ghost-compact overrides padding to --sp-1 (2px). */
 
 .ghostBtn {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-body); /* 13px — predecessor .btn-ghost uses --fs-body */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-brand);
+  color: var(--tid-text-muted); /* predecessor uses --text-muted, not brand */
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--tid-sp-1) var(--tid-sp-2); /* 2px 4px — compact touch target */
+  width: 100%; /* predecessor .btn-ghost is full width */
+  text-align: center;
+  padding: var(--tid-sp-1) var(--tid-sp-0); /* 2px 0 — predecessor .btn-ghost-compact */
   letter-spacing: var(--tid-ls-normal);
   line-height: var(--tid-lh-snug); /* 15px */
   border-radius: var(--tid-radius-xs); /* 2px — for focus ring shape */
+  transition: color var(--tid-duration-fast);
 }
 
 .ghostBtn:hover {
-  color: var(--tid-brand-dark);
+  color: var(--tid-text-secondary); /* predecessor .btn-ghost:hover uses --text-secondary */
 }
 
 .ghostBtn:focus-visible {
@@ -286,22 +285,22 @@
 
 /* ── Expiry Callout ──
    Clock icon + "Without an account, your preferences expire after 6 months..."
-   Raised surface background, subtle styling, flex row layout. */
+   Predecessor uses color-mix tinting and border. */
 
 .expiryCallout {
   display: flex;
   align-items: flex-start;
-  gap: var(--tid-sp-3); /* 6px */
+  gap: var(--tid-sp-2); /* 4px — predecessor --sp-2 */
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px — smallest readable micro text */
+  font-size: var(--tid-fs-xs); /* 10px — predecessor .expiry-callout span uses --fs-xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-tight); /* 13px */
+  color: var(--tid-ink); /* predecessor .expiry-callout span uses --ink */
+  line-height: var(--tid-lh-body); /* 17px — predecessor --lh-body */
   letter-spacing: var(--tid-ls-normal);
-  background: var(--tid-surface-raised);
-  padding: var(--tid-sp-4); /* 8px */
-  border-radius: var(--tid-radius-sm); /* 4px */
-  width: 100%;
+  background: color-mix(in srgb, var(--tid-text-muted) 8%, transparent); /* predecessor tinted bg */
+  border: 1px solid color-mix(in srgb, var(--tid-text-muted) 15%, transparent); /* predecessor border */
+  padding: var(--tid-sp-3); /* 6px — predecessor --sp-3 */
+  border-radius: var(--tid-radius-md); /* 6px — predecessor --radius-md */
 }
 
 /* ── Clock Icon ──
@@ -309,7 +308,8 @@
 
 .clockIcon {
   flex-shrink: 0;
-  color: var(--tid-text-secondary);
+  margin-top: 1px; /* predecessor expiry-callout-icon has margin-top: 1px */
+  color: var(--tid-text-muted); /* predecessor uses --text-muted */
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -322,7 +322,7 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }
 
 /* ══════════════════════════════════════════════════════════════════════

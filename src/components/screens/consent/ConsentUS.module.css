@@ -27,12 +27,12 @@
    Screen heading — heading font, medium weight, ink color. */
 
 .headline {
-  font-family: var(--tid-ff-heading);
+  font-family: var(--tid-ff-body); /* predecessor .bold uses body font (Inter), NOT heading */
   font-size: var(--tid-fs-base); /* 14px */
   font-weight: var(--tid-fw-medium);
   color: var(--tid-ink);
   line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
+  letter-spacing: var(--tid-ls-normal); /* predecessor uses ls-normal, NOT ls-tight */
   margin: var(--tid-sp-0);
 }
 
@@ -50,6 +50,15 @@
   margin: var(--tid-sp-0);
 }
 
+/* ── Text Block Link Override ──
+   Predecessor .text-block .link { color: inherit; text-decoration: underline }.
+   Policy links inside the text block blend with body text, NOT brand-blue. */
+
+.content :global(a) {
+  color: inherit;
+  text-decoration: underline;
+}
+
 /* ── Trust Line ──
    Motivational tagline in brand blue. Displayed as a standalone
    line between the body text and signal indicators. */
@@ -59,7 +68,7 @@
   font-size: var(--tid-fs-base); /* 14px — predecessor trust line size */
   font-weight: var(--tid-fw-medium); /* 500 — medium weight for emphasis */
   color: var(--tid-brand); /* Trust ID Blue — trust line is always brand color */
-  line-height: var(--tid-lh-normal); /* 16px */
+  line-height: var(--tid-lh-loose); /* 20px — predecessor .trust-line uses lh-loose */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
   margin-bottom: var(--tid-sp-3); /* 6px gap before signal indicators */
@@ -73,10 +82,11 @@
 .gpcIndicator {
   display: flex;
   align-items: flex-start;
-  gap: var(--tid-sp-3); /* 6px */
-  padding: var(--tid-sp-3); /* 6px */
-  background: rgba(var(--tid-brand-rgb), 0.06);
-  border-radius: var(--tid-radius-sm); /* 4px */
+  gap: var(--tid-sp-2); /* 4px — predecessor gap sp-2 */
+  padding: var(--tid-sp-3); /* 6px — predecessor padding sp-3 */
+  background: rgba(var(--tid-brand-rgb), 0.08); /* predecessor 0.08 opacity */
+  border-radius: var(--tid-radius-md); /* 6px — predecessor radius-md */
+  border: var(--tid-border-width) solid rgba(var(--tid-brand-rgb), 0.2); /* predecessor accent border */
   margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
@@ -105,10 +115,10 @@
 
 .gpcText {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-medium);
-  color: var(--tid-text-body);
-  line-height: var(--tid-lh-normal); /* 16px */
+  font-size: var(--tid-fs-xs); /* 10px — predecessor .gpc-text fs-xs */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-ink); /* predecessor uses ink, not text-body */
+  line-height: var(--tid-lh-body); /* 17px — predecessor lh-body */
   letter-spacing: var(--tid-ls-normal);
 }
 
@@ -118,10 +128,10 @@
 
 .gpcDetail {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-sm); /* 11px */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .gpc-detail fs-2xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-snug); /* 15px */
+  color: var(--tid-text-muted); /* predecessor uses text-muted */
+  line-height: var(--tid-lh-body); /* 17px — predecessor lh-body */
   letter-spacing: var(--tid-ls-normal);
 }
 
@@ -177,15 +187,28 @@
    Micro text, muted color. */
 
 .optoutDisclosure {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline; /* predecessor social-proof pattern uses baseline */
+  gap: var(--tid-sp-2); /* 4px between icon and text */
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-sm); /* 11px */
+  font-size: var(--tid-fs-body-sm); /* 12px — predecessor social-proof fs-body-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-muted);
+  color: var(--tid-text-secondary); /* predecessor social-proof text-secondary */
   line-height: var(--tid-lh-snug); /* 15px */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
   margin-top: var(--tid-sp-3); /* 6px */
-  text-align: center;
+}
+
+/* ── Opt-Out Icon ──
+   Badge-check icon for universal opt-out disclosure. */
+
+.optoutIcon {
+  width: var(--tid-sp-7); /* 14px */
+  height: var(--tid-sp-7); /* 14px */
+  color: var(--tid-text-secondary);
+  flex-shrink: 0;
 }
 
 /* ── Privacy Choices Section ──
@@ -205,8 +228,8 @@
 .privacyChoicesRow {
   display: flex;
   align-items: center;
-  padding: var(--tid-sp-3) var(--tid-sp-0); /* 6px 0 — vertical padding only */
-  border-top: var(--tid-border-width) solid var(--tid-border-light);
+  padding: var(--tid-sp-0); /* 0 — predecessor has no padding on rows */
+  line-height: 1.2; /* predecessor tight line-height */
 }
 
 /* ── Privacy Choices Link ──
@@ -215,16 +238,16 @@
 
 .privacyChoicesLink {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .privacy-choices-link fs-2xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-brand);
-  line-height: var(--tid-lh-normal); /* 16px */
+  color: var(--tid-text-muted); /* predecessor uses text-muted, NOT brand */
+  line-height: var(--tid-lh-snug); /* 15px */
   letter-spacing: var(--tid-ls-normal);
   text-decoration: underline;
 }
 
 .privacyChoicesLink:hover {
-  color: var(--tid-brand-dark);
+  color: var(--tid-ink); /* predecessor hover goes to ink color */
 }
 
 /* ── Privacy Choices Button ──
@@ -234,10 +257,10 @@
 
 .privacyChoicesButton {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .privacy-choices-link fs-2xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-brand);
-  line-height: var(--tid-lh-normal); /* 16px */
+  color: var(--tid-text-muted); /* predecessor uses text-muted, NOT brand */
+  line-height: var(--tid-lh-snug); /* 15px */
   letter-spacing: var(--tid-ls-normal);
   text-decoration: underline;
   background: none;
@@ -248,7 +271,7 @@
 }
 
 .privacyChoicesButton:hover {
-  color: var(--tid-brand-dark);
+  color: var(--tid-ink); /* predecessor hover goes to ink color */
 }
 
 .privacyChoicesButton:focus-visible {
@@ -263,5 +286,5 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }

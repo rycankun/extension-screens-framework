@@ -87,10 +87,10 @@ export function ConsentUSStd({
 
         {/* ── 2. Text Block — Headline + Body with Policy Links ── */}
         <div className={styles.textBlock}>
-          <h2 className={styles.headline}>
+          <span className={styles.headline}>
             {COPY_TEXT.consentHeadline}
-          </h2>
-          <p className={styles.body}>
+          </span>
+          <span className={styles.body}>
             {US_STD_CONSENT_BODY}{' '}
             <Link
               href={POLICY_URLS.privacy}
@@ -108,7 +108,7 @@ export function ConsentUSStd({
               {POLICY_LINKS.cookie}
             </Link>
             .
-          </p>
+          </span>
         </div>
 
         {/* ── 3. Trust Line ── */}
@@ -149,7 +149,7 @@ export function ConsentUSStd({
         <div className={styles.btnStack}>
           <Button
             label={COPY_TEXT.consentRejectBtn}
-            variant="secondary"
+            variant="primary"
             fullWidth
             onClick={onRejectAll}
           />

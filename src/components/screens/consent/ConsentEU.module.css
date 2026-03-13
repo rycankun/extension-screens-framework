@@ -52,6 +52,16 @@
   margin: var(--tid-sp-0);
 }
 
+/* ── Text Block Link Override ──
+   Predecessor .text-block .link { color: inherit; text-decoration: underline }.
+   Policy links inside the text block blend with body text color,
+   NOT brand-blue CTAs. */
+
+.textBlock :global(a) {
+  color: inherit;
+  text-decoration: underline;
+}
+
 /* ── Trust Line ──
    "Your preferences. Your control." — brand-colored tagline
    positioned between text block and GPC indicator. */
@@ -61,7 +71,7 @@
   font-size: var(--tid-fs-base); /* 14px — predecessor trust line size */
   font-weight: var(--tid-fw-medium); /* 500 — medium weight for emphasis */
   color: var(--tid-brand); /* Trust ID Blue — trust line is always brand color */
-  line-height: var(--tid-lh-normal); /* 16px */
+  line-height: var(--tid-lh-loose); /* 20px — predecessor .trust-line uses lh-loose */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
   margin-bottom: var(--tid-sp-3); /* 6px — space before GPC or social proof */
@@ -76,10 +86,11 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: var(--tid-sp-3); /* 6px between icon and text column */
-  background: rgba(var(--tid-brand-rgb), 0.06); /* Subtle brand tint */
-  padding: var(--tid-sp-4); /* 8px */
-  border-radius: var(--tid-radius-sm); /* 4px */
+  gap: var(--tid-sp-2); /* 4px — predecessor gap sp-2 */
+  background: rgba(var(--tid-brand-rgb), 0.08); /* Subtle brand tint */
+  padding: var(--tid-sp-3); /* 6px — predecessor padding sp-3 */
+  border-radius: var(--tid-radius-md); /* 6px — predecessor radius-md */
+  border: var(--tid-border-width) solid rgba(var(--tid-brand-rgb), 0.2); /* predecessor accent border */
   margin-bottom: var(--tid-sp-3); /* 6px before social proof */
 }
 
@@ -99,10 +110,10 @@
 
 .gpcText {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-xs); /* 10px — predecessor .gpc-text fs-xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-normal); /* 16px */
+  color: var(--tid-ink); /* predecessor uses ink, not secondary */
+  line-height: var(--tid-lh-body); /* 17px — predecessor lh-body */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
 }
@@ -113,10 +124,10 @@
 
 .gpcDetail {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .gpc-detail fs-2xs */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-text-muted);
-  line-height: var(--tid-lh-tight); /* 13px */
+  line-height: var(--tid-lh-body); /* 17px — predecessor lh-body */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
   margin-top: var(--tid-sp-2); /* 4px gap from gpcText */
@@ -151,12 +162,12 @@
 .universalOptout {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: baseline; /* predecessor social-proof pattern uses baseline */
   gap: var(--tid-sp-2); /* 4px between icon and text */
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px — small disclosure text */
+  font-size: var(--tid-fs-body-sm); /* 12px — predecessor social-proof fs-body-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
+  color: var(--tid-text-secondary); /* predecessor social-proof text-secondary */
   line-height: var(--tid-lh-snug); /* 15px */
   letter-spacing: var(--tid-ls-normal);
   margin-top: var(--tid-sp-4); /* 8px — space from button stack or receipt */
@@ -168,5 +179,5 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }

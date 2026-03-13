@@ -21,14 +21,13 @@
   width: 100%;
 }
 
-/* ── Logo Center ──
-   Centered logo between back arrow and close button. */
+/* ── Header Left ──
+   BackArrow + logo grouped on the left.
+   Predecessor .logo-left layout. */
 
-.logoCenter {
+.headerLeft {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex: 1;
 }
 
 /* ── Host Site Logo Image ──
@@ -81,39 +80,35 @@
 }
 
 /* ── Text Block ──
-   Bold headline + regular body text, left-aligned (not centered).
-   Matches predecessor email-confirm.html layout. */
+   Predecessor .text-block sets shared typography for all inline spans:
+   line-height: --lh-reading (21px), font-size: --fs-base (14px),
+   color: --text-body, letter-spacing: --ls-normal (-0.1px).
+   Bold and regular spans inherit from this container. */
 
 .textBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px */
+  line-height: var(--tid-lh-reading); /* 21px — predecessor .text-block */
+  font-size: var(--tid-fs-base); /* 14px — predecessor .text-block */
+  color: var(--tid-text-body); /* predecessor .text-block */
+  letter-spacing: var(--tid-ls-normal); /* -0.1px — predecessor .text-block */
   margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
 /* ── Bold Headline ──
-   "Verify with a code instead." — heading font, medium weight. */
+   Predecessor .bold only sets font-weight and color — inherits
+   font-family (body/Inter), font-size, line-height, letter-spacing
+   from the .text-block parent. NOT heading font (Work Sans). */
 
 .bold {
-  font-family: var(--tid-ff-heading);
-  font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium);
+  font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
-  line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
   margin: var(--tid-sp-0);
 }
 
 /* ── Regular Body Text ──
-   Description below headline — body font, regular weight. */
+   Predecessor .regular only sets font-weight — inherits all else. */
 
 .regular {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-body);
-  line-height: var(--tid-lh-relaxed); /* 18px */
-  letter-spacing: var(--tid-ls-normal);
+  font-weight: var(--tid-fw-regular); /* 400 */
   margin: var(--tid-sp-0);
 }
 
@@ -155,5 +150,5 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }

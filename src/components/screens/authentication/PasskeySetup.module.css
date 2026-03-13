@@ -14,53 +14,50 @@
  */
 
 /* ── Text Block ──
-   Bold headline + regular body, left-aligned, tight gap. */
+   Predecessor .text-block sets shared typography for all inline spans:
+   line-height: --lh-reading (21px), font-size: --fs-base (14px),
+   color: --text-body, letter-spacing: --ls-normal (-0.1px).
+   Bold and regular spans inherit from this container. */
 
 .textBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-1); /* 2px */
+  line-height: var(--tid-lh-reading); /* 21px — predecessor .text-block */
+  font-size: var(--tid-fs-base); /* 14px — predecessor .text-block */
+  color: var(--tid-text-body); /* predecessor .text-block */
+  letter-spacing: var(--tid-ls-normal); /* -0.1px — predecessor .text-block */
 }
 
 /* ── Bold Headline ──
-   "Skip the code next time." — heading font, medium weight, left-aligned. */
+   Predecessor .bold only sets font-weight and color — inherits
+   font-family (body/Inter), font-size, line-height, letter-spacing
+   from the .text-block parent. NOT heading font (Work Sans). */
 
 .bold {
-  font-family: var(--tid-ff-heading);
-  font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium);
+  font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
-  line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
   margin: var(--tid-sp-0);
   text-align: left;
 }
 
 /* ── Regular Body ──
-   "Set up a passkey..." — body font, regular weight, left-aligned. */
+   Predecessor .regular only sets font-weight — inherits all else. */
 
 .regular {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-body);
-  line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-normal);
+  font-weight: var(--tid-fw-regular); /* 400 */
   margin: var(--tid-sp-0);
   text-align: left;
 }
 
 /* ── Detail Micro Text ──
    Predecessor: .micro .color-body .text-left .micro-relaxed
-   12px, text-body color, left-aligned, relaxed (18px) line-height.
+   11px (--fs-sm), text-body color, left-aligned, --lh-body (17px) line-height.
    Longer passkey explainer paragraph. */
 
 .detail {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .micro uses --fs-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-body);
-  line-height: var(--tid-lh-relaxed); /* 18px */
+  color: var(--tid-text-body); /* predecessor .color-body overrides .micro color */
+  line-height: var(--tid-lh-body); /* 17px — predecessor .micro-relaxed */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
   margin-top: var(--tid-sp-3); /* 6px — space between text block and detail */
@@ -83,5 +80,5 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }

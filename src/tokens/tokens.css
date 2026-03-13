@@ -66,6 +66,7 @@
   --tid-success: #00C897;                 /* Success states, verified badges, checkmarks */
   --tid-success-light: #33D4AB;           /* Light success variant for subtle indicators */
   --tid-success-verified: #00B085;        /* Verified credential badge */
+  --tid-success-tint: rgba(56, 200, 120, 0.12); /* Subtle success background for icon circles */
   --tid-error: #FF4D4D;                   /* Error states, destructive actions */
   --tid-error-light: #FFF0F0;             /* Error background tint for input fields */
   --tid-warning: #F59E0B;                 /* Warning states, credential expiry */
@@ -117,6 +118,7 @@
   --tid-surface-rgb: 255, 255, 255;       /* #FFFFFF decomposed */
   --tid-black-rgb: 0, 0, 0;              /* For shadow/overlay alpha */
   --tid-white-rgb: 255, 255, 255;         /* For frost/glow alpha */
+  --tid-neutral-rgb: 0, 0, 0;            /* Theme-aware neutral — black in light, white in dark */
 
   /* ─────────────────────────────────────────────────────────────────
      3. TYPOGRAPHY
@@ -175,6 +177,7 @@
   --tid-lh-body: 17px;                   /* Body text, multi-line paragraphs */
   --tid-lh-relaxed: 18px;                /* Readable body, legal text */
   --tid-lh-loose: 20px;                  /* Spaced text, input fields */
+  --tid-lh-reading: 21px;                /* Text blocks — predecessor --lh-reading */
   --tid-lh-heading: 26px;                /* Section headings */
   --tid-lh-display: 28px;                /* Display text, banner headings */
 
@@ -235,6 +238,7 @@
   /* ── 6b. Controls ── */
   --tid-size-control: 40px;              /* Standard button height */
   --tid-size-control-sm: 32px;           /* Compact button height */
+  --tid-size-control-xl: 48px;           /* Large icon circles (predecessor --size-control-xl) */
   --tid-size-touch: 44px;                /* WCAG minimum touch target */
   --tid-size-input-height: 40px;         /* Input field height */
   --tid-size-otp-cell: 40px;             /* OTP digit input cell (square) */
@@ -476,6 +480,7 @@
   --tid-surface-rgb: 24, 27, 36;          /* #181B24 decomposed */
   --tid-black-rgb: 0, 0, 0;
   --tid-white-rgb: 255, 255, 255;
+  --tid-neutral-rgb: 255, 255, 255;       /* Dark: flipped to white for subtle borders/tints */
 
   /* ── Shadows (increased opacity for visibility on dark backgrounds) ── */
   --tid-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);

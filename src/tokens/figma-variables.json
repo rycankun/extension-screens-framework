@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-12T21:37:15.583Z",
-  "tokenCount": 206,
+  "generatedAt": "2026-03-13T07:42:56.245Z",
+  "tokenCount": 210,
   "collectionCount": 12,
   "collections": [
     {
@@ -136,6 +136,14 @@
           "values": {
             "Light": "#00B085",
             "Dark": "#00C090"
+          }
+        },
+        {
+          "name": "success-tint",
+          "type": "STRING",
+          "values": {
+            "Light": "rgba(56, 200, 120, 0.12)",
+            "Dark": "rgba(56, 200, 120, 0.12)"
           }
         },
         {
@@ -343,6 +351,14 @@
           "type": "STRING",
           "values": {
             "Light": "255, 255, 255",
+            "Dark": "255, 255, 255"
+          }
+        },
+        {
+          "name": "neutral-rgb",
+          "type": "STRING",
+          "values": {
+            "Light": "0, 0, 0",
             "Dark": "255, 255, 255"
           }
         }
@@ -910,6 +926,13 @@
           }
         },
         {
+          "name": "lh-reading",
+          "type": "FLOAT",
+          "values": {
+            "Default": "21px"
+          }
+        },
+        {
           "name": "lh-heading",
           "type": "FLOAT",
           "values": {
@@ -1197,6 +1220,13 @@
           "type": "FLOAT",
           "values": {
             "Default": "32px"
+          }
+        },
+        {
+          "name": "size-control-xl",
+          "type": "FLOAT",
+          "values": {
+            "Default": "48px"
           }
         },
         {

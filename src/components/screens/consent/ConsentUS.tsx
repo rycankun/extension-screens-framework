@@ -72,7 +72,7 @@ export interface ConsentUSProps {
    Self-contained SVGs for Figma-compatible rendering.
    No external icon font or sprite sheet dependencies. */
 
-/** Shield icon for GPC indicator — 14px, brand blue */
+/** Shield icon for GPC indicator — stroke-based outline per predecessor */
 function ShieldIcon() {
   return (
     <svg
@@ -81,12 +81,34 @@ function ShieldIcon() {
       height="14"
       viewBox="0 0 24 24"
       fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden="true"
     >
-      <path
-        d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7l-9-5z"
-        fill="currentColor"
-      />
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+  );
+}
+
+/** Badge-check icon for universal opt-out disclosure — predecessor pattern */
+function BadgeCheckIcon() {
+  return (
+    <svg
+      className={styles.optoutIcon}
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.77 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z" />
+      <path d="m9 12 2 2 4-4" />
     </svg>
   );
 }
@@ -135,10 +157,10 @@ export function ConsentUS({
 
         {/* ── 2. Headline + Body with Policy Links ── */}
         <div className={styles.content}>
-          <h2 className={styles.headline}>
+          <span className={styles.headline}>
             {COPY_TEXT.consentHeadline}
-          </h2>
-          <p className={styles.body}>
+          </span>
+          <span className={styles.body}>
             {US_CONSENT_BODY}{' '}
             <Link href={POLICY_URLS.privacy} external size="sm">
               {POLICY_LINKS.privacy}
@@ -148,7 +170,7 @@ export function ConsentUS({
               {POLICY_LINKS.cookie}
             </Link>
             .
-          </p>
+          </span>
         </div>
 
         {/* ── 3. Trust Line (brand blue) ── */}
@@ -187,7 +209,7 @@ export function ConsentUS({
         <div className={styles.actions}>
           <Button
             label={COPY_TEXT.consentRejectBtn}
-            variant="secondary"
+            variant="primary"
             fullWidth
             onClick={onRejectAll}
           />
@@ -206,9 +228,10 @@ export function ConsentUS({
         </div>
 
         {/* ── 8. Universal Opt-Out Disclosure ── */}
-        <p className={styles.optoutDisclosure}>
-          {UNIVERSAL_OPTOUT_TEXT}
-        </p>
+        <div className={styles.optoutDisclosure}>
+          <BadgeCheckIcon />
+          <span>{UNIVERSAL_OPTOUT_TEXT}</span>
+        </div>
 
         {/* ── 9. Privacy Choices Links (5 rows) ── */}
         <nav

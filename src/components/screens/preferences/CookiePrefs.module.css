@@ -43,58 +43,70 @@
   font-size: var(--tid-fs-base); /* 14px — predecessor trust line size */
   font-weight: var(--tid-fw-medium); /* 500 — medium weight for emphasis */
   color: var(--tid-brand); /* Trust ID Blue — trust line is always brand color */
-  line-height: var(--tid-lh-normal); /* 16px */
+  line-height: var(--tid-lh-loose); /* 20px — predecessor .trust-line uses lh-loose */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
   margin-bottom: var(--tid-sp-3); /* 6px — space before tab bar */
 }
 
 /* ── Tab Bar ──
-   Horizontal tab row with bottom border. Active tab has brand
-   bottom border for visual indicator. */
+   Rounded box with 1px border, tabs fill equally. Hidden when
+   only one tab (single-tab mode). Matches predecessor .pane-tabs. */
 
 .tabBar {
   display: flex;
   gap: var(--tid-sp-0);
-  border-bottom: var(--tid-border-width) solid var(--tid-border-light);
-  margin-bottom: var(--tid-sp-3); /* 6px */
+  border-radius: var(--tid-radius-sm); /* 4px — predecessor rounded box */
+  overflow: hidden;
+  border: 1px solid rgba(var(--tid-neutral-rgb), 0.1);
+  margin-bottom: var(--tid-sp-4); /* 8px — predecessor sp-4 */
 }
 
 /* ── Tab Button ──
-   Individual tab — text-only button with bottom-border active state. */
+   Equal-width tab button with filled background on active.
+   Predecessor uses --ff-heading (Work Sans), --fs-sm (11px). */
 
 .tab {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  flex: 1;
+  min-height: var(--tid-size-touch); /* 44px — touch target */
+  font-family: var(--tid-ff-heading); /* Work Sans — predecessor .pane-tab */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor --fs-sm */
   font-weight: var(--tid-fw-medium);
   color: var(--tid-text-secondary);
-  background: none;
+  background: transparent;
   border: none;
-  border-bottom: var(--tid-border-width-thick) solid transparent;
-  padding: var(--tid-sp-3) var(--tid-sp-4); /* 6px 8px */
+  padding: var(--tid-sp-0);
+  text-align: center;
   cursor: pointer;
   letter-spacing: var(--tid-ls-normal);
-  line-height: var(--tid-lh-snug); /* 15px */
-  transition: color var(--tid-duration-fast) var(--tid-ease-default),
-              border-color var(--tid-duration-fast) var(--tid-ease-default);
+  line-height: var(--tid-tab-line-height, 36px); /* predecessor --tab-line-height */
+  transition: background var(--tid-duration-fast),
+              color var(--tid-duration-fast);
 }
 
 .tab:hover {
-  color: var(--tid-ink);
+  background: rgba(var(--tid-neutral-rgb), 0.03);
 }
 
 .tab:focus-visible {
   outline: var(--tid-outline-width) solid var(--tid-border-focus);
   outline-offset: var(--tid-outline-offset);
-  border-radius: var(--tid-radius-xs);
+  border-radius: var(--tid-radius-sm);
 }
 
 /* ── Active Tab ──
-   Brand-colored bottom border and dark text. */
+   Filled background and stronger text. Matches predecessor .pane-tab.active. */
 
 .tabActive {
-  color: var(--tid-brand);
-  border-bottom-color: var(--tid-brand);
+  background: rgba(var(--tid-neutral-rgb), 0.06);
+  color: rgba(var(--tid-neutral-rgb), 0.75);
+}
+
+/* ── Tab Divider ──
+   Vertical border between adjacent tabs. */
+
+.tab + .tab {
+  border-left: 1px solid rgba(var(--tid-neutral-rgb), 0.08);
 }
 
 /* ── Toggle Section ──
@@ -127,12 +139,14 @@
 
 .cookieSummary {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-brand); /* Brand blue link-style text */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .cookie-details-summary */
+  font-weight: var(--tid-fw-medium); /* predecessor uses fw-medium */
+  color: var(--tid-text-muted); /* predecessor uses --text-muted, not brand */
+  text-decoration: underline; /* predecessor underlines the summary link */
   cursor: pointer;
-  line-height: var(--tid-lh-snug); /* 15px */
-  letter-spacing: var(--tid-ls-normal);
+  user-select: none;
+  line-height: var(--tid-lh-body); /* 17px — predecessor --lh-body */
+  white-space: nowrap;
   list-style: none; /* Remove default disclosure triangle */
 }
 
@@ -142,7 +156,7 @@
 }
 
 .cookieSummary:hover {
-  text-decoration: underline;
+  color: var(--tid-ink);
 }
 
 .cookieSummary:focus-visible {
@@ -156,23 +170,28 @@
 
 .cookieList {
   list-style: none;
-  padding: var(--tid-sp-0);
+  padding: var(--tid-sp-0) var(--tid-sp-0) var(--tid-sp-0) var(--tid-sp-4); /* 0 0 0 8px — predecessor left-indented */
   margin: var(--tid-sp-2) var(--tid-sp-0) var(--tid-sp-0); /* 4px 0 0 */
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px between entries */
 }
 
 .cookieItem {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px — predecessor cookie detail size */
-  color: var(--tid-text-body);
-  line-height: var(--tid-lh-tight); /* 13px */
-  letter-spacing: var(--tid-ls-normal);
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .cookie-details-list li uses --fs-2xs */
+  color: var(--tid-text-muted); /* predecessor uses --text-muted */
+  line-height: var(--tid-lh-body); /* 17px — predecessor --lh-body */
+  padding: var(--tid-sp-1) var(--tid-sp-0); /* 2px 0 — predecessor */
+  border-bottom: var(--tid-border-width) solid rgba(var(--tid-neutral-rgb), 0.06);
+}
+
+.cookieItem:last-child {
+  border-bottom: none;
 }
 
 .cookieName {
   font-weight: var(--tid-fw-medium); /* Bold cookie name */
+  color: var(--tid-text-secondary); /* predecessor .cookie-details-list strong uses --text-secondary */
+  font-family: var(--tid-ff-mono); /* predecessor uses monospace for cookie names */
+  font-size: var(--tid-fs-2xs); /* 9px */
 }
 
 .cookieDesc {
@@ -195,10 +214,10 @@
 
 .microText {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .micro uses --fs-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-tight); /* 13px */
+  color: var(--tid-text-micro); /* predecessor uses --text-micro (#5c6b80) */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor .micro uses --lh-snug */
   letter-spacing: var(--tid-ls-normal);
   text-align: center;
   margin: var(--tid-sp-3) var(--tid-sp-0) var(--tid-sp-0); /* 6px 0 0 */
@@ -220,25 +239,31 @@
 .finePrint {
   display: flex;
   flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px between fine-print items */
-  margin-top: var(--tid-sp-4); /* 8px — space above fine-print block */
-  padding-top: var(--tid-sp-3); /* 6px — internal padding above first item */
-  border-top: var(--tid-border-width) solid var(--tid-border-light);
+  gap: var(--tid-sp-0); /* 0 — predecessor .fine-print-block has gap: 0 */
+  margin-top: var(--tid-sp-4); /* 8px — predecessor --sp-4 */
+  line-height: 1.2; /* predecessor uses unitless 1.2 */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor --fs-2xs */
+  color: var(--tid-text-muted); /* predecessor uses --text-muted */
+}
+
+/* Predecessor .fine-print-block > * { padding: 1px 0 } */
+.finePrint > * {
+  margin: var(--tid-sp-0);
+  padding: 1px var(--tid-sp-0);
 }
 
 .finePrintLink {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .dns-link uses --fs-2xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-brand); /* Brand blue for links */
-  line-height: var(--tid-lh-tight); /* 13px */
-  letter-spacing: var(--tid-ls-normal);
-  text-decoration: none;
+  color: var(--tid-text-muted); /* predecessor uses --text-muted, not brand */
+  line-height: 1.2; /* predecessor uses unitless 1.2 */
+  text-decoration: underline; /* predecessor .dns-link has underline by default */
   cursor: pointer;
 }
 
 .finePrintLink:hover {
-  text-decoration: underline;
+  color: var(--tid-ink); /* predecessor .dns-link:hover darkens to --ink */
 }
 
 .finePrintLink:focus-visible {
@@ -249,11 +274,10 @@
 
 .finePrintText {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .retention-notice uses --fs-2xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-tight); /* 13px */
-  letter-spacing: var(--tid-ls-normal);
+  color: var(--tid-text-muted); /* predecessor uses --text-muted */
+  line-height: 1.2; /* predecessor uses unitless 1.2 */
   margin: var(--tid-sp-0);
 }
 
@@ -263,5 +287,5 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }

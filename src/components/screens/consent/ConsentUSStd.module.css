@@ -27,12 +27,12 @@
    Screen heading — heading font, medium weight. */
 
 .headline {
-  font-family: var(--tid-ff-heading);
+  font-family: var(--tid-ff-body); /* predecessor .bold uses body font (Inter), NOT heading */
   font-size: var(--tid-fs-base); /* 14px */
   font-weight: var(--tid-fw-medium);
   color: var(--tid-ink);
   line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
+  letter-spacing: var(--tid-ls-normal); /* predecessor uses ls-normal, NOT ls-tight */
   margin: var(--tid-sp-0);
 }
 
@@ -50,15 +50,24 @@
   margin: var(--tid-sp-0);
 }
 
+/* ── Text Block Link Override ──
+   Predecessor .text-block .link { color: inherit; text-decoration: underline }.
+   Policy links inside the text block blend with body text, NOT brand-blue. */
+
+.textBlock :global(a) {
+  color: inherit;
+  text-decoration: underline;
+}
+
 /* ── Trust Line ──
    Brand-blue motivational tagline below the text block. */
 
 .trustLine {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px — matches predecessor trust line */
+  font-size: var(--tid-fs-base); /* 14px — predecessor trust line size */
   font-weight: var(--tid-fw-medium); /* 500 — medium weight for emphasis */
   color: var(--tid-brand); /* Trust ID Blue — trust line is always brand color */
-  line-height: var(--tid-lh-normal); /* 16px */
+  line-height: var(--tid-lh-loose); /* 20px — predecessor .trust-line uses lh-loose */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-0);
   margin-bottom: var(--tid-sp-3); /* 6px */
@@ -96,19 +105,19 @@
 
 .signalLabel {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-medium);
+  font-size: var(--tid-fs-xs); /* 10px — predecessor .gpc-text fs-xs */
+  font-weight: var(--tid-fw-regular);
   color: var(--tid-ink);
-  line-height: var(--tid-lh-snug); /* 15px */
+  line-height: var(--tid-lh-body); /* 17px — predecessor lh-body */
   letter-spacing: var(--tid-ls-normal);
 }
 
 .signalDetail {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-sm); /* 11px */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .gpc-detail fs-2xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-snug); /* 15px */
+  color: var(--tid-text-muted); /* predecessor uses text-muted */
+  line-height: var(--tid-lh-body); /* 17px — predecessor lh-body */
   letter-spacing: var(--tid-ls-normal);
 }
 
@@ -163,8 +172,9 @@
    Uses body-sm size to keep compact within the 380px banner. */
 
 .privacyChoicesLink {
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  line-height: var(--tid-lh-normal); /* 16px */
+  font-size: var(--tid-fs-2xs); /* 9px — predecessor .privacy-choices-link fs-2xs */
+  color: var(--tid-text-muted); /* predecessor uses text-muted, NOT brand */
+  line-height: var(--tid-lh-snug); /* 15px */
 }
 
 /* ── Sensitive Data Notice ──
@@ -189,5 +199,5 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }

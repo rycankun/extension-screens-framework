@@ -13,8 +13,9 @@
  */
 
 /* ── Custom Header ──
-   Three-column flex: BackArrow (left) · Logo (center) · Close (right).
-   Same pattern as OtpEntry predecessor header. */
+   Two-section layout: BackArrow + Logo (left) | Close (right).
+   Same pattern as OtpEntry predecessor header — NOT three-column centered.
+   Predecessor: .logo > .logo-left (back+logo) + .close-btn (right). */
 
 .header {
   display: flex;
@@ -23,13 +24,12 @@
   width: 100%;
 }
 
-/* ── Logo Center Wrapper ──
-   Flex-1 to center the logo between back arrow and close button. */
+/* ── Header Left ──
+   BackArrow button + host site logo grouped together on the left.
+   Mirrors predecessor .logo-left wrapper. */
 
-.logoCenter {
-  flex: 1;
+.headerLeft {
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -81,52 +81,44 @@
 }
 
 /* ── Text Block ──
-   Bold headline + regular body text + email link on a single flow.
-   Left-aligned (not centered) to match predecessor OTP error layout. */
+   Predecessor .text-block sets shared typography for all inline spans:
+   line-height: --lh-reading (21px), font-size: --fs-base (14px),
+   color: --text-body, letter-spacing: --ls-normal (-0.1px).
+   Bold, regular, and emailLink spans inherit from this container. */
 
 .textBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-2); /* 4px */
+  line-height: var(--tid-lh-reading); /* 21px — predecessor .text-block */
+  font-size: var(--tid-fs-base); /* 14px — predecessor .text-block */
+  color: var(--tid-text-body); /* predecessor .text-block */
+  letter-spacing: var(--tid-ls-normal); /* -0.1px — predecessor .text-block */
   margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Text Content ──
-   Single paragraph containing bold headline, regular body, and email.
-   Predecessor renders these inline within one <p> element. */
-
-.textContent {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
-  font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-body);
-  line-height: var(--tid-lh-relaxed); /* 18px */
-  letter-spacing: var(--tid-ls-normal);
-  margin: var(--tid-sp-0);
-}
-
 /* ── Bold Headline (inline) ──
-   "That code didn't work." — medium weight, ink color. */
+   Predecessor .bold only sets font-weight and color — inherits
+   font-family (body/Inter), font-size, line-height, letter-spacing
+   from the .text-block parent. NOT heading font (Work Sans). */
 
 .bold {
-  font-weight: var(--tid-fw-medium);
+  font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
 }
 
 /* ── Regular Body (inline) ──
-   "Let's try again. We sent a code to" — inherits from .textContent. */
+   Predecessor .regular only sets font-weight — inherits all else. */
 
 .regular {
-  font-weight: var(--tid-fw-regular);
+  font-weight: var(--tid-fw-regular); /* 400 */
 }
 
 /* ── Email Link ──
-   Styled as a link (brand color) but not a real anchor —
-   just visual emphasis on the email address. */
+   Predecessor .text-block .link uses color: inherit and text-decoration: underline.
+   The email address inherits the text-body color and is underlined, NOT brand blue. */
 
 .emailLink {
-  color: var(--tid-brand);
-  font-weight: var(--tid-fw-medium);
+  color: inherit; /* predecessor .text-block .link */
+  text-decoration: underline; /* predecessor .text-block .link */
+  font-weight: var(--tid-fw-medium); /* predecessor .link base */
 }
 
 /* ── OTP Input Area ──
@@ -161,10 +153,10 @@
 
 .errorText {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-sm); /* 11px */
+  font-size: var(--tid-fs-body); /* 13px — predecessor .error-text uses --fs-body */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-error);
-  line-height: var(--tid-lh-tight); /* 13px */
+  line-height: var(--tid-lh-snug); /* 15px */
   letter-spacing: var(--tid-ls-normal);
   text-align: center;
   margin: var(--tid-sp-0);
@@ -185,19 +177,21 @@
 
 .resendLink {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-body); /* 13px — predecessor .btn-ghost uses --fs-body */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-brand);
+  color: var(--tid-text-muted); /* predecessor .btn-ghost uses --text-muted */
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--tid-sp-0);
+  padding: var(--tid-sp-2) var(--tid-sp-0); /* predecessor .btn-ghost: --sp-2 0 */
   letter-spacing: var(--tid-ls-normal);
   line-height: var(--tid-lh-snug); /* 15px */
+  width: 100%; /* predecessor .btn-ghost: width 100% */
+  text-align: center; /* predecessor .btn-ghost: text-align center */
 }
 
 .resendLink:hover {
-  color: var(--tid-brand-dark);
+  color: var(--tid-text-secondary); /* predecessor .btn-ghost:hover uses --text-secondary */
 }
 
 .resendLink:focus-visible {
@@ -210,9 +204,11 @@
    Centered micro link for changing the email address. */
 
 .wrongEmailRow {
-  display: flex;
-  justify-content: center;
-  padding-top: var(--tid-sp-2); /* 4px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .micro context */
+  color: var(--tid-text-micro); /* predecessor .micro */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor .micro */
+  text-align: center;
+  letter-spacing: var(--tid-ls-normal);
 }
 
 /* ── Ghost Inline Button ──
@@ -221,19 +217,19 @@
 
 .ghostInline {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-sm); /* 11px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .btn-ghost-inline */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
+  color: var(--tid-text-muted); /* predecessor .btn-ghost uses --text-muted */
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--tid-sp-0);
+  padding: var(--tid-sp-0); /* predecessor .btn-ghost-inline: padding 0 */
   letter-spacing: var(--tid-ls-normal);
-  line-height: var(--tid-lh-tight); /* 13px */
+  line-height: var(--tid-lh-snug); /* 15px — matches micro context */
 }
 
 .ghostInline:hover {
-  color: var(--tid-brand);
+  color: var(--tid-text-secondary); /* predecessor .btn-ghost:hover */
 }
 
 .ghostInline:focus-visible {
@@ -247,11 +243,12 @@
    Centered, small font, secondary color with brand-colored link. */
 
 .passkeyFallback {
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  gap: var(--tid-sp-1); /* 2px */
-  padding-top: var(--tid-sp-3); /* 6px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .micro */
+  color: var(--tid-text-micro); /* predecessor .micro */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor .micro */
+  text-align: center;
+  letter-spacing: var(--tid-ls-normal);
+  margin-top: var(--tid-sp-1); /* 2px */
 }
 
 /* ── Passkey Prefix Text ──
@@ -261,8 +258,8 @@
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-sm); /* 11px */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-tight); /* 13px */
+  color: var(--tid-text-micro); /* predecessor .micro uses --text-micro */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor .micro uses --lh-snug */
   letter-spacing: var(--tid-ls-normal);
 }
 
@@ -271,15 +268,15 @@
 
 .passkeyLink {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-sm); /* 11px */
-  font-weight: var(--tid-fw-medium);
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .link-sm */
+  font-weight: var(--tid-fw-medium); /* predecessor .link */
   color: var(--tid-brand);
   background: none;
   border: none;
   cursor: pointer;
   padding: var(--tid-sp-0);
   letter-spacing: var(--tid-ls-normal);
-  line-height: var(--tid-lh-tight); /* 13px */
+  line-height: var(--tid-lh-snug); /* 15px — matches micro context */
 }
 
 .passkeyLink:hover {
@@ -298,5 +295,5 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }

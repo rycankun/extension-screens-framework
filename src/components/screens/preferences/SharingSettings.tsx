@@ -89,13 +89,16 @@ export function SharingSettings({
           </div>
         </dl>
 
-        {/* ── Revoke Button ── */}
+        {/* ── Revoke Button ──
+            Predecessor uses .btn-secondary.btn-revoke (red text + red border).
+            className override applies error color to the secondary variant. */}
         <Button
           label={SHARING_REVOKE_BTN}
           variant="secondary"
           fullWidth
           onClick={onRevoke}
           ariaLabel="Revoke credential sharing with this site"
+          className={styles.revokeBtn}
         />
 
         {/* ── Revoke Warning Micro Text ── */}

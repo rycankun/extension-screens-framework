@@ -65,7 +65,7 @@ export interface ConsentEUProps {
    Self-contained SVGs for Figma-compatible rendering. No external icon
    dependencies — each icon is a lightweight inline path. */
 
-/** Shield icon for GPC indicator and universal opt-out disclosure */
+/** Shield icon for GPC indicator — stroke-based outline per predecessor */
 function ShieldIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -74,12 +74,34 @@ function ShieldIcon({ className }: { className?: string }) {
       height="14"
       viewBox="0 0 24 24"
       fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden="true"
     >
-      <path
-        d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-        fill="currentColor"
-      />
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+  );
+}
+
+/** Badge-check icon for universal opt-out disclosure — predecessor pattern */
+function BadgeCheckIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.77 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z" />
+      <path d="m9 12 2 2 4-4" />
     </svg>
   );
 }
@@ -107,10 +129,10 @@ export function ConsentEU({
             Bold headline + regular body with inline policy links.
             Matches predecessor consent-t1.html .consent-text-block. */}
         <div className={styles.textBlock}>
-          <p className={styles.textBlockBold}>
+          <span className={styles.textBlockBold}>
             {COPY_TEXT.consentHeadline}
-          </p>
-          <p className={styles.textBlockRegular}>
+          </span>
+          <span className={styles.textBlockRegular}>
             {EU_CONSENT_BODY}{' '}
             <Link href={POLICY_URLS.privacy} size="sm">
               {POLICY_LINKS.privacy}
@@ -124,7 +146,7 @@ export function ConsentEU({
               {POLICY_LINKS.terms}
             </Link>
             .
-          </p>
+          </span>
         </div>
 
         {/* ── 3. Trust Line ── */}
@@ -164,7 +186,7 @@ export function ConsentEU({
         <div className={styles.btnStack}>
           <Button
             label={COPY_TEXT.consentRejectBtn}
-            variant="secondary"
+            variant="primary"
             fullWidth
             onClick={onRejectAll}
           />
@@ -195,7 +217,7 @@ export function ConsentEU({
             Required by CPA §6-1-1313 and similar state laws. Displayed
             regardless of GPC detection to inform all users. */}
         <div className={styles.universalOptout}>
-          <ShieldIcon className={styles.gpcIcon} />
+          <BadgeCheckIcon className={styles.gpcIcon} />
           <span>{UNIVERSAL_OPTOUT_TEXT}</span>
         </div>
 

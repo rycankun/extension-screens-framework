@@ -84,12 +84,12 @@ export function OtpError({
         ariaLabel={SCREEN_TITLES[SCREENS.OTP_ERROR]}
         screenId={SCREENS.OTP_ERROR}
       >
-        {/* ── Custom Header: BackArrow + Logo + Close ──
-            Same three-column layout as OtpEntry predecessor:
-            back arrow (left) · logo (center) · close button (right). */}
+        {/* ── Custom Header: BackArrow + Logo (left) | Close (right) ──
+            Two-section layout matching predecessor .logo > .logo-left + .close-btn.
+            Same pattern as OtpEntry. */}
         <header className={styles.header}>
-          <BackArrow onClick={onBack} />
-          <div className={styles.logoCenter}>
+          <div className={styles.headerLeft}>
+            <BackArrow onClick={onBack} />
             <img
               className={styles.logoImg}
               src="/assets/StreamVault-BrandLockup-Primary.svg"
@@ -107,14 +107,14 @@ export function OtpError({
         </header>
 
         {/* ── Text Block: Headline + Body + Email ──
-            Bold error headline, then regular body text ending with
-            the user's email styled as a link. */}
+            Predecessor uses inline <span> elements in .text-block,
+            not <p>/<strong>. The .bold and .regular classes inherit
+            font-family (Inter), font-size (14px), line-height (21px)
+            from the .textBlock parent. */}
         <div className={styles.textBlock}>
-          <p className={styles.textContent}>
-            <strong className={styles.bold}>{OTP_ERROR_HEADLINE}</strong>{' '}
-            <span className={styles.regular}>{OTP_ERROR_BODY}</span>{' '}
-            <span className={styles.emailLink}>{email}</span>
-          </p>
+          <span className={styles.bold}>{OTP_ERROR_HEADLINE}</span>{' '}
+          <span className={styles.regular}>{OTP_ERROR_BODY}</span>{' '}
+          <span className={styles.emailLink}>{email}</span>
         </div>
 
         {/* ── Step Indicator ──

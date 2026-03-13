@@ -65,10 +65,11 @@ export function PasskeyVerify({
         {/* ── Header: logo + close (NO back arrow) ── */}
         <DialogHeader onClose={onClose} />
 
-        {/* ── Text Block: bold headline + regular body (left-aligned) ── */}
+        {/* ── Text Block: bold headline + regular body as inline spans ──
+            Matches predecessor's inline-span pattern (NOT block p elements). */}
         <div className={styles.textBlock}>
-          <p className={styles.bold}>{COPY_TEXT.passkeyVerifyHeadline}</p>
-          <p className={styles.regular}>{COPY_TEXT.passkeyVerifyBody}</p>
+          <span className={styles.bold}>{COPY_TEXT.passkeyVerifyHeadline}</span>{' '}
+          <span className={styles.regular}>{COPY_TEXT.passkeyVerifyBody}</span>
         </div>
 
         {/* ── Passkey Preview Area ──

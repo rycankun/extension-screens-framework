@@ -151,9 +151,9 @@ export function OtpEntry({
         {/* ── Auto-Submit Indicator ──
             "Code verifies automatically" — tells user no Verify button is needed.
             aria-live="polite" for screen readers when status changes. */}
-        <p className={styles.micro} aria-live="polite">
+        <div className={styles.micro} aria-live="polite">
           {COPY_TEXT.otpAutoSubmit}
-        </p>
+        </div>
 
         {/* ── Resend Timer ──
             Shows countdown ("Haven't received it? Resend in 27s") or active

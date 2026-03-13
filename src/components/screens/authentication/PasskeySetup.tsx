@@ -58,10 +58,11 @@ export function PasskeySetup({
         {/* ── Header: logo + close (no back arrow, no icon) ── */}
         <DialogHeader onClose={onClose} />
 
-        {/* ── Text Block: bold headline + regular body ── */}
+        {/* ── Text Block: bold headline + regular body as inline spans ──
+            Matches predecessor's inline-span pattern (NOT block p elements). */}
         <div className={styles.textBlock}>
-          <p className={styles.bold}>{COPY_TEXT.passkeyHeadline}</p>
-          <p className={styles.regular}>{COPY_TEXT.passkeyBody}</p>
+          <span className={styles.bold}>{COPY_TEXT.passkeyHeadline}</span>{' '}
+          <span className={styles.regular}>{COPY_TEXT.passkeyBody}</span>
         </div>
 
         {/* ── Detail Micro Text ──

@@ -109,30 +109,33 @@ export function DnsConfirm({
         <div className={styles.dnsContent}>
           {/* ── Green Check Icon ──
               24×24 stroke-based check-circle from predecessor.
+              Wrapped in a 48×48 circle with success-tint background.
               Uses currentColor so the token (.checkIcon color) applies. */}
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-            className={styles.checkIcon}
-          >
-            <path
-              d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <polyline
-              points="22 4 12 14.01 9 11.01"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <div className={styles.checkIconWrap}>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              className={styles.checkIcon}
+            >
+              <path
+                d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <polyline
+                points="22 4 12 14.01 9 11.01"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
 
           {/* ── Title ── */}
           <h2 className={styles.title}>{DNS_HEADLINE}</h2>

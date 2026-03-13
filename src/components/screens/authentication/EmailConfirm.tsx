@@ -75,12 +75,12 @@ export function EmailConfirm({
         ariaLabel={SCREEN_TITLES[SCREENS.EMAIL_CONFIRM]}
         screenId={SCREENS.EMAIL_CONFIRM}
       >
-        {/* ── Custom Header: BackArrow | Logo | Close ──
-            Same three-column header pattern as predecessor email-confirm.html.
-            BackArrow left, logo center, close button right. */}
+        {/* ── Custom Header: BackArrow + Logo (left) | Close (right) ──
+            Two-section layout matching predecessor .logo > .logo-left + .close-btn.
+            Same pattern as OtpEntry. */}
         <header className={styles.header}>
-          <BackArrow onClick={onBack} />
-          <div className={styles.logoCenter}>
+          <div className={styles.headerLeft}>
+            <BackArrow onClick={onBack} />
             <img
               className={styles.logoImg}
               src={DEFAULT_LOGO_SRC}
@@ -98,14 +98,11 @@ export function EmailConfirm({
         </header>
 
         {/* ── Text Block ──
-            Bold headline + regular body text, left-aligned. */}
+            Bold headline + regular body as inline spans, matching
+            predecessor's inline-span pattern (NOT block h2/p). */}
         <div className={styles.textBlock}>
-          <h2 className={styles.bold}>
-            {EMAIL_CONFIRM_HEADLINE}
-          </h2>
-          <p className={styles.regular}>
-            {EMAIL_CONFIRM_BODY}
-          </p>
+          <span className={styles.bold}>{EMAIL_CONFIRM_HEADLINE}</span>{' '}
+          <span className={styles.regular}>{EMAIL_CONFIRM_BODY}</span>
         </div>
 
         {/* ── Email Input ──

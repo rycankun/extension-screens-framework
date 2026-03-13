@@ -99,17 +99,24 @@
    check icon → title → description → note box. */
 
 .dnsContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
-  gap: var(--tid-sp-3); /* 6px */
-  margin-top: var(--tid-sp-3); /* 6px */
+  padding: var(--tid-sp-12) var(--tid-sp-8); /* 24px 16px — predecessor .dns-confirm-content */
 }
 
-/* ── Green Check Circle Icon ──
-   24×24 SVG check-circle from predecessor.
-   Uses --tid-success (Signal Green) for the stroke color. */
+/* ── Green Check Circle Icon Container ──
+   Predecessor wraps the SVG in a 48×48 circle with success-tint background.
+   Centered using auto margins. */
+
+.checkIconWrap {
+  margin: var(--tid-sp-3) auto var(--tid-sp-4); /* 6px auto 8px — predecessor sp-6 auto sp-8 adjusted */
+  width: var(--tid-size-control-xl); /* 48px — predecessor --size-control-xl */
+  height: var(--tid-size-control-xl);
+  border-radius: 50%; /* Circle — predecessor --radius-circle */
+  background: var(--tid-success-tint); /* predecessor --success-tint */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .checkIcon {
   color: var(--tid-success);
@@ -117,48 +124,45 @@
 
 /* ── Title ──
    "Request Received" — bold heading, centered.
-   Heading font, medium weight, ink color, 14px. */
+   Predecessor uses .bold + .bold-sm + .dns-confirm-title classes.
+   .bold inherits body font (Inter, NOT heading), .dns-confirm-title sets 14px. */
 
 .title {
-  font-family: var(--tid-ff-heading);
-  font-size: var(--tid-fs-base); /* 14px */
-  font-weight: var(--tid-fw-medium); /* 500 */
+  font-family: var(--tid-ff-body); /* Inter — predecessor .bold inherits body font */
+  font-size: var(--tid-fs-base); /* 14px — predecessor .dns-confirm-title overrides to --fs-base */
+  font-weight: var(--tid-fw-medium); /* 500 — predecessor .bold weight */
   color: var(--tid-ink);
   line-height: var(--tid-lh-body); /* 17px */
-  letter-spacing: var(--tid-ls-tight);
-  margin: var(--tid-sp-0);
+  letter-spacing: var(--tid-ls-normal); /* -0.1px — NOT --ls-tight */
+  margin: var(--tid-sp-4) var(--tid-sp-0) var(--tid-sp-0); /* 8px 0 0 — predecessor margin-top: --sp-4 */
 }
 
 /* ── Description ──
    Body text describing what happened (opt-out confirmed).
-   Body font, regular weight, text-body color, 12px. */
+   Predecessor: --fs-body (13px), --lh-ratio-relaxed (1.5). */
 
 .description {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-body); /* 13px — predecessor .dns-confirm-description uses --fs-body */
   font-weight: var(--tid-fw-regular); /* 400 */
   color: var(--tid-text-body);
-  line-height: var(--tid-lh-relaxed); /* 18px */
+  line-height: 1.5; /* predecessor --lh-ratio-relaxed */
   letter-spacing: var(--tid-ls-normal);
-  margin: var(--tid-sp-0);
+  margin: var(--tid-sp-4) var(--tid-sp-0) var(--tid-sp-0); /* 8px 0 0 — predecessor margin-top: --sp-4 */
 }
 
-/* ── Note Box ──
-   Subtle background box explaining scope (this site only).
-   Raised surface bg, small padding, rounded corners. */
+/* ── Note Text ──
+   Scope note: "This applies to data collected by StreamVault..."
+   Predecessor: no background, just muted text. --fs-sm (11px), --text-muted, --lh-ratio-normal (1.4). */
 
 .note {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .dns-confirm-note uses --fs-sm */
   font-weight: var(--tid-fw-regular); /* 400 */
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-relaxed); /* 18px */
+  color: var(--tid-text-muted); /* predecessor uses --text-muted */
+  line-height: 1.4; /* predecessor --lh-ratio-normal */
   letter-spacing: var(--tid-ls-normal);
-  background: var(--tid-surface-raised);
-  padding: var(--tid-sp-4); /* 8px */
-  border-radius: var(--tid-radius-sm); /* 4px */
-  margin: var(--tid-sp-0);
-  width: 100%;
+  margin: var(--tid-sp-3) var(--tid-sp-0) var(--tid-sp-0); /* 6px 0 0 — predecessor margin-top: --sp-3 */
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -185,10 +189,10 @@
 
 .micro {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .micro uses --fs-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-tight); /* 13px */
+  color: var(--tid-text-micro); /* predecessor .micro uses --text-micro */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor .micro uses --lh-snug */
   letter-spacing: var(--tid-ls-normal);
   text-align: center;
   margin: var(--tid-sp-3) var(--tid-sp-0) var(--tid-sp-0); /* 6px top, 0 bottom */
@@ -204,5 +208,5 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-3); /* 6px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }

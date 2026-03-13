@@ -98,36 +98,36 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 /* ── Text Block Container ──
-   Inline flow: bold headline then regular body text.
-   Predecessor renders these as inline spans flowing together. */
+   Predecessor .text-block: --fs-base (14px), --lh-reading (21px),
+   --text-body, --ls-normal (-0.1px). Inline spans inherit. */
 
 .textBlock {
+  font-family: var(--tid-ff-body); /* Inter — predecessor inherits body font */
+  font-size: var(--tid-fs-base); /* 14px — predecessor --fs-base */
+  line-height: var(--tid-lh-reading); /* 21px — predecessor --lh-reading */
+  color: var(--tid-text-body); /* predecessor --text-body */
+  letter-spacing: var(--tid-ls-normal); /* -0.1px — predecessor --ls-normal */
   margin-top: var(--tid-sp-2); /* 4px */
   margin-bottom: var(--tid-sp-3); /* 6px — space before radio group */
-  line-height: var(--tid-lh-relaxed); /* 18px — wrapping line height for the block */
 }
 
 /* ── Bold Span (Headline) ──
-   Heading font, medium weight, ink color, 14px.
-   Jurisdiction-adaptive text (e.g., "Exercise Your Data Rights"). */
+   Body font (Inter), medium weight, ink color.
+   Inherits size/line-height from .textBlock. Predecessor .bold has NO
+   explicit font-family — inherits body font. */
 
 .bold {
-  font-family: var(--tid-ff-heading);
-  font-size: var(--tid-fs-base); /* 14px */
+  font-family: var(--tid-ff-body); /* Inter — NOT heading font */
   font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
-  letter-spacing: var(--tid-ls-tight);
+  letter-spacing: var(--tid-ls-normal); /* -0.1px — NOT --ls-tight */
 }
 
 /* ── Regular Span (Body) ──
-   Body font, regular weight, text-body color, 12px. */
+   Inherits from .textBlock, regular weight. */
 
 .regular {
-  font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
   font-weight: var(--tid-fw-regular); /* 400 */
-  color: var(--tid-text-body);
-  letter-spacing: var(--tid-ls-normal);
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -142,20 +142,39 @@
   border: none;
   margin: var(--tid-sp-0);
   padding: var(--tid-sp-0);
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-2); /* 4px — predecessor .dsr-fieldset gap */
   margin-bottom: var(--tid-sp-3); /* 6px — space before email input */
 }
 
 /* ── Radio Label ──
-   Each radio option: flex row with custom radio control + text block.
-   Predecessor .dsr-radio-label pattern with flex-start alignment
-   so the radio circle aligns to the top of two-line text. */
+   Each radio option: bordered card with radio control + text block.
+   Predecessor .dsr-radio-label: border, radius-md, sp-3 sp-4 padding,
+   hover/checked states with brand tint. */
 
 .radioLabel {
   display: flex;
   align-items: flex-start;
-  gap: var(--tid-sp-3); /* 6px */
+  gap: var(--tid-sp-3); /* 6px — predecessor --sp-3 */
   cursor: pointer;
-  padding: var(--tid-sp-3) var(--tid-sp-0); /* 6px 0 — vertical tap area */
+  padding: var(--tid-sp-3) var(--tid-sp-4); /* 6px 8px — predecessor sp-3 sp-4 */
+  border: 1px solid var(--tid-border-default); /* predecessor border-default */
+  border-radius: var(--tid-radius-md); /* 6px — predecessor --radius-md */
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.radioLabel:hover {
+  border-color: var(--tid-brand);
+  background: rgba(var(--tid-brand-rgb), 0.04); /* predecessor brand-primary-rgb 0.04 */
+}
+
+/* ── Checked Radio Label ──
+   When the hidden input is checked, highlight the parent card. */
+
+.radioLabel:has(.radioInput:checked) {
+  border-color: var(--tid-brand);
+  background: rgba(var(--tid-brand-rgb), 0.06); /* predecessor brand-primary-rgb 0.06 */
 }
 
 /* ── Hidden Radio Input ──
@@ -236,27 +255,27 @@
 
 /* ── Radio Title ──
    First line: option name (e.g., "Access / Right to Know").
-   12px, medium weight, ink color. */
+   Predecessor .dsr-radio-title: fs-body (13px), fw-medium, ink, lh-ratio-normal (1.4). */
 
 .radioTitle {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-size: var(--tid-fs-body); /* 13px — predecessor --fs-body */
   font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
-  line-height: var(--tid-lh-body); /* 17px */
+  line-height: 1.4; /* predecessor --lh-ratio-normal */
   letter-spacing: var(--tid-ls-normal);
 }
 
 /* ── Radio Description ──
    Second line: brief explanation of the option.
-   11px, regular weight, secondary text color. */
+   Predecessor .dsr-radio-desc: fs-sm (11px), text-muted, lh-ratio-normal (1.4). */
 
 .radioDesc {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor --fs-sm */
   font-weight: var(--tid-fw-regular); /* 400 */
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-relaxed); /* 18px */
+  color: var(--tid-text-muted); /* predecessor --text-muted */
+  line-height: 1.4; /* predecessor --lh-ratio-normal */
   letter-spacing: var(--tid-ls-normal);
 }
 
@@ -266,7 +285,7 @@
 
 /* ── Trust Signal Container ──
    "We'll verify your identity before processing your request."
-   Small star icon + 11px secondary text. Same pattern as EmailCapture. */
+   Predecessor .trust-signal: text-muted color, margin-bottom 0. */
 
 .trustSignal {
   display: flex;
@@ -275,21 +294,22 @@
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-sm); /* 11px — micro text */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-tight); /* 13px */
+  color: var(--tid-text-muted); /* predecessor --text-muted */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor trust-signal inherits */
   letter-spacing: var(--tid-ls-normal);
   margin-top: var(--tid-sp-2); /* 4px */
-  margin-bottom: var(--tid-sp-2); /* 4px */
+  margin-bottom: var(--tid-sp-0); /* 0 — predecessor margin-bottom: 0 */
 }
 
 /* ── Trust Signal Icon ──
-   12px star SVG, flex-shrink-0 to prevent collapse. */
+   12px star SVG, flex-shrink-0, brand color.
+   Predecessor .trust-signal-icon uses --brand. */
 
 .trustSignalIcon {
   width: var(--tid-size-icon-xs); /* 12px */
   height: var(--tid-size-icon-xs); /* 12px */
   flex-shrink: 0;
-  color: var(--tid-text-secondary);
+  color: var(--tid-brand); /* predecessor --brand */
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -297,33 +317,34 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 /* ── Response Notice Container ──
-   Subtle background pill with clock icon + response time text.
-   Raised surface background with small padding and rounded corners. */
+   Green-tinted notice with clock icon + response time text.
+   Predecessor .dsr-response-notice: success-tint bg, radius-md, fs-sm, ink color. */
 
 .responseNotice {
   display: flex;
   align-items: center;
-  gap: var(--tid-sp-2); /* 4px */
+  gap: var(--tid-sp-2); /* 4px — predecessor --sp-2 */
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor --fs-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-relaxed); /* 18px */
+  color: var(--tid-ink); /* predecessor --ink */
+  line-height: 1.4; /* predecessor --lh-ratio-normal */
   letter-spacing: var(--tid-ls-normal);
-  background: var(--tid-surface-raised);
-  padding: var(--tid-sp-3); /* 6px */
-  border-radius: var(--tid-radius-sm); /* 4px */
+  background: var(--tid-success-tint); /* predecessor --success-tint */
+  padding: var(--tid-sp-3) var(--tid-sp-4); /* 6px 8px — predecessor sp-3 sp-4 */
+  border-radius: var(--tid-radius-md); /* 6px — predecessor --radius-md */
   margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
 /* ── Response Notice Icon ──
-   12px clock SVG, flex-shrink-0 to prevent collapse. */
+   12px clock SVG, flex-shrink-0, green stroke.
+   Predecessor .dsr-response-notice svg: stroke sv-green (#38c878). */
 
 .responseNoticeIcon {
   width: var(--tid-size-icon-xs); /* 12px */
   height: var(--tid-size-icon-xs); /* 12px */
   flex-shrink: 0;
-  color: var(--tid-text-secondary);
+  color: var(--tid-success); /* predecessor sv-green / success green */
 }
 
 /* ── Response Notice Strong ──
@@ -354,14 +375,14 @@
 
 /* ── Disclaimer Text ──
    "StreamVault processes this request..."
-   Micro text, secondary color, centered. */
+   Predecessor .micro pattern: fs-sm (11px), text-micro, lh-snug (15px), centered. */
 
 .disclaimer {
   font-family: var(--tid-ff-body);
-  font-size: var(--tid-fs-xs); /* 10px */
+  font-size: var(--tid-fs-sm); /* 11px — predecessor .micro uses --fs-sm */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-secondary);
-  line-height: var(--tid-lh-relaxed); /* 18px */
+  color: var(--tid-text-micro); /* predecessor .micro uses --text-micro */
+  line-height: var(--tid-lh-snug); /* 15px — predecessor .micro uses --lh-snug */
   letter-spacing: var(--tid-ls-normal);
   text-align: center;
   margin: var(--tid-sp-3) var(--tid-sp-0); /* 6px 0 */
@@ -377,7 +398,7 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--tid-sp-2); /* 4px */
+  padding-top: var(--tid-sp-0); /* 0 — BannerShell gap handles separation */
 }
 
 /* ══════════════════════════════════════════════════════════════════════
