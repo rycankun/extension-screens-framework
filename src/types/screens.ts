@@ -9,8 +9,13 @@
  * @see docs/PRD.md § Variant System for axis definitions
  */
 
+/* Types re-exported from constants where they are derived from
+   const objects. This is intentional — the constants own the values
+   and the derived types live alongside them. We re-export here for
+   convenience so consumers can import from either location. */
 import type { Jurisdiction } from '../constants/jurisdictions';
 import type { Scenario, SlcMode } from '../constants/variants';
+export type { Jurisdiction, Scenario, SlcMode };
 
 /* ── Theme ── */
 

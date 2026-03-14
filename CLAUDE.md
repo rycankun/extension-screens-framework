@@ -83,7 +83,7 @@ Every piece of data in this project must have exactly ONE canonical source. All 
 | Figma token manifest | `src/tokens/figma-variables.json` | Figma plugin (auto-generated from `tokens.css`) |
 | Screen enum & metadata | `src/constants/screens.ts` | Stories, screen components, plugin, flow docs |
 | Jurisdiction configs & legal text | `src/constants/jurisdictions.ts` | Screen components, stories |
-| Variant copy text (62 keys) | `src/constants/variants.ts` | Screen components |
+| Variant copy text (61 keys) | `src/constants/variants.ts` | Screen components |
 | Flow transitions (170 edges) | `src/constants/flows.ts` | Storybook MDX flow docs |
 | Timing constants | `src/constants/timing.ts` | Components (CSS transition references only) |
 | ARIA screen titles | `src/constants/screens.ts` (SCREEN_TITLES) | Screen components, Storybook |
@@ -155,7 +155,7 @@ extension-screens-framework/
 │   ├── constants/
 │   │   ├── screens.ts             # Screen enum, metadata, ARIA titles, categories
 │   │   ├── jurisdictions.ts       # Jurisdiction configs, legal text, state lists
-│   │   ├── variants.ts            # 62 copy text variant keys
+│   │   ├── variants.ts            # 61 copy text variant keys
 │   │   ├── flows.ts               # Flow transition graph (170 edges)
 │   │   ├── timing.ts              # Animation/delay timing constants
 │   │   └── index.ts               # Barrel export
