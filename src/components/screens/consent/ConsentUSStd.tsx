@@ -30,6 +30,7 @@ import { SocialProof } from '../../molecules/SocialProof/SocialProof';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
 import { Link } from '../../atoms/Link/Link';
+import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import { COPY_TEXT } from '../../../constants/variants';
 import {
@@ -116,18 +117,24 @@ export function ConsentUSStd({
           {COPY_TEXT.usTrustLine}
         </p>
 
-        {/* ── 4. GPC Indicator (conditional) ── */}
+        {/* ── 4. GPC Indicator (conditional) ──
+            Structure matches ConsentEU/ConsentUS: shield icon + text column. */}
         {gpcDetected && (
-          <div className={styles.gpcIndicator} role="status">
-            <span className={styles.signalLabel}>{GPC_TEXT}</span>
-            <span className={styles.signalDetail}>{GPC_DETAIL}</span>
+          <div className={styles.gpcIndicator} role="status" aria-live="polite">
+            <Icon name="shield" className={styles.gpcIcon} />
+            <div className={styles.gpcContent}>
+              <span className={styles.gpcText}>{GPC_TEXT}</span>
+              <span className={styles.gpcDetail}>{GPC_DETAIL}</span>
+            </div>
           </div>
         )}
 
-        {/* ── 5. DNT Indicator (conditional) ── */}
+        {/* ── 5. DNT Indicator (conditional) ──
+            Structure matches ConsentUS: circle-slash icon + text. */}
         {dntDetected && (
-          <div className={styles.dntIndicator} role="status">
-            <span className={styles.signalLabel}>{DNT_TEXT}</span>
+          <div className={styles.dntIndicator} role="status" aria-live="polite">
+            <Icon name="circleSlash" className={styles.dntIcon} />
+            <span className={styles.dntText}>{DNT_TEXT}</span>
           </div>
         )}
 

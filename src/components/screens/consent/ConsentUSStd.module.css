@@ -74,50 +74,105 @@
 }
 
 /* ── GPC Indicator ──
-   Green-tinted signal block when Global Privacy Control is detected.
-   Shows main text + detail breakdown of opt-outs. */
+   Brand-blue-tinted signal block when Global Privacy Control is detected.
+   Shows shield icon + main text + detail breakdown of opt-outs.
+   Matches ConsentEU/ConsentUS styling: brand-rgb bg, radius-md, brand border. */
 
 .gpcIndicator {
   display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-1); /* 2px */
-  padding: var(--tid-sp-3); /* 6px */
-  background: rgba(var(--tid-success-rgb), 0.08);
-  border-radius: var(--tid-radius-sm); /* 4px */
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--tid-sp-2); /* 4px — predecessor gap sp-2 */
+  padding: var(--tid-sp-3); /* 6px — predecessor padding sp-3 */
+  background: rgba(var(--tid-brand-rgb), 0.08); /* Subtle brand tint — matches ConsentEU/ConsentUS */
+  border-radius: var(--tid-radius-md); /* 6px — predecessor radius-md */
+  border: var(--tid-border-width) solid rgba(var(--tid-brand-rgb), 0.2); /* predecessor accent border */
   margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
 /* ── DNT Indicator ──
-   Blue-tinted signal block when Do Not Track is detected. */
+   Subtle ink-tinted signal block when Do Not Track is detected.
+   Matches ConsentUS styling: ink-rgb bg at 0.04, radius-sm. */
 
 .dntIndicator {
   display: flex;
-  flex-direction: column;
-  gap: var(--tid-sp-1); /* 2px */
+  align-items: center;
+  gap: var(--tid-sp-3); /* 6px — matches ConsentUS */
   padding: var(--tid-sp-3); /* 6px */
-  background: rgba(var(--tid-brand-rgb), 0.06);
+  background: rgba(var(--tid-ink-rgb), 0.04); /* Neutral ink tint — matches ConsentUS */
   border-radius: var(--tid-radius-sm); /* 4px */
   margin-bottom: var(--tid-sp-3); /* 6px */
 }
 
-/* ── Signal Text Labels ──
-   Shared styles for GPC/DNT indicator text. */
+/* ── GPC Shield Icon ──
+   14px inline icon, brand-colored to match the indicator theme.
+   Matches ConsentEU/ConsentUS gpcIcon styling. */
 
-.signalLabel {
+.gpcIcon {
+  width: var(--tid-sp-7); /* 14px */
+  height: var(--tid-sp-7); /* 14px */
+  color: var(--tid-brand);
+  flex-shrink: 0;
+  margin-top: var(--tid-sp-px); /* 1px — optical alignment with text */
+}
+
+/* ── GPC Content Wrapper ──
+   Vertical stack of main GPC text and detail text.
+   Matches ConsentUS gpcContent styling. */
+
+.gpcContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tid-sp-1); /* 2px */
+}
+
+/* ── GPC Text ──
+   Main GPC indicator text — xs font, ink color.
+   Matches ConsentEU/ConsentUS gpcText styling. */
+
+.gpcText {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-xs); /* 10px — predecessor .gpc-text fs-xs */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-ink);
+  color: var(--tid-ink); /* predecessor uses ink, not secondary */
   line-height: var(--tid-lh-body); /* 17px — predecessor lh-body */
   letter-spacing: var(--tid-ls-normal);
 }
 
-.signalDetail {
+/* ── GPC Detail ──
+   Supplementary GPC detail text — smaller, muted color.
+   Matches ConsentEU/ConsentUS gpcDetail styling. */
+
+.gpcDetail {
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-2xs); /* 9px — predecessor .gpc-detail fs-2xs */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-text-muted); /* predecessor uses text-muted */
   line-height: var(--tid-lh-body); /* 17px — predecessor lh-body */
+  letter-spacing: var(--tid-ls-normal);
+}
+
+/* ── DNT Icon ──
+   Circle-slash icon — 14px, muted text color.
+   Matches ConsentUS dntIcon styling. */
+
+.dntIcon {
+  width: var(--tid-sp-7); /* 14px */
+  height: var(--tid-sp-7); /* 14px */
+  color: var(--tid-text-muted);
+  flex-shrink: 0;
+}
+
+/* ── DNT Text ──
+   DNT indicator text — body-sm, secondary color.
+   Matches ConsentUS dntText styling. */
+
+.dntText {
+  font-family: var(--tid-ff-body);
+  font-size: var(--tid-fs-body-sm); /* 12px */
+  font-weight: var(--tid-fw-regular);
+  color: var(--tid-text-secondary);
+  line-height: var(--tid-lh-normal); /* 16px */
   letter-spacing: var(--tid-ls-normal);
 }
 

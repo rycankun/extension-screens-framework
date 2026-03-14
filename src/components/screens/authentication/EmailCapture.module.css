@@ -67,7 +67,7 @@
   font-family: var(--tid-ff-body);
   font-size: var(--tid-fs-sm); /* 11px — micro text */
   font-weight: var(--tid-fw-regular);
-  color: var(--tid-text-micro); /* predecessor .micro uses --text-micro */
+  color: var(--tid-text-muted); /* predecessor .trust-signal overrides to --text-muted — matches CookieEmail/DsrIntake */
   line-height: var(--tid-lh-snug); /* 15px — predecessor .micro uses --lh-snug */
   letter-spacing: var(--tid-ls-normal);
   margin-top: var(--tid-sp-2); /* 4px */
@@ -81,7 +81,7 @@
   width: var(--tid-size-icon-xs); /* 12px */
   height: var(--tid-size-icon-xs); /* 12px */
   flex-shrink: 0;
-  color: var(--tid-text-micro); /* inherits micro context color */
+  color: var(--tid-brand); /* predecessor .trust-signal-icon uses --brand — matches CookieEmail/DsrIntake */
 }
 
 /* ── Divider ──
