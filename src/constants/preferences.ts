@@ -197,6 +197,9 @@ export const DSR_RESPONSE_TIME = {
 /** DSR response time notice template */
 export const DSR_RESPONSE_NOTICE_PREFIX = 'We will respond to your request within';
 
+/** DSR response time notice suffix */
+export const DSR_RESPONSE_NOTICE_SUFFIX = 'as required by law.';
+
 /** Submit button label */
 export const DSR_SUBMIT_BTN = 'Submit Request';
 

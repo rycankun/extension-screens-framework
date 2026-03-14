@@ -12,6 +12,11 @@
  * @see DIRECTIVES.md § 8.1 — no hardcoded strings in components
  */
 
+/* ── OTP Configuration ── */
+
+/** Number of OTP digit cells — shared by OtpInput, OtpEntry, and OtpError */
+export const OTP_LENGTH = 6;
+
 /* ── Email Capture ── */
 
 /** Input placeholder for email capture screen */

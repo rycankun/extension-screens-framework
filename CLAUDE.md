@@ -158,6 +158,10 @@ extension-screens-framework/
 │   │   ├── variants.ts            # 61 copy text variant keys
 │   │   ├── flows.ts               # Flow transition graph (170 edges)
 │   │   ├── timing.ts              # Animation/delay timing constants
+│   │   ├── auth.ts                # Authentication screen labels, OTP config
+│   │   ├── consent.ts             # Consent category labels and configs
+│   │   ├── cookies.ts             # Cookie entries, sublabels per category
+│   │   ├── preferences.ts         # Preference screen labels, DSR text, fine print
 │   │   └── index.ts               # Barrel export
 │   ├── hooks/
 │   │   ├── useTheme.ts
@@ -218,7 +222,7 @@ extension-screens-framework/
 ├── package.json
 ├── vite.config.ts
 ├── tsconfig.json
-├── .eslintrc.cjs
+├── eslint.config.js               # ESLint v9 flat config
 ├── .prettierrc
 ├── .stylelintrc.json
 └── vitest.config.ts

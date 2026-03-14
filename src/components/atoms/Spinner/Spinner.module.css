@@ -40,6 +40,16 @@
   border-width: var(--tid-border-width-thick); /* 2px */
 }
 
+/* ── Reduced Motion ──
+   WCAG 2.3.3: Users who prefer reduced motion get a static spinner.
+   The border styling still indicates loading state without animation. */
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
 /* ── Rotation Keyframes ── */
 
 @keyframes spin {

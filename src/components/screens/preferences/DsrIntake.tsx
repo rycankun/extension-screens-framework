@@ -36,6 +36,7 @@ import {
   DSR_EMAIL_PLACEHOLDER,
   DSR_RESPONSE_TIME,
   DSR_RESPONSE_NOTICE_PREFIX,
+  DSR_RESPONSE_NOTICE_SUFFIX,
   DSR_SUBMIT_BTN,
   DSR_DISCLAIMER,
   DSR_TRUST_SIGNAL,
@@ -220,7 +221,7 @@ export function DsrIntake({
           <span>
             {DSR_RESPONSE_NOTICE_PREFIX}{' '}
             <strong>{DSR_RESPONSE_TIME[jurisdiction]}</strong>{' '}
-            as required by law.
+            {DSR_RESPONSE_NOTICE_SUFFIX}
           </span>
         </div>
 

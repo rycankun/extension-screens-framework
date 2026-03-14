@@ -68,7 +68,7 @@
   height: var(--tid-sp-6); /* 12px */
   border: solid var(--tid-toggle-knob); /* white */
   border-width: 0 var(--tid-border-width-thick) var(--tid-border-width-thick) 0; /* 0 2px 2px 0 */
-  transform: rotate(45deg) translateY(-1px);
+  transform: rotate(45deg) translateY(calc(-1 * var(--tid-sp-px))); /* -1px optical checkmark alignment */
 }
 
 /* ── Focus-Visible ──

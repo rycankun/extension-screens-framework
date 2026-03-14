@@ -107,9 +107,10 @@
    Predecessor .btn-revoke colors the secondary button with error styling:
    red text + red-tinted border. Applied via className on the Button component. */
 
-.revokeBtn {
-  color: var(--tid-error) !important; /* Override secondary text color */
-  border-color: rgba(var(--tid-error-rgb), 0.3) !important; /* Predecessor error-tinted border */
+/* Double-class specificity to override Button .secondary without !important */
+.revokeBtn.revokeBtn {
+  color: var(--tid-error); /* Override secondary text color */
+  border-color: rgba(var(--tid-error-rgb), 0.3); /* Predecessor error-tinted border */
 }
 
 /* ── Micro Text ── */

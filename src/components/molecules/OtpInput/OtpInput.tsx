@@ -9,12 +9,8 @@
  * @see docs/PRD.md § 4.2 — OTP Entry screen layout
  */
 import React, { useRef, useCallback } from 'react';
+import { OTP_LENGTH } from '../../../constants/auth';
 import styles from './OtpInput.module.css';
-
-/* ── Constants ── */
-
-/** Number of OTP digit cells */
-const OTP_LENGTH = 6;
 
 /* ── Props ── */
 

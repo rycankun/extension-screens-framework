@@ -182,7 +182,9 @@ export function Icon({
   color,
   ariaLabel,
 }: IconProps) {
-  const isDecorative = !ariaLabel;
+  /* Treat both undefined and empty string as decorative —
+     empty ariaLabel would render role="img" with no accessible name */
+  const isDecorative = !ariaLabel || ariaLabel.trim() === '';
 
   return (
     <svg
