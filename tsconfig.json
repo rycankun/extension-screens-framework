@@ -15,8 +15,8 @@
     "forceConsistentCasingInFileNames": true,
 
     /* ── Output ── */
-    "declaration": true,
-    "declarationMap": true,
+    /* declaration/declarationMap removed — conflicts with noEmit: true.
+       Vite handles the build; this tsconfig is for type-checking only. */
     "sourceMap": true,
     "outDir": "./dist",
     "skipLibCheck": true,
@@ -26,6 +26,7 @@
 
     /* ── Interop ── */
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,

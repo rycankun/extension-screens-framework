@@ -25,11 +25,13 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
+      'react': reactPlugin,
     },
     rules: {
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'react/no-danger': 'error',
     },
   },
   {
