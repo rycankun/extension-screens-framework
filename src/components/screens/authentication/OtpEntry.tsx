@@ -23,7 +23,7 @@
  */
 import React, { useState } from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
-import { BackArrow } from '../../molecules/BackArrow/BackArrow';
+import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { StepIndicator } from '../../molecules/StepIndicator/StepIndicator';
 import { OtpInput } from '../../molecules/OtpInput/OtpInput';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
@@ -41,12 +41,6 @@ import {
   PASSKEY_FALLBACK_ARIA_LOGIN,
 } from '../../../constants/auth';
 import styles from './OtpEntry.module.css';
-
-/* ── Constants ── */
-
-/** Default host site logo for the StreamVault demo context */
-const DEFAULT_LOGO_SRC = '/assets/StreamVault-BrandLockup-Primary.svg';
-const DEFAULT_LOGO_ALT = 'StreamVault';
 
 /* ── Props ── */
 
@@ -87,43 +81,16 @@ export function OtpEntry({
   const [otp, setOtp] = useState(otpValue);
 
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.OTP_ENTRY]}
         screenId={SCREENS.OTP_ENTRY}
+        theme={theme}
       >
         {/* ── Header with Back Arrow ──
-            Custom header: BackArrow + logo on the left, close button on the right.
-            Matches predecessor .logo > .logo-left + .close-btn layout. */}
-        <div className={styles.header}>
-          <div className={styles.headerLeft}>
-            <BackArrow onClick={onBack} />
-            <img
-              className={styles.logoImg}
-              src={DEFAULT_LOGO_SRC}
-              alt={DEFAULT_LOGO_ALT}
-            />
-          </div>
-          <button
-            className={styles.closeBtn}
-            type="button"
-            onClick={onClose}
-            aria-label="Close verification banner"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
+            Delegates to DialogHeader molecule (single source of truth for
+            header layout + close button). showBackArrow adds the BackArrow
+            molecule before the logo, matching predecessor .logo-left layout. */}
+        <DialogHeader showBackArrow onBack={onBack} onClose={onClose} />
 
         {/* ── Text Block ──
             Bold headline + regular subtext + link-styled email.
@@ -207,7 +174,6 @@ export function OtpEntry({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

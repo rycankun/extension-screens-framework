@@ -17,11 +17,10 @@
  */
 import React, { useState } from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
-import { BackArrow } from '../../molecules/BackArrow/BackArrow';
+import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
 import { Input } from '../../atoms/Input/Input';
-import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import {
   EMAIL_CONFIRM_HEADLINE,
@@ -51,12 +50,6 @@ export interface EmailConfirmProps {
   onBackToPasskey?: () => void;
 }
 
-/* ── Default Values ──
-   StreamVault is the fictional demo host site. Default logo path points
-   to the provided brand lockup SVG in public/assets/. */
-const DEFAULT_LOGO_SRC = '/assets/StreamVault-BrandLockup-Primary.svg';
-const DEFAULT_LOGO_ALT = 'StreamVault';
-
 /* ── Component ── */
 
 export function EmailConfirm({
@@ -70,32 +63,16 @@ export function EmailConfirm({
   const [emailValue, setEmailValue] = useState(email);
 
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.EMAIL_CONFIRM]}
         screenId={SCREENS.EMAIL_CONFIRM}
+        theme={theme}
       >
-        {/* ── Custom Header: BackArrow + Logo (left) | Close (right) ──
-            Two-section layout matching predecessor .logo > .logo-left + .close-btn.
-            Same pattern as OtpEntry. */}
-        <header className={styles.header}>
-          <div className={styles.headerLeft}>
-            <BackArrow onClick={onBack} />
-            <img
-              className={styles.logoImg}
-              src={DEFAULT_LOGO_SRC}
-              alt={DEFAULT_LOGO_ALT}
-            />
-          </div>
-          <button
-            className={styles.closeBtn}
-            onClick={onClose}
-            aria-label="Close dialog"
-            type="button"
-          >
-            <Icon name="close" size="sm" />
-          </button>
-        </header>
+        {/* ── Header with Back Arrow ──
+            Delegates to DialogHeader molecule (single source of truth for
+            header layout + close button). showBackArrow adds the BackArrow
+            molecule before the logo, matching predecessor .logo-left layout. */}
+        <DialogHeader showBackArrow onBack={onBack} onClose={onClose} />
 
         {/* ── Text Block ──
             Bold headline + regular body as inline spans, matching
@@ -147,7 +124,6 @@ export function EmailConfirm({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

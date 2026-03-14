@@ -9,7 +9,7 @@
  * @see src/components/molecules/ConsentToggle/ — Full variant with info icon
  * @see src/components/atoms/Toggle/Toggle.tsx — Toggle atom dependency
  */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Toggle } from '../../atoms/Toggle/Toggle';
 import styles from './ToggleRow.module.css';
 
@@ -40,8 +40,19 @@ export function ToggleRow({
   locked = false,
   disabled = false,
 }: ToggleRowProps) {
+  const isDisabled = disabled || locked;
+
+  /* WCAG 1.3.1: clicking the label text activates the toggle.
+     The row onClick fires onChange; the Toggle's own onClick calls
+     e.stopPropagation() to prevent double-toggling. */
+  const handleRowClick = useCallback(() => {
+    if (!isDisabled) {
+      onChange(!checked);
+    }
+  }, [checked, onChange, isDisabled]);
+
   return (
-    <div className={styles.row}>
+    <div className={styles.row} onClick={handleRowClick}>
       <Toggle
         checked={checked}
         onChange={onChange}

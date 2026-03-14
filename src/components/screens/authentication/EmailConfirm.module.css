@@ -2,82 +2,14 @@
  * EmailConfirm Styles — Screen Component
  *
  * Layout and typography for the "Verify with a code instead" screen.
- * Custom three-column header (BackArrow | Logo | Close), left-aligned
- * text block, email input, primary + ghost button stack.
+ * Header delegated to DialogHeader molecule (with back arrow).
+ * Left-aligned text block, email input, primary + ghost button stack.
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see src/components/molecules/DialogHeader — header layout + close button
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
-
-/* ── Custom Header ──
-   Three-column layout: BackArrow (left) | Logo (center) | Close (right).
-   Same pattern as predecessor email-confirm.html header. */
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-/* ── Header Left ──
-   BackArrow + logo grouped on the left.
-   Predecessor .logo-left layout. */
-
-.headerLeft {
-  display: flex;
-  align-items: center;
-}
-
-/* ── Host Site Logo Image ──
-   Height-constrained logo with auto width to preserve aspect ratio.
-   Matches DialogHeader's --tid-size-icon-md (20px). */
-
-.logoImg {
-  height: var(--tid-size-icon-md); /* 20px */
-  width: auto;
-}
-
-/* ── Dark Mode Logo Inversion ──
-   StreamVault logo is designed for light backgrounds. In dark mode,
-   invert to white via CSS filter (predecessor pattern). */
-
-:global([data-theme='dark']) .logoImg {
-  filter: brightness(0) invert(1);
-}
-
-/* ── Close Button ──
-   44px touch target (WCAG minimum) with centered 16px close icon.
-   Negative right margin aligns icon edge with content area. */
-
-.closeBtn {
-  width: var(--tid-size-touch); /* 44px */
-  height: var(--tid-size-touch);
-  /* Align icon edge with content padding edge */
-  margin-right: calc((var(--tid-size-touch) - var(--tid-size-icon)) / -2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--tid-text-muted);
-  cursor: pointer;
-  flex-shrink: 0;
-  border-radius: var(--tid-radius-sm); /* 4px */
-}
-
-.closeBtn:hover {
-  background: rgba(var(--tid-ink-rgb), 0.04); /* Very subtle tint on hover */
-  color: var(--tid-text-secondary);
-}
-
-.closeBtn:focus-visible {
-  box-shadow: var(--tid-shadow-focus-brand);
-  outline: var(--tid-outline-width) solid var(--tid-border-focus);
-  outline-offset: var(--tid-outline-offset);
-}
 
 /* ── Text Block ──
    Predecessor .text-block sets shared typography for all inline spans:

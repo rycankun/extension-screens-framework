@@ -45,11 +45,17 @@ export function Toggle({
 }: ToggleProps) {
   const isDisabled = disabled || locked;
 
-  const handleClick = useCallback(() => {
-    if (!isDisabled) {
-      onChange(!checked);
-    }
-  }, [checked, onChange, isDisabled]);
+  const handleClick = useCallback(
+    (e: React.MouseEvent) => {
+      /* Stop propagation so parent row onClick doesn't double-toggle
+         (ConsentToggle and ToggleRow wrap the entire row as clickable) */
+      e.stopPropagation();
+      if (!isDisabled) {
+        onChange(!checked);
+      }
+    },
+    [checked, onChange, isDisabled],
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {

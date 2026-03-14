@@ -29,6 +29,7 @@ import { CheckboxRow } from '../../molecules/CheckboxRow/CheckboxRow';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
 import { Input } from '../../atoms/Input/Input';
+import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import { COPY_TEXT } from '../../../constants/variants';
 import {
@@ -76,10 +77,10 @@ export function EmailCapture({
   const [emailShareChecked, setEmailShareChecked] = useState(true);
 
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.EMAIL_CAPTURE]}
         screenId={SCREENS.EMAIL_CAPTURE}
+        theme={theme}
       >
         {/* ── Header ──
             Logo + close button. No back arrow on email capture (first screen). */}
@@ -118,20 +119,7 @@ export function EmailCapture({
             Small star icon + "We'll never share your email or send spam."
             Provides reassurance below the email input. */}
         <div className={styles.trustSignal}>
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            aria-hidden="true"
-            className={styles.trustSignalIcon}
-          >
-            <path
-              d="M6 1L7 3.5H9.5L7.5 5.5L8.5 8L6 6.5L3.5 8L4.5 5.5L2.5 3.5H5L6 1Z"
-              fill="currentColor"
-              opacity="0.6"
-            />
-          </svg>
+          <Icon name="star" size="xs" className={styles.trustSignalIcon} />
           {TRUST_SIGNAL_TEXT}
         </div>
 
@@ -189,7 +177,6 @@ export function EmailCapture({
         {/* ── Footer ── */}
         <PoweredBadge />
       </BannerShell>
-    </div>
   );
 }
 

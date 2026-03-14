@@ -32,6 +32,7 @@ import { SocialProof } from '../../molecules/SocialProof/SocialProof';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
 import { Link } from '../../atoms/Link/Link';
+import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import { COPY_TEXT } from '../../../constants/variants';
 import {
@@ -68,72 +69,6 @@ export interface ConsentUSProps {
   onRequestData?: () => void;
 }
 
-/* ── Inline SVG Icons ──
-   Self-contained SVGs for Figma-compatible rendering.
-   No external icon font or sprite sheet dependencies. */
-
-/** Shield icon for GPC indicator — stroke-based outline per predecessor */
-function ShieldIcon() {
-  return (
-    <svg
-      className={styles.gpcIcon}
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    </svg>
-  );
-}
-
-/** Badge-check icon for universal opt-out disclosure — predecessor pattern */
-function BadgeCheckIcon() {
-  return (
-    <svg
-      className={styles.optoutIcon}
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.77 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
-  );
-}
-
-/** Circle-slash icon for DNT indicator — 14px, muted color */
-function CircleSlashIcon() {
-  return (
-    <svg
-      className={styles.dntIcon}
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
-    </svg>
-  );
-}
-
 /* ── Component ── */
 
 export function ConsentUS({
@@ -147,10 +82,10 @@ export function ConsentUS({
   onRequestData,
 }: ConsentUSProps) {
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.CONSENT_US]}
         screenId={SCREENS.CONSENT_US}
+        theme={theme}
       >
         {/* ── 1. Header ── */}
         <DialogHeader onClose={onClose} />
@@ -181,7 +116,7 @@ export function ConsentUS({
         {/* ── 4. GPC Indicator (conditional) ── */}
         {gpcDetected && (
           <div className={styles.gpcIndicator} role="status" aria-live="polite">
-            <ShieldIcon />
+            <Icon name="shield" className={styles.gpcIcon} />
             <div className={styles.gpcContent}>
               <span className={styles.gpcText}>{GPC_TEXT}</span>
               <span className={styles.gpcDetail}>{GPC_DETAIL}</span>
@@ -192,7 +127,7 @@ export function ConsentUS({
         {/* ── 5. DNT Indicator (conditional) ── */}
         {dntDetected && (
           <div className={styles.dntIndicator} role="status" aria-live="polite">
-            <CircleSlashIcon />
+            <Icon name="circleSlash" className={styles.dntIcon} />
             <span className={styles.dntText}>{DNT_TEXT}</span>
           </div>
         )}
@@ -229,7 +164,7 @@ export function ConsentUS({
 
         {/* ── 8. Universal Opt-Out Disclosure ── */}
         <div className={styles.optoutDisclosure}>
-          <BadgeCheckIcon />
+          <Icon name="badgeCheck" className={styles.optoutIcon} />
           <span>{UNIVERSAL_OPTOUT_TEXT}</span>
         </div>
 
@@ -308,7 +243,6 @@ export function ConsentUS({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

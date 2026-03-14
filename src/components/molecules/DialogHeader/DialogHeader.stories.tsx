@@ -3,7 +3,8 @@
  *
  * Showcases the standard banner header with logo image and close button.
  * The header displays a site logo (e.g., StreamVault brand lockup) instead
- * of a text title.
+ * of a text title. Optionally shows a BackArrow before the logo for
+ * sub-screens that navigate back.
  *
  * @see src/components/molecules/DialogHeader/DialogHeader.tsx for implementation
  */
@@ -59,6 +60,18 @@ export const NoCloseButton: Story = {
 /** Header with close button only (no logo provided) */
 export const NoLogo: Story = {
   args: {
+    onClose: () => {},
+  },
+};
+
+/** Header with BackArrow + logo + close button — used by sub-screens
+ * (OtpEntry, OtpError, EmailConfirm, CookieEmail, DnsConfirm, DsrIntake) */
+export const WithBackArrow: Story = {
+  args: {
+    logoSrc: STREAMVAULT_LOGO,
+    logoAlt: 'StreamVault',
+    showBackArrow: true,
+    onBack: () => {},
     onClose: () => {},
   },
 };

@@ -15,6 +15,7 @@
   gap: var(--tid-sp-4); /* 8px */
   padding: var(--tid-sp-3) 0; /* 6px vertical */
   min-height: var(--tid-size-touch); /* 44px — WCAG touch target */
+  cursor: pointer; /* WCAG 1.3.1: label text is clickable to activate the toggle */
 }
 
 /* ── Label Stack ── */

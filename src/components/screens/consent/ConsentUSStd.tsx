@@ -77,10 +77,10 @@ export function ConsentUSStd({
   onManagePrefs,
 }: ConsentUSStdProps) {
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.CONSENT_US_STD]}
         screenId={SCREENS.CONSENT_US_STD}
+        theme={theme}
       >
         {/* ── 1. Header ── */}
         <DialogHeader onClose={onClose} />
@@ -216,7 +216,6 @@ export function ConsentUSStd({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

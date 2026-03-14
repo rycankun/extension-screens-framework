@@ -3,82 +3,15 @@
  *
  * Layout and typography for the OTP verification error screen.
  * Nearly identical to OtpEntry layout but with error-specific styling:
- * custom three-column header (BackArrow + logo + close), error text
- * with role="alert", and passkey fallback section.
+ * error text with role="alert", and passkey fallback section.
+ * Header is delegated to DialogHeader molecule (with back arrow).
  *
  * All values from tokens.css — zero hardcoded values.
  *
  * @see src/tokens/tokens.css for all --tid-* token definitions
+ * @see src/components/molecules/DialogHeader — header layout + close button
  * @see DIRECTIVES.md § 1.1 — All values from tokens.css
  */
-
-/* ── Custom Header ──
-   Two-section layout: BackArrow + Logo (left) | Close (right).
-   Same pattern as OtpEntry predecessor header — NOT three-column centered.
-   Predecessor: .logo > .logo-left (back+logo) + .close-btn (right). */
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-/* ── Header Left ──
-   BackArrow button + host site logo grouped together on the left.
-   Mirrors predecessor .logo-left wrapper. */
-
-.headerLeft {
-  display: flex;
-  align-items: center;
-}
-
-/* ── Host Site Logo Image ──
-   Height-constrained logo (same as DialogHeader pattern). */
-
-.logoImg {
-  height: var(--tid-size-icon-md); /* 20px */
-  width: auto;
-}
-
-/* ── Dark Mode Logo Inversion ──
-   StreamVault logo designed for light backgrounds — invert in dark mode. */
-
-:global([data-theme='dark']) .logoImg {
-  filter: brightness(0) invert(1);
-}
-
-/* ── Close Button ──
-   44px touch target with centered 16px close icon.
-   Negative right margin aligns icon edge with content area. */
-
-.closeBtn {
-  width: var(--tid-size-touch); /* 44px */
-  height: var(--tid-size-touch);
-  /* Align icon edge with content padding edge */
-  margin-right: calc((var(--tid-size-touch) - var(--tid-size-icon)) / -2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--tid-text-muted);
-  cursor: pointer;
-  flex-shrink: 0;
-  border-radius: var(--tid-radius-sm); /* 4px */
-}
-
-.closeBtn:hover {
-  background: rgba(var(--tid-ink-rgb), 0.04); /* Very subtle tint on hover */
-  color: var(--tid-text-secondary);
-}
-
-.closeBtn:focus-visible {
-  box-shadow: var(--tid-shadow-focus-brand);
-  outline: var(--tid-outline-width) solid var(--tid-border-focus);
-  outline-offset: var(--tid-outline-offset);
-}
 
 /* ── Text Block ──
    Predecessor .text-block sets shared typography for all inline spans:

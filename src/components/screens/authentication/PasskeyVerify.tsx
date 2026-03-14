@@ -57,10 +57,10 @@ export function PasskeyVerify({
   onUseCode,
 }: PasskeyVerifyProps) {
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.PASSKEY_VERIFY]}
         screenId={SCREENS.PASSKEY_VERIFY}
+        theme={theme}
       >
         {/* ── Header: logo + close (NO back arrow) ── */}
         <DialogHeader onClose={onClose} />
@@ -119,7 +119,6 @@ export function PasskeyVerify({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

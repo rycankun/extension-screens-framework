@@ -17,8 +17,8 @@
  *  10. Dismiss group: "Save without an account" ghost button + expiry callout
  *  11. PoweredBadge footer
  *
- * Uses the same custom header pattern as OtpEntry/OtpError (BackArrow +
- * logo + close), NOT the DialogHeader molecule (which has no back arrow).
+ * Uses DialogHeader molecule with showBackArrow for the header layout
+ * (single source of truth for header + close button markup).
  *
  * @see docs/PRD.md § 4.3 — CookieEmail specification
  * @see src/constants/variants.ts — COPY_TEXT for cookieEmail* keys
@@ -27,12 +27,13 @@
  */
 import React, { useState } from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
-import { BackArrow } from '../../molecules/BackArrow/BackArrow';
+import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { StepIndicator } from '../../molecules/StepIndicator/StepIndicator';
 import { CheckboxRow } from '../../molecules/CheckboxRow/CheckboxRow';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
 import { Input } from '../../atoms/Input/Input';
+import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import { COPY_TEXT } from '../../../constants/variants';
 import {
@@ -49,12 +50,6 @@ import {
   COOKIE_EMAIL_EXPIRY_WARNING,
 } from '../../../constants/preferences';
 import styles from './CookieEmail.module.css';
-
-/* ── Constants ── */
-
-/** Default host site logo for the StreamVault demo context */
-const DEFAULT_LOGO_SRC = '/assets/StreamVault-BrandLockup-Primary.svg';
-const DEFAULT_LOGO_ALT = 'StreamVault';
 
 /* ── Props ── */
 
@@ -91,44 +86,16 @@ export function CookieEmail({
   const [emailShareChecked, setEmailShareChecked] = useState(true);
 
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.COOKIE_EMAIL]}
         screenId={SCREENS.COOKIE_EMAIL}
+        theme={theme}
       >
         {/* ── Header with Back Arrow ──
-            Custom header: BackArrow + logo on the left, close button on the right.
-            Matches predecessor .logo > .logo-left + .close-btn layout.
-            Same pattern as OtpEntry/OtpError — NOT DialogHeader. */}
-        <div className={styles.header}>
-          <div className={styles.headerLeft}>
-            <BackArrow onClick={onBack} />
-            <img
-              className={styles.logoImg}
-              src={DEFAULT_LOGO_SRC}
-              alt={DEFAULT_LOGO_ALT}
-            />
-          </div>
-          <button
-            className={styles.closeBtn}
-            type="button"
-            onClick={onClose}
-            aria-label="Close verification banner"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
+            Delegates to DialogHeader molecule (single source of truth for
+            header layout + close button). showBackArrow adds the BackArrow
+            molecule before the logo, matching predecessor .logo-left layout. */}
+        <DialogHeader showBackArrow onBack={onBack} onClose={onClose} />
 
         {/* ── Text Block ──
             Bold headline + regular body as inline spans in a single div,
@@ -163,20 +130,7 @@ export function CookieEmail({
             Small star icon + "We'll never share your email or send spam."
             Provides reassurance below the email input. */}
         <div className={styles.trustSignal}>
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            aria-hidden="true"
-            className={styles.trustSignalIcon}
-          >
-            <path
-              d="M6 1L7 3.5H9.5L7.5 5.5L8.5 8L6 6.5L3.5 8L4.5 5.5L2.5 3.5H5L6 1Z"
-              fill="currentColor"
-              opacity="0.6"
-            />
-          </svg>
+          <Icon name="star" size="xs" className={styles.trustSignalIcon} />
           {TRUST_SIGNAL_TEXT}
         </div>
 
@@ -230,21 +184,7 @@ export function CookieEmail({
           {/* ── Expiry Callout ──
               Clock icon + warning text about preference expiration. */}
           <div className={styles.expiryCallout}>
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              className={styles.clockIcon}
-            >
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
+            <Icon name="clock" className={styles.clockIcon} />
             <span>{COOKIE_EMAIL_EXPIRY_WARNING}</span>
           </div>
         </div>
@@ -254,7 +194,6 @@ export function CookieEmail({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

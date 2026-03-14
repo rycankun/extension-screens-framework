@@ -8,7 +8,7 @@
  * @see docs/PRD.md § 3.2 — ConsentToggle specification
  * @see src/components/atoms/Toggle/Toggle.tsx — Toggle atom dependency
  */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Toggle } from '../../atoms/Toggle/Toggle';
 import { Icon } from '../../atoms/Icon/Icon';
 import styles from './ConsentToggle.module.css';
@@ -46,8 +46,27 @@ export function ConsentToggle({
   showInfo = false,
   infoText,
 }: ConsentToggleProps) {
+  const isDisabled = disabled || locked;
+
+  /* WCAG 1.3.1: clicking the label text activates the toggle.
+     The row onClick fires onChange; the Toggle's own onClick calls
+     e.stopPropagation() to prevent double-toggling. */
+  const handleRowClick = useCallback(() => {
+    if (!isDisabled) {
+      onChange(!checked);
+    }
+  }, [checked, onChange, isDisabled]);
+
+  /* Prevent info-icon clicks from bubbling up to the row and toggling */
+  const handleInfoClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+    },
+    [],
+  );
+
   return (
-    <div className={styles.row}>
+    <div className={styles.row} onClick={handleRowClick}>
       <Toggle
         checked={checked}
         onChange={onChange}
@@ -65,6 +84,7 @@ export function ConsentToggle({
           type="button"
           aria-label={`Information about ${label}`}
           title={infoText}
+          onClick={handleInfoClick}
         >
           <Icon name="info" size="sm" />
         </button>

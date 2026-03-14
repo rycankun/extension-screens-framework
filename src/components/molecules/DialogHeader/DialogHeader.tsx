@@ -3,18 +3,25 @@
  *
  * Standard header for all 27 banner screens. Displays the host site
  * logo image (e.g., StreamVault lockup) on the left and a close button
- * on the right. No title text — the predecessor uses logo-only headers.
+ * on the right. Optionally shows a BackArrow before the logo for
+ * sub-screens that navigate back (OTP entry, cookie email, etc.).
  *
  * The logo defaults to the StreamVault brand lockup (the demo host site).
  * In dark mode, the logo is inverted to white via CSS filter.
+ *
+ * This is the SINGLE SOURCE OF TRUTH for header layout + close button
+ * markup. Screen components should compose this molecule rather than
+ * duplicating header/close button markup inline.
  *
  * Predecessor ref: .logo, .logo-left, .logo-img, .close-btn in components.css:335-408
  *
  * @see docs/PRD.md § 3.2 — DialogHeader specification
  * @see src/components/atoms/Icon/Icon.tsx — Icon atom (close button)
+ * @see src/components/molecules/BackArrow/BackArrow.tsx — BackArrow molecule
  */
 import React from 'react';
 import { Icon } from '../../atoms/Icon/Icon';
+import { BackArrow } from '../BackArrow/BackArrow';
 import styles from './DialogHeader.module.css';
 
 /* ── Props ── */
@@ -28,6 +35,10 @@ export interface DialogHeaderProps {
   onClose?: () => void;
   /** Whether to show the close button (default true) */
   showClose?: boolean;
+  /** Whether to show a back arrow before the logo */
+  showBackArrow?: boolean;
+  /** Callback when back arrow is clicked */
+  onBack?: () => void;
 }
 
 /* ── Default Values ──
@@ -43,13 +54,17 @@ export function DialogHeader({
   logoAlt = DEFAULT_LOGO_ALT,
   onClose,
   showClose = true,
+  showBackArrow = false,
+  onBack,
 }: DialogHeaderProps) {
   return (
     <header className={styles.header}>
-      {/* ── Host Site Logo ──
-          Image-based logo for Figma-compatible rendering. Inverted
-          to white in dark mode via CSS filter on the img element. */}
+      {/* ── Logo Left Group ──
+          Contains the optional BackArrow and the host site logo image.
+          When showBackArrow is true, the BackArrow appears before the logo,
+          matching the predecessor .logo-left layout for sub-screens. */}
       <div className={styles.logoLeft}>
+        {showBackArrow && <BackArrow onClick={onBack} />}
         <img
           className={styles.logoImg}
           src={logoSrc}

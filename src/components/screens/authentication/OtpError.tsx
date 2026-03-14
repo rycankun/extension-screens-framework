@@ -16,11 +16,10 @@
  */
 import React, { useState } from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
-import { BackArrow } from '../../molecules/BackArrow/BackArrow';
+import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { StepIndicator } from '../../molecules/StepIndicator/StepIndicator';
 import { OtpInput } from '../../molecules/OtpInput/OtpInput';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
-import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import {
   OTP_ERROR_HEADLINE,
@@ -79,32 +78,16 @@ export function OtpError({
   const [otp, setOtp] = useState(otpValue);
 
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.OTP_ERROR]}
         screenId={SCREENS.OTP_ERROR}
+        theme={theme}
       >
-        {/* ── Custom Header: BackArrow + Logo (left) | Close (right) ──
-            Two-section layout matching predecessor .logo > .logo-left + .close-btn.
-            Same pattern as OtpEntry. */}
-        <header className={styles.header}>
-          <div className={styles.headerLeft}>
-            <BackArrow onClick={onBack} />
-            <img
-              className={styles.logoImg}
-              src="/assets/StreamVault-BrandLockup-Primary.svg"
-              alt="StreamVault"
-            />
-          </div>
-          <button
-            className={styles.closeBtn}
-            onClick={onClose}
-            aria-label="Close dialog"
-            type="button"
-          >
-            <Icon name="close" size="sm" />
-          </button>
-        </header>
+        {/* ── Header with Back Arrow ──
+            Delegates to DialogHeader molecule (single source of truth for
+            header layout + close button). showBackArrow adds the BackArrow
+            molecule before the logo, matching predecessor .logo-left layout. */}
+        <DialogHeader showBackArrow onBack={onBack} onClose={onClose} />
 
         {/* ── Text Block: Headline + Body + Email ──
             Predecessor uses inline <span> elements in .text-block,
@@ -189,7 +172,6 @@ export function OtpError({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

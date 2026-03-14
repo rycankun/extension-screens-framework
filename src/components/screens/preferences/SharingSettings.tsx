@@ -53,10 +53,10 @@ export function SharingSettings({
   onRevoke,
 }: SharingSettingsProps) {
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.SHARING_SETTINGS]}
         screenId={SCREENS.SHARING_SETTINGS}
+        theme={theme}
       >
         {/* ── Header — Logo + Close (no back arrow) ── */}
         <DialogHeader onClose={onClose} />
@@ -109,7 +109,6 @@ export function SharingSettings({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

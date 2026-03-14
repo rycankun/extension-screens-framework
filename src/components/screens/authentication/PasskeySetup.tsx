@@ -50,10 +50,10 @@ export function PasskeySetup({
   onSkip,
 }: PasskeySetupProps) {
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.PASSKEY_SETUP]}
         screenId={SCREENS.PASSKEY_SETUP}
+        theme={theme}
       >
         {/* ── Header: logo + close (no back arrow, no icon) ── */}
         <DialogHeader onClose={onClose} />
@@ -93,7 +93,6 @@ export function PasskeySetup({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

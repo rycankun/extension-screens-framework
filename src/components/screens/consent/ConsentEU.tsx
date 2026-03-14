@@ -31,6 +31,7 @@ import { SocialProof } from '../../molecules/SocialProof/SocialProof';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
 import { Link } from '../../atoms/Link/Link';
+import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import { COPY_TEXT } from '../../../constants/variants';
 import {
@@ -61,51 +62,6 @@ export interface ConsentEUProps {
   onManagePrefs?: () => void;
 }
 
-/* ── Inline SVG Icons ──
-   Self-contained SVGs for Figma-compatible rendering. No external icon
-   dependencies — each icon is a lightweight inline path. */
-
-/** Shield icon for GPC indicator — stroke-based outline per predecessor */
-function ShieldIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    </svg>
-  );
-}
-
-/** Badge-check icon for universal opt-out disclosure — predecessor pattern */
-function BadgeCheckIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.77 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
-  );
-}
-
 /* ── Component ── */
 
 export function ConsentEU({
@@ -117,10 +73,10 @@ export function ConsentEU({
   onManagePrefs,
 }: ConsentEUProps) {
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.CONSENT_EU]}
         screenId={SCREENS.CONSENT_EU}
+        theme={theme}
       >
         {/* ── 1. Header ── */}
         <DialogHeader onClose={onClose} />
@@ -160,7 +116,7 @@ export function ConsentEU({
             and aligns with ePrivacy Regulation drafts. */}
         {gpcDetected && (
           <div className={styles.gpcIndicator} role="status">
-            <ShieldIcon className={styles.gpcIcon} />
+            <Icon name="shield" className={styles.gpcIcon} />
             <div>
               <p className={styles.gpcText}>{GPC_TEXT}</p>
               <p className={styles.gpcDetail}>{GPC_DETAIL}</p>
@@ -217,7 +173,7 @@ export function ConsentEU({
             Required by CPA §6-1-1313 and similar state laws. Displayed
             regardless of GPC detection to inform all users. */}
         <div className={styles.universalOptout}>
-          <BadgeCheckIcon className={styles.gpcIcon} />
+          <Icon name="badgeCheck" className={styles.gpcIcon} />
           <span>{UNIVERSAL_OPTOUT_TEXT}</span>
         </div>
 
@@ -226,7 +182,6 @@ export function ConsentEU({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

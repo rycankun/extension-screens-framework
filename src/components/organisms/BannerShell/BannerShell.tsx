@@ -29,6 +29,8 @@ export interface BannerShellProps {
   onClose?: () => void;
   /** Optional data-screen attribute for tracking/testing */
   screenId?: string;
+  /** Theme variant — applies data-theme attribute on the shell container */
+  theme?: 'light' | 'dark';
 }
 
 /* ── Component ── */
@@ -38,6 +40,7 @@ export function BannerShell({
   ariaLabel,
   onClose,
   screenId,
+  theme = 'light',
 }: BannerShellProps) {
   /* WCAG 2.4.3: Trap focus within the dialog */
   const trapRef = useFocusTrap<HTMLDivElement>();
@@ -50,6 +53,7 @@ export function BannerShell({
       aria-modal="true"
       aria-label={ariaLabel}
       data-screen={screenId}
+      data-theme={theme}
     >
       {/* ── Gradient Background Layer ──
           Static diagonal gradient with three decorative radial blobs.

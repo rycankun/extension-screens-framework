@@ -26,6 +26,8 @@ export interface OverlayShellProps {
   ariaLabel: string;
   /** Optional data-screen attribute for tracking/testing */
   screenId?: string;
+  /** Theme variant — applies data-theme attribute on the shell container */
+  theme?: 'light' | 'dark';
 }
 
 /* ── Component ── */
@@ -34,6 +36,7 @@ export function OverlayShell({
   children,
   ariaLabel,
   screenId,
+  theme = 'light',
 }: OverlayShellProps) {
   /* WCAG 2.4.3: Trap focus within the overlay dialog */
   const trapRef = useFocusTrap<HTMLDivElement>();
@@ -46,6 +49,7 @@ export function OverlayShell({
       aria-modal="true"
       aria-label={ariaLabel}
       data-screen={screenId}
+      data-theme={theme}
     >
       {/* ── Content Card ──
           Centered card with solid surface background for Figma.

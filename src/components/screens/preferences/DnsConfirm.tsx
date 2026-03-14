@@ -23,9 +23,10 @@
  */
 import React from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
-import { BackArrow } from '../../molecules/BackArrow/BackArrow';
+import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
+import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import {
   DNS_HEADLINE,
@@ -36,12 +37,6 @@ import {
   DNS_UPDATE_TEXT,
 } from '../../../constants/preferences';
 import styles from './DnsConfirm.module.css';
-
-/* ── Constants ── */
-
-/** Default host site logo for the StreamVault demo context */
-const DEFAULT_LOGO_SRC = '/assets/StreamVault-BrandLockup-Primary.svg';
-const DEFAULT_LOGO_ALT = 'StreamVault';
 
 /* ── Props ── */
 
@@ -65,43 +60,16 @@ export function DnsConfirm({
   onReturn,
 }: DnsConfirmProps) {
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.DNS_CONFIRM]}
         screenId={SCREENS.DNS_CONFIRM}
+        theme={theme}
       >
         {/* ── Header with Back Arrow ──
-            Custom header: BackArrow + logo on the left, close button on the right.
-            Matches predecessor .logo > .logo-left + .close-btn layout. */}
-        <div className={styles.header}>
-          <div className={styles.headerLeft}>
-            <BackArrow onClick={onBack} />
-            <img
-              className={styles.logoImg}
-              src={DEFAULT_LOGO_SRC}
-              alt={DEFAULT_LOGO_ALT}
-            />
-          </div>
-          <button
-            className={styles.closeBtn}
-            type="button"
-            onClick={onClose}
-            aria-label="Close confirmation banner"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
+            Delegates to DialogHeader molecule (single source of truth for
+            header layout + close button). showBackArrow adds the BackArrow
+            molecule before the logo, matching predecessor .logo-left layout. */}
+        <DialogHeader showBackArrow onBack={onBack} onClose={onClose} />
 
         {/* ── DNS Confirm Content ──
             Centered success confirmation block: green check icon,
@@ -112,29 +80,7 @@ export function DnsConfirm({
               Wrapped in a 48×48 circle with success-tint background.
               Uses currentColor so the token (.checkIcon color) applies. */}
           <div className={styles.checkIconWrap}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-              className={styles.checkIcon}
-            >
-              <path
-                d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <polyline
-                points="22 4 12 14.01 9 11.01"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <Icon name="checkCircle" size="lg" className={styles.checkIcon} />
           </div>
 
           {/* ── Title ── */}
@@ -168,7 +114,6 @@ export function DnsConfirm({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

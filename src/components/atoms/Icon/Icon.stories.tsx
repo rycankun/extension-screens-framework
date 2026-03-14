@@ -13,7 +13,8 @@ import { Icon, type IconName } from './Icon';
 const ALL_ICONS: IconName[] = [
   'close', 'check', 'warning', 'info', 'fingerprint',
   'shield', 'lock', 'email', 'chevronRight', 'chevronDown',
-  'external', 'eye', 'eyeOff',
+  'external', 'eye', 'eyeOff', 'badgeCheck', 'circleSlash',
+  'star', 'clock', 'clockSm', 'checkCircle',
 ];
 
 const meta: Meta<typeof Icon> = {

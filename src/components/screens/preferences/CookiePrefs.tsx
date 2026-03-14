@@ -175,10 +175,10 @@ export function CookiePrefs({
   );
 
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.COOKIE_PREFS]}
         screenId={SCREENS.COOKIE_PREFS}
+        theme={theme}
       >
         {/* ── Header ──
             Logo + close button, NO back arrow (predecessor pattern). */}
@@ -431,7 +431,6 @@ export function CookiePrefs({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 

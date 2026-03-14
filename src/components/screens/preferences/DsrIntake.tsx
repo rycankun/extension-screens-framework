@@ -23,10 +23,11 @@
  */
 import React, { useState } from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
-import { BackArrow } from '../../molecules/BackArrow/BackArrow';
+import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { PoweredBadge } from '../../molecules/PoweredBadge/PoweredBadge';
 import { Button } from '../../atoms/Button/Button';
 import { Input } from '../../atoms/Input/Input';
+import { Icon } from '../../atoms/Icon/Icon';
 import { SCREENS, SCREEN_TITLES } from '../../../constants/screens';
 import {
   DSR_HEADLINES,
@@ -42,12 +43,6 @@ import {
   DSR_TRUST_SIGNAL,
 } from '../../../constants/preferences';
 import styles from './DsrIntake.module.css';
-
-/* ── Constants ── */
-
-/** Default host site logo for the StreamVault demo context */
-const DEFAULT_LOGO_SRC = '/assets/StreamVault-BrandLockup-Primary.svg';
-const DEFAULT_LOGO_ALT = 'StreamVault';
 
 /* ── Props ── */
 
@@ -94,43 +89,16 @@ export function DsrIntake({
   const isSubmitDisabled = !selected || !emailValue.trim();
 
   return (
-    <div data-theme={theme}>
-      <BannerShell
+    <BannerShell
         ariaLabel={SCREEN_TITLES[SCREENS.DSR_INTAKE]}
         screenId={SCREENS.DSR_INTAKE}
+        theme={theme}
       >
         {/* ── Header with Back Arrow ──
-            Custom header: BackArrow + logo on the left, close button on the right.
-            Matches predecessor .logo > .logo-left + .close-btn layout. */}
-        <div className={styles.header}>
-          <div className={styles.headerLeft}>
-            <BackArrow onClick={onBack} />
-            <img
-              className={styles.logoImg}
-              src={DEFAULT_LOGO_SRC}
-              alt={DEFAULT_LOGO_ALT}
-            />
-          </div>
-          <button
-            className={styles.closeBtn}
-            type="button"
-            onClick={onClose}
-            aria-label="Close data request form"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
+            Delegates to DialogHeader molecule (single source of truth for
+            header layout + close button). showBackArrow adds the BackArrow
+            molecule before the logo, matching predecessor .logo-left layout. */}
+        <DialogHeader showBackArrow onBack={onBack} onClose={onClose} />
 
         {/* ── Text Block ──
             Bold headline + regular body as inline spans.
@@ -186,20 +154,7 @@ export function DsrIntake({
             Star icon + "We'll verify your identity before processing your request."
             Provides reassurance below the email input. */}
         <div className={styles.trustSignal}>
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            aria-hidden="true"
-            className={styles.trustSignalIcon}
-          >
-            <path
-              d="M6 1L7 3.5H9.5L7.5 5.5L8.5 8L6 6.5L3.5 8L4.5 5.5L2.5 3.5H5L6 1Z"
-              fill="currentColor"
-              opacity="0.6"
-            />
-          </svg>
+          <Icon name="star" size="xs" className={styles.trustSignalIcon} />
           {DSR_TRUST_SIGNAL}
         </div>
 
@@ -207,17 +162,7 @@ export function DsrIntake({
             Clock icon + jurisdiction-specific response time.
             Background pill/box with subtle surface color. */}
         <div className={styles.responseNotice}>
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            aria-hidden="true"
-            className={styles.responseNoticeIcon}
-          >
-            <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2" />
-            <polyline points="6,3 6,6 8,7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <Icon name="clockSm" size="xs" className={styles.responseNoticeIcon} />
           <span>
             {DSR_RESPONSE_NOTICE_PREFIX}{' '}
             <strong>{DSR_RESPONSE_TIME[jurisdiction]}</strong>{' '}
@@ -249,7 +194,6 @@ export function DsrIntake({
           <PoweredBadge />
         </div>
       </BannerShell>
-    </div>
   );
 }
 
