@@ -30,7 +30,7 @@
   align-self: center;
   margin-right: var(--tid-sp-2); /* 4px */
   color: var(--tid-brand); /* Trust ID Blue */
-  vertical-align: -2px;
+  vertical-align: calc(-1 * var(--tid-sp-1)); /* -2px optical alignment for inline icon */
 }
 
 /* ── Bold Emphasis ── */

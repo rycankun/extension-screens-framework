@@ -31,7 +31,8 @@ export function LegalNotice({
   return (
     <div className={styles.notice}>
       <span className={styles.iconWrap}>
-        <Icon name={icon} size="sm" ariaLabel="" />
+        {/* Decorative icon — no ariaLabel so it renders as aria-hidden */}
+        <Icon name={icon} size="sm" />
       </span>
       <p className={styles.text}>{text}</p>
     </div>

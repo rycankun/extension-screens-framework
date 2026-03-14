@@ -229,7 +229,7 @@
   display: flex;
   align-items: center;
   padding: var(--tid-sp-0); /* 0 — predecessor has no padding on rows */
-  line-height: 1.2; /* predecessor tight line-height */
+  line-height: var(--tid-lh-ratio-tight); /* 1.2 — predecessor tight line-height */
 }
 
 /* ── Privacy Choices Link ──

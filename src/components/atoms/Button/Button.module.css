@@ -70,7 +70,7 @@
 }
 
 .primary:hover:not(:disabled) {
-  opacity: 0.9;
+  opacity: var(--tid-opacity-hover-emphasis); /* 0.9 */
 }
 
 .primary:active:not(:disabled) {
@@ -127,7 +127,7 @@
 }
 
 .danger:hover:not(:disabled) {
-  opacity: 0.9;
+  opacity: var(--tid-opacity-hover-emphasis); /* 0.9 */
 }
 
 .danger:active:not(:disabled) {
@@ -137,10 +137,11 @@
 /* ── Disabled State ──
    Applies to all variants. Reduced opacity, no pointer events. */
 
+/* WCAG 4.1.2: HTML disabled already prevents activation —
+   pointer-events:none would hide the element from AT discovery */
 .button:disabled {
   opacity: var(--tid-opacity-disabled); /* 0.5 */
   cursor: default;
-  pointer-events: none;
 }
 
 /* ── Focus-Visible ──

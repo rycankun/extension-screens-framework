@@ -44,6 +44,16 @@
   box-shadow: var(--tid-shadow-focus-brand);
 }
 
+/* ── Focus-Visible (WCAG 2.4.7) ──
+   Keyboard-only focus ring. Supplements .cell:focus for mouse users. */
+
+.cell:focus-visible {
+  outline: var(--tid-outline-width) solid var(--tid-border-focus);
+  outline-offset: var(--tid-outline-offset);
+  border-color: var(--tid-border-focus);
+  box-shadow: var(--tid-shadow-focus-brand);
+}
+
 /* ── Error State ── */
 
 .error {

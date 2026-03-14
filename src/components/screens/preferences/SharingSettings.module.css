@@ -64,7 +64,7 @@
   justify-content: space-between;
   align-items: center; /* predecessor uses center, not baseline */
   padding: var(--tid-sp-5) var(--tid-sp-0); /* 10px 0 — predecessor --sp-5 */
-  border-bottom: 1px solid rgba(var(--tid-neutral-rgb), 0.06); /* predecessor rgba neutral */
+  border-bottom: var(--tid-border-width) solid rgba(var(--tid-neutral-rgb), 0.06); /* predecessor rgba neutral */
 }
 
 .credRow:last-child {

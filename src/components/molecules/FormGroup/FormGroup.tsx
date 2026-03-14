@@ -56,6 +56,7 @@ export function FormGroup({
         {label}
       </label>
       <Input
+        id={id}
         value={value}
         placeholder={placeholder}
         type={type}

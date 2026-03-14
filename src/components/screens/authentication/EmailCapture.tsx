@@ -159,18 +159,14 @@ export function EmailCapture({
         <div className={styles.divider} role="separator" />
         <div className={styles.passkeyFallback}>
           {PASSKEY_FALLBACK_PREFIX}{' '}
-          <a
+          <button
+            type="button"
             className={styles.link}
-            role="button"
-            tabIndex={0}
             aria-label={PASSKEY_FALLBACK_ARIA}
             onClick={onPasskeySignIn}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') onPasskeySignIn?.();
-            }}
           >
             {PASSKEY_FALLBACK_LINK}
-          </a>
+          </button>
         </div>
 
         {/* ── Dismiss Group ──

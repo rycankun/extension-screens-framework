@@ -111,7 +111,7 @@
   margin: var(--tid-sp-3) auto var(--tid-sp-4); /* 6px auto 8px — predecessor sp-6 auto sp-8 adjusted */
   width: var(--tid-size-control-xl); /* 48px — predecessor --size-control-xl */
   height: var(--tid-size-control-xl);
-  border-radius: 50%; /* Circle — predecessor --radius-circle */
+  border-radius: var(--tid-radius-circle); /* 50% — predecessor --radius-circle */
   background: var(--tid-success-tint); /* predecessor --success-tint */
   display: flex;
   align-items: center;
@@ -146,7 +146,7 @@
   font-size: var(--tid-fs-body); /* 13px — predecessor .dns-confirm-description uses --fs-body */
   font-weight: var(--tid-fw-regular); /* 400 */
   color: var(--tid-text-body);
-  line-height: 1.5; /* predecessor --lh-ratio-relaxed */
+  line-height: var(--tid-lh-ratio-relaxed); /* 1.5 — predecessor --lh-ratio-relaxed */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-4) var(--tid-sp-0) var(--tid-sp-0); /* 8px 0 0 — predecessor margin-top: --sp-4 */
 }
@@ -160,7 +160,7 @@
   font-size: var(--tid-fs-sm); /* 11px — predecessor .dns-confirm-note uses --fs-sm */
   font-weight: var(--tid-fw-regular); /* 400 */
   color: var(--tid-text-muted); /* predecessor uses --text-muted */
-  line-height: 1.4; /* predecessor --lh-ratio-normal */
+  line-height: var(--tid-lh-ratio-normal); /* 1.4 — predecessor --lh-ratio-normal */
   letter-spacing: var(--tid-ls-normal);
   margin: var(--tid-sp-3) var(--tid-sp-0) var(--tid-sp-0); /* 6px 0 0 — predecessor margin-top: --sp-3 */
 }

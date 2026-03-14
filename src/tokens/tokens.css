@@ -180,6 +180,15 @@
   --tid-lh-reading: 21px;                /* Text blocks — predecessor --lh-reading */
   --tid-lh-heading: 26px;                /* Section headings */
   --tid-lh-display: 28px;                /* Display text, banner headings */
+  --tid-lh-tab: 36px;                    /* Tab bar line height for CookiePrefs tabs */
+
+  /* ── 3f. Line Height Ratios ──
+     Unitless ratio line-heights for components that need proportional
+     scaling. Unlike the fixed-px line-heights above, these scale with
+     the element's font-size. */
+  --tid-lh-ratio-tight: 1.2;             /* Compact multi-line (fine print, privacy links) */
+  --tid-lh-ratio-normal: 1.4;            /* Standard readable ratio (radio labels, notes) */
+  --tid-lh-ratio-relaxed: 1.5;           /* Comfortable reading ratio (descriptions) */
 
   /* ─────────────────────────────────────────────────────────────────
      4. SPACING (4px base unit)
@@ -258,6 +267,7 @@
   --tid-size-toast-width: 280px;         /* Toast notification width */
   --tid-size-success-ring: 64px;         /* Success circle + progress ring */
   --tid-size-credential-card: 56px;      /* Credential card height (icon + text row) */
+  --tid-size-overlay-height: 600px;      /* Minimum height for full-page overlays */
 
   /* ── 6e. Blobs (decorative background elements) ──
      Three radial gradient blobs animate behind the banner content
@@ -349,6 +359,7 @@
   --tid-opacity-disabled: 0.5;            /* Disabled elements */
   --tid-opacity-hover: 0.04;              /* Hover tint overlay */
   --tid-opacity-active: 0.08;             /* Active/pressed tint overlay */
+  --tid-opacity-hover-emphasis: 0.9;     /* Subtle dim on hover for emphasis buttons */
   --tid-opacity-frost: 0.85;              /* Frost glass panel (live demo only) */
   --tid-opacity-overlay: 0.6;             /* Overlay scrim behind modals */
   --tid-opacity-overlay-heavy: 0.8;       /* Heavy overlay for age gate */
@@ -443,6 +454,7 @@
   --tid-error-light: #2D1F1F;
   --tid-warning: #FBBF24;
   --tid-warning-light: #2D2810;
+  --tid-success-tint: rgba(0, 214, 160, 0.12); /* Dark theme success tint */
   --tid-info: #60A5FA;
 
   /* ── Colors / Surfaces ── */

@@ -152,8 +152,8 @@ function categorize(name: string): string {
   /* ── Opacity ── */
   if (name.startsWith('opacity-')) return 'opacity';
 
-  /* ── Backdrop Blur ── */
-  if (name.startsWith('blur-')) return 'blur';
+  /* ── Backdrop Blur & Saturation ── */
+  if (name.startsWith('blur-') || name.startsWith('saturate-')) return 'blur';
 
   /* ── Gradients ── */
   if (name.startsWith('gradient-')) return 'gradient';

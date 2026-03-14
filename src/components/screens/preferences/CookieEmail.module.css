@@ -298,7 +298,7 @@
   line-height: var(--tid-lh-body); /* 17px — predecessor --lh-body */
   letter-spacing: var(--tid-ls-normal);
   background: color-mix(in srgb, var(--tid-text-muted) 8%, transparent); /* predecessor tinted bg */
-  border: 1px solid color-mix(in srgb, var(--tid-text-muted) 15%, transparent); /* predecessor border */
+  border: var(--tid-border-width) solid color-mix(in srgb, var(--tid-text-muted) 15%, transparent); /* predecessor border */
   padding: var(--tid-sp-3); /* 6px — predecessor --sp-3 */
   border-radius: var(--tid-radius-md); /* 6px — predecessor --radius-md */
 }
@@ -308,7 +308,7 @@
 
 .clockIcon {
   flex-shrink: 0;
-  margin-top: 1px; /* predecessor expiry-callout-icon has margin-top: 1px */
+  margin-top: var(--tid-sp-px); /* 1px — predecessor expiry-callout-icon has margin-top: 1px */
   color: var(--tid-text-muted); /* predecessor uses --text-muted */
 }
 

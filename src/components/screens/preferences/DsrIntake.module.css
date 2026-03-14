@@ -159,9 +159,9 @@
   gap: var(--tid-sp-3); /* 6px — predecessor --sp-3 */
   cursor: pointer;
   padding: var(--tid-sp-3) var(--tid-sp-4); /* 6px 8px — predecessor sp-3 sp-4 */
-  border: 1px solid var(--tid-border-default); /* predecessor border-default */
+  border: var(--tid-border-width) solid var(--tid-border); /* predecessor border-default */
   border-radius: var(--tid-radius-md); /* 6px — predecessor --radius-md */
-  transition: border-color 150ms ease, background 150ms ease;
+  transition: border-color var(--tid-duration-fast) var(--tid-ease-default), background var(--tid-duration-fast) var(--tid-ease-default);
 }
 
 .radioLabel:hover {
@@ -201,14 +201,14 @@
   width: var(--tid-size-icon); /* 16px */
   height: var(--tid-size-icon); /* 16px */
   min-width: var(--tid-size-icon); /* prevent shrink */
-  border-radius: var(--tid-radius-full); /* 50% — perfect circle */
-  border: var(--tid-border-width) solid var(--tid-border-default);
+  border-radius: var(--tid-radius-circle); /* 50% — perfect circle */
+  border: var(--tid-border-width) solid var(--tid-border);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   margin-top: var(--tid-sp-1); /* 2px — nudge down to align with first line of text */
-  transition: border-color 150ms ease;
+  transition: border-color var(--tid-duration-fast) var(--tid-ease-default);
 }
 
 /* ── Checked Radio Control ──
@@ -225,10 +225,10 @@
 .radioDot {
   width: var(--tid-sp-4); /* 8px */
   height: var(--tid-sp-4); /* 8px */
-  border-radius: var(--tid-radius-full); /* 50% */
+  border-radius: var(--tid-radius-circle); /* 50% */
   background: var(--tid-brand);
   opacity: 0;
-  transition: opacity 150ms ease;
+  transition: opacity var(--tid-duration-fast) var(--tid-ease-default);
 }
 
 .radioInput:checked + .radioControl .radioDot {
@@ -262,7 +262,7 @@
   font-size: var(--tid-fs-body); /* 13px — predecessor --fs-body */
   font-weight: var(--tid-fw-medium); /* 500 */
   color: var(--tid-ink);
-  line-height: 1.4; /* predecessor --lh-ratio-normal */
+  line-height: var(--tid-lh-ratio-normal); /* 1.4 — predecessor --lh-ratio-normal */
   letter-spacing: var(--tid-ls-normal);
 }
 
@@ -275,7 +275,7 @@
   font-size: var(--tid-fs-sm); /* 11px — predecessor --fs-sm */
   font-weight: var(--tid-fw-regular); /* 400 */
   color: var(--tid-text-muted); /* predecessor --text-muted */
-  line-height: 1.4; /* predecessor --lh-ratio-normal */
+  line-height: var(--tid-lh-ratio-normal); /* 1.4 — predecessor --lh-ratio-normal */
   letter-spacing: var(--tid-ls-normal);
 }
 
@@ -328,7 +328,7 @@
   font-size: var(--tid-fs-sm); /* 11px — predecessor --fs-sm */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-ink); /* predecessor --ink */
-  line-height: 1.4; /* predecessor --lh-ratio-normal */
+  line-height: var(--tid-lh-ratio-normal); /* 1.4 — predecessor --lh-ratio-normal */
   letter-spacing: var(--tid-ls-normal);
   background: var(--tid-success-tint); /* predecessor --success-tint */
   padding: var(--tid-sp-3) var(--tid-sp-4); /* 6px 8px — predecessor sp-3 sp-4 */

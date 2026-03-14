@@ -43,6 +43,7 @@
 /* ── Focus-Visible ── */
 
 .backArrow:focus-visible {
+  box-shadow: var(--tid-shadow-focus-brand);
   outline: var(--tid-outline-width) solid var(--tid-border-focus);
   outline-offset: var(--tid-outline-offset);
   border-radius: var(--tid-radius-sm);

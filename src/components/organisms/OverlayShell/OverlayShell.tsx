@@ -14,6 +14,7 @@
  * @see src/constants/screens.ts — SCREEN_TITLES for aria-label values
  */
 import React from 'react';
+import { useFocusTrap } from '../../../hooks/useFocusTrap';
 import styles from './OverlayShell.module.css';
 
 /* ── Props ── */
@@ -34,8 +35,12 @@ export function OverlayShell({
   ariaLabel,
   screenId,
 }: OverlayShellProps) {
+  /* WCAG 2.4.3: Trap focus within the overlay dialog */
+  const trapRef = useFocusTrap<HTMLDivElement>();
+
   return (
     <div
+      ref={trapRef}
       className={styles.backdrop}
       role="dialog"
       aria-modal="true"

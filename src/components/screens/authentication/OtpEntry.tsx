@@ -192,21 +192,14 @@ export function OtpEntry({
             alternative auth path for returning users. */}
         <div className={styles.passkeyFallback}>
           <span>{PASSKEY_FALLBACK_PREFIX}</span>{' '}
-          <a
+          <button
+            type="button"
             className={styles.link}
-            role="button"
-            tabIndex={0}
             aria-label={PASSKEY_FALLBACK_ARIA_LOGIN}
             onClick={onPasskeySignIn}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onPasskeySignIn?.();
-              }
-            }}
           >
             {PASSKEY_FALLBACK_LINK}
-          </a>
+          </button>
         </div>
 
         {/* ── Footer ── */}

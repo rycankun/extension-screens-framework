@@ -27,7 +27,7 @@
  * @see src/constants/preferences.ts — COOKIE_TABS, SHARED_DATA_LABELS, fine-print text
  * @see src/constants/cookies.ts — Cookie entries and sublabels per category
  */
-import React, { useState } from 'react';
+import React, { useState, useCallback, useId } from 'react';
 import { BannerShell } from '../../organisms/BannerShell/BannerShell';
 import { DialogHeader } from '../../molecules/DialogHeader/DialogHeader';
 import { ConsentToggle } from '../../molecules/ConsentToggle/ConsentToggle';
@@ -159,6 +159,20 @@ export function CookiePrefs({
   const [email, setEmail] = useState(emailShared);
   const [dob, setDob] = useState(dobShared);
   const [age, setAge] = useState(ageShared);
+  const tabPanelId = useId();
+  const cookiesTabId = useId();
+  const sharedTabId = useId();
+
+  /* WCAG: Arrow key navigation between tabs per WAI-ARIA tablist pattern */
+  const handleTabKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setTab((prev) => (prev === 'cookies' ? 'sharedData' : 'cookies'));
+      }
+    },
+    [],
+  );
 
   return (
     <div data-theme={theme}>
@@ -197,11 +211,14 @@ export function CookiePrefs({
         {/* ── Tab Bar ──
             "Cookies" | "Shared Data" tabs. Shared Data hidden until
             TrustID verification (showSharedData prop). */}
-        <div className={styles.tabBar} role="tablist">
+        <div className={styles.tabBar} role="tablist" onKeyDown={handleTabKeyDown}>
           <button
+            id={cookiesTabId}
             className={`${styles.tab} ${tab === 'cookies' ? styles.tabActive : ''}`}
             role="tab"
             aria-selected={tab === 'cookies'}
+            aria-controls={tab === 'cookies' ? tabPanelId : undefined}
+            tabIndex={tab === 'cookies' ? 0 : -1}
             onClick={() => setTab('cookies')}
             type="button"
           >
@@ -209,9 +226,12 @@ export function CookiePrefs({
           </button>
           {showSharedData && (
             <button
+              id={sharedTabId}
               className={`${styles.tab} ${tab === 'sharedData' ? styles.tabActive : ''}`}
               role="tab"
               aria-selected={tab === 'sharedData'}
+              aria-controls={tab === 'sharedData' ? tabPanelId : undefined}
+              tabIndex={tab === 'sharedData' ? 0 : -1}
               onClick={() => setTab('sharedData')}
               type="button"
             >
@@ -222,7 +242,7 @@ export function CookiePrefs({
 
         {/* ── Cookies Tab ── */}
         {tab === 'cookies' && (
-          <div role="tabpanel" aria-label={COOKIE_TABS.COOKIES}>
+          <div id={tabPanelId} role="tabpanel" aria-labelledby={cookiesTabId}>
             {/* ── Toggle Rows ──
                 4 categories: Essential (locked ON), Performance & Analytics,
                 Personalization, Advertising. Each has a toggle + sublabel +
@@ -293,7 +313,7 @@ export function CookiePrefs({
 
         {/* ── Shared Data Tab ── */}
         {tab === 'sharedData' && (
-          <div role="tabpanel" aria-label={COOKIE_TABS.SHARED_DATA}>
+          <div id={tabPanelId} role="tabpanel" aria-labelledby={sharedTabId}>
             {/* ── Toggle Rows ──
                 3 shared data items: Age Verification, Email Address,
                 Date of Birth. Each has on/off sublabels from SHARED_COPY. */}

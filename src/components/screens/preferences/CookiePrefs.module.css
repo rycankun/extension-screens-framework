@@ -58,7 +58,7 @@
   gap: var(--tid-sp-0);
   border-radius: var(--tid-radius-sm); /* 4px — predecessor rounded box */
   overflow: hidden;
-  border: 1px solid rgba(var(--tid-neutral-rgb), 0.1);
+  border: var(--tid-border-width) solid rgba(var(--tid-neutral-rgb), 0.1);
   margin-bottom: var(--tid-sp-4); /* 8px — predecessor sp-4 */
 }
 
@@ -79,7 +79,7 @@
   text-align: center;
   cursor: pointer;
   letter-spacing: var(--tid-ls-normal);
-  line-height: var(--tid-tab-line-height, 36px); /* predecessor --tab-line-height */
+  line-height: var(--tid-lh-tab); /* 36px — predecessor --tab-line-height */
   transition: background var(--tid-duration-fast),
               color var(--tid-duration-fast);
 }
@@ -106,7 +106,7 @@
    Vertical border between adjacent tabs. */
 
 .tab + .tab {
-  border-left: 1px solid rgba(var(--tid-neutral-rgb), 0.08);
+  border-left: var(--tid-border-width) solid rgba(var(--tid-neutral-rgb), 0.08);
 }
 
 /* ── Toggle Section ──
@@ -241,7 +241,7 @@
   flex-direction: column;
   gap: var(--tid-sp-0); /* 0 — predecessor .fine-print-block has gap: 0 */
   margin-top: var(--tid-sp-4); /* 8px — predecessor --sp-4 */
-  line-height: 1.2; /* predecessor uses unitless 1.2 */
+  line-height: var(--tid-lh-ratio-tight); /* 1.2 — predecessor uses unitless ratio */
   font-size: var(--tid-fs-2xs); /* 9px — predecessor --fs-2xs */
   color: var(--tid-text-muted); /* predecessor uses --text-muted */
 }
@@ -249,7 +249,7 @@
 /* Predecessor .fine-print-block > * { padding: 1px 0 } */
 .finePrint > * {
   margin: var(--tid-sp-0);
-  padding: 1px var(--tid-sp-0);
+  padding: var(--tid-sp-px) var(--tid-sp-0);
 }
 
 .finePrintLink {
@@ -257,7 +257,7 @@
   font-size: var(--tid-fs-2xs); /* 9px — predecessor .dns-link uses --fs-2xs */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-text-muted); /* predecessor uses --text-muted, not brand */
-  line-height: 1.2; /* predecessor uses unitless 1.2 */
+  line-height: var(--tid-lh-ratio-tight); /* 1.2 — predecessor uses unitless ratio */
   text-decoration: underline; /* predecessor .dns-link has underline by default */
   cursor: pointer;
 }
@@ -277,7 +277,7 @@
   font-size: var(--tid-fs-2xs); /* 9px — predecessor .retention-notice uses --fs-2xs */
   font-weight: var(--tid-fw-regular);
   color: var(--tid-text-muted); /* predecessor uses --text-muted */
-  line-height: 1.2; /* predecessor uses unitless 1.2 */
+  line-height: var(--tid-lh-ratio-tight); /* 1.2 — predecessor uses unitless ratio */
   margin: var(--tid-sp-0);
 }
 

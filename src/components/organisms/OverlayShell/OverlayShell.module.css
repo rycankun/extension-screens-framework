@@ -17,7 +17,7 @@
 .backdrop {
   position: relative;
   width: 100%;
-  min-height: 600px; /* Figma frame height — ensures visible card centering */
+  min-height: var(--tid-size-overlay-height); /* 600px — Figma frame height, ensures visible card centering */
   background: var(--tid-gradient-overlay);
   display: flex;
   align-items: center;

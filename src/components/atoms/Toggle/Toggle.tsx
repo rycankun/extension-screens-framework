@@ -82,6 +82,9 @@ export function Toggle({
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       disabled={disabled}
+      /* WCAG: locked toggles are discoverable but not operable —
+         tabIndex -1 prevents Tab focus while keeping AT visibility */
+      tabIndex={locked && !disabled ? -1 : undefined}
       type="button"
     >
       <span className={styles.knob} />

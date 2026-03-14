@@ -14,6 +14,8 @@ import styles from './Input.module.css';
 /* ── Props ── */
 
 export interface InputProps {
+  /** HTML id attribute — used by FormGroup to associate <label htmlFor> */
+  id?: string;
   /** Current input value */
   value?: string;
   /** Placeholder text shown when empty */
@@ -37,6 +39,7 @@ export interface InputProps {
 /* ── Component ── */
 
 export function Input({
+  id,
   value,
   placeholder,
   type = 'text',
@@ -59,6 +62,7 @@ export function Input({
   return (
     <div className={styles.wrapper}>
       <input
+        id={id}
         className={classNames}
         type={type}
         value={value}
